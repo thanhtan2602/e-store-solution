@@ -13,7 +13,7 @@ namespace Store.Infrastructure.Data
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            var connectionString = configuration.GetConnectionString("StoreDb");
+            var connectionString = configuration.GetConnectionString("MobileStore");
 
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
             optionsBuilder.UseSqlServer(connectionString);

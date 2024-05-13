@@ -56,3 +56,6 @@ $RECYCLE.BIN/
 /E-MobileStore/Store.Web/obj/
 /E-MobileStore/Store.WebService/bin/
 /E-MobileStore/Store.WebService/obj/
+
+#Migration files
+/E-MobileStore/Store.Infrastructure/Migrations/
