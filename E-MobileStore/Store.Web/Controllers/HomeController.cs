@@ -15,10 +15,10 @@ namespace Store.Web.Controllers
             _productWebService = productWebService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var response = _productWebService.GetProductDetail(1);
-            return View("/Views/Common/ProductBox.cshtml");
+            var response = await _productWebService.GetProductDetail(1);
+            return View("/Views/Common/ProductBox.cshtml", response);
         }
 
         public IActionResult Privacy()

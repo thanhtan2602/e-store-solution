@@ -9,7 +9,7 @@ namespace Store.WebService.APIs
 {
     public class ProductApi : IProductApi
     {
-        private string baseUrl = "http://localhost:5165";  //"http://localhost:5165/api/Products/GetProductById";
+        private string baseUrl = "http://localhost:5163";  //"http://localhost:5163/api/Products/GetProductById?productId=1";
 
         public ProductApi()
         {
@@ -17,7 +17,7 @@ namespace Store.WebService.APIs
 
         public string GetProductById(int productId)
         {
-            return $"{baseUrl}/api/product/getproductbyid?productid={productId}";
+            return $"{baseUrl}/api/products/getproductbyid?productid={productId}";
         }
     }
 }

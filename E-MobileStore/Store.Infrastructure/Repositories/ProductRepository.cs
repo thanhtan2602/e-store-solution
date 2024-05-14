@@ -1,4 +1,5 @@
-﻿using Store.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Store.Domain.Entities;
 using Store.Infrastructure.Data;
 using Store.Infrastructure.Repositories.Interfaces;
 using System;
@@ -32,7 +33,9 @@ namespace Store.Infrastructure.Repositories
 
         public async Task<Product> GetProductByIdAsync(int productId)
         {
-            var product = _context.Products.FirstOrDefault(x => x.Id == productId);
+            var product = _context.Products
+                .Include(x=>x.Category)
+                .FirstOrDefault(x => x.Id == productId);
 
             return product ?? new Product();
         }

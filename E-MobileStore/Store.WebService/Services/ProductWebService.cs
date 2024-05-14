@@ -23,15 +23,35 @@ namespace Store.WebService.Services
             _productApi = productApi;
         }
 
-        public async Task<vmProduct> GetProductDetail(int categoryId)
+        public async Task<vmProduct> GetProductDetail(int productId)
         {
+            try
+            {
+                var uri = _productApi.GetProductById(productId);
 
-            var uri = _productApi.GetProductById(categoryId);
+                var response = await _httpClient.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var product = JsonConvert.DeserializeObject<Product>(content);
+                    if (product != null)
+                    {
+                        return new vmProduct
+                        {
+                            ProductId = product.Id,
+                            ProductName = product.Name,
+                            Price = product.Price,
+                            CategoryName = product.Category.Name
+                        };
+                    }
+                }
 
-            var response = await _httpClient.GetStringAsync(uri);
-            var product = JsonConvert.DeserializeObject<Product>(response);
-
-            return new vmProduct();
+                return new vmProduct();
+            }
+            catch (Exception ex)
+            {
+                return new vmProduct();
+            }
         }
     }
 }
