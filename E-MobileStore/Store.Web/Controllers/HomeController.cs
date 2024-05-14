@@ -15,7 +15,7 @@ namespace Store.Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View("/Common/ProductBox.cshtml");
         }
 
         public IActionResult Privacy()
