@@ -20,11 +20,26 @@ namespace Store.Web.Controllers
             var response = await _productWebService.GetProductDetail(1);
             return View("/Views/Common/ProductBox.cshtml", response);
         }
+        public IActionResult FlashSale()
+        {
+            return View();
+        }
+        public IActionResult HomeSlider()
+        {
+            return View();
+        }
 
+        public IActionResult ListBranch()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();
         }
+       
+       
+       
 
         //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         //public IActionResult Error()
