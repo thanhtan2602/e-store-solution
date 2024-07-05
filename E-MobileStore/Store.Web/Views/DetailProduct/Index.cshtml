@@ -1,0 +1,543 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    ViewData["Title"] = "Product Detail Page";
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="~/css/layout/detail.css" asp-append-version="true" />
+
+<style>
+
+   
+    .color-sp span {
+        display: block;
+        overflow: hidden;
+        font-size: 15px;
+        line-height: 20px;
+        color: #fff;
+        padding: 0 0 10px;
+    }
+    .slick-prev, .slick-next {
+        background-color: #333; /* Màu nền */
+        color: #fff; /* Màu chữ */
+        border: none; /* Bỏ viền mặc định */
+        padding: 10px; /* Khoảng đệm */
+        border-radius: 50%; /* Bo góc */
+        width: 40px; /* Chiều rộng của nút */
+        height: 40px; /* Chiều cao của nút */
+        display: flex; /* Flexbox để căn giữa */
+        align-items: center; /* Căn giữa theo chiều dọc */
+        justify-content: center; /* Căn giữa theo chiều ngang */
+        position: absolute; /* Vị trí tuyệt đối để định vị tùy chỉnh */
+        top: 50%; /* Căn giữa theo chiều dọc */
+        transform: translateY(-50%); /* Điều chỉnh để căn giữa */
+        z-index: 1; /* Đảm bảo các nút ở trên cùng */
+        cursor: pointer; /* Con trỏ chuột */
+        transition: background-color 0.3s; /* Chuyển đổi cho hiệu ứng hover */
+    }
+
+    .slick-prev {
+        width: 50px; /* Đặt kích thước hợp lý */
+        height: 50px;
+        left: 10%;
+        transform: translateY(-50%); /* Đặt vị trí hợp lý */
+    }
+
+
+
+
+    .slick-next {
+        width: 50px; /* Đặt kích thước hợp lý */
+        height: 50px;
+        right: 10%;
+        transform: translateY(-50%); /* Đặt vị trí hợp lý */
+    }
+        /* Hiệu ứng hover */
+        .slick-prev:hover, .slick-next:hover {
+            background-color: #555; /* Thay đổi màu nền khi hover */
+        }
+
+        /* Tạo kiểu cho biểu tượng tùy chỉnh (nếu sử dụng biểu tượng) */
+        .slick-prev:before, .slick-next:before {
+            font-size: 20px; /* Điều chỉnh kích thước biểu tượng */
+            line-height: 1; /* Điều chỉnh chiều cao dòng */
+            opacity: 1; /* Đảm bảo độ trong suốt đầy đủ */
+            color: #fff; /* Màu biểu tượng */
+        }
+
+    /* Nếu bạn sử dụng biểu tượng tùy chỉnh của riêng mình */
+    .slick-prev:before {
+        content: '←';
+    }
+
+    .slick-next:before {
+        content: '→';
+    }
+
+    .wrap_border {
+        margin-top: 30px;
+        border: 1px solid #e5e5e5;
+    }
+
+    .wrap_rating, .wrap_cmt {
+        box-sizing: border-box;
+        max-width: 780px;
+        border-radius: 12px;
+        margin: 0 auto;
+        margin-bottom: 40px;
+        padding: 30px;
+        font: 14px / 18px Arial, sans-serif, Helvetica;
+        color: #333;
+        outline: none;
+    }
+
+    .wrap_rating, .wrap_cmt {
+        max-width: 780px;
+        margin: 0 auto;
+    }
+
+    
+
+    .rating-topzonecr-title {
+        font-size: 26px;
+        font-weight: bold;
+        line-height: 32px;
+        text-align: center;
+    }
+
+    .wrap_rating *, .wrap_cmt * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    .iconcmt-unstarlist {
+        background-position: -80px -75px;
+        height: 38px;
+        width: 40px;
+    }
+
+    [class^="iconcmt-"], [class*="iconcmt-"] {
+        background-image: url(//cdn.tgdd.vn/mwgcart/avacomment/images/icon_comment_2x.png?v=2);
+        background-repeat: no-repeat;
+        display: inline-block;
+        line-height: 30px;
+        vertical-align: middle;
+        background-size: 200px 150px;
+    }
+
+    .wrap_cmt ul li, .wrap_rating ul li {
+        list-style: none;
+    }
+
+    .rating-topzonecr-star {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .rating-topzonecr-star li {
+        cursor: pointer;
+        margin: 0 10px;
+        text-align: center;
+    }
+
+</style>
+@Html.Partial("_Header")
+   
+        <div class="intro-detail">
+            <div class="center-page">
+                <div class="thubmail-slide full">
+                    <div class="owl-carousel slider-img owl-loaded owl-drag" id="slider-defaults">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div>
+                                        <div class="owl-carousel  owl-loaded  slider-for">
+                                            <div class="owl-item slidenumber1 active" style="width: 600px;">
+                                                <div class="item-img" data-thumb="https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-xanh-tn-200x200.png">
+                                                    <img class="owl-lazy" title="Loa Bluetooth JBL Go 3 Màu Xanh Dương" alt="Loa Bluetooth JBL Go 3 Màu Xanh Dương" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-xanh-tn-650x650.png" width="650" height="650" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-xanh-tn-650x650.png" style="opacity: 1;">
+                                                </div>
+                                            </div><div class="owl-item slidenumber2" style="width: 600px;">
+                                                <div class="item-img" data-thumb="https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-1-200x200.jpg">
+                                                    <img class="owl-lazy" title="Loa Bluetooth JBL Go 3" alt="Loa Bluetooth JBL Go 3" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-1-650x650.jpg" width="650" height="650" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-1-650x650.jpg" style="opacity: 1;">
+                                                </div>
+                                            </div><div class="owl-item slidenumber3" style="width: 600px;">
+                                                <div class="item-img" data-thumb="https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-2-200x200.jpg">
+                                                    <img class="owl-lazy" title="Loa Bluetooth JBL Go 3" alt="Loa Bluetooth JBL Go 3" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-2-650x650.jpg" width="650" height="650" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-2-650x650.jpg" style="opacity: 1;">
+                                                </div>
+                                            </div><div class="owl-item slidenumber4" style="width: 600px;">
+                                                <div class="item-img" data-thumb="https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-3-200x200.jpg">
+                                                    <img class="owl-lazy" title="Loa Bluetooth JBL Go 3" alt="Loa Bluetooth JBL Go 3" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-3-650x650.jpg" width="650" height="650" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-3-650x650.jpg" style="opacity: 1;">
+                                                </div>
+                                            </div><div class="owl-item slidenumber5" style="width: 600px;">
+                                                <div class="item-img" data-thumb="https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-4-200x200.jpg">
+                                                    <img class="owl-lazy" title="Loa Bluetooth JBL Go 3" alt="Loa Bluetooth JBL Go 3" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-4-650x650.jpg" width="650" height="650" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-4-650x650.jpg" style="opacity: 1;">
+                                                </div>
+                                            </div><div class="owl-item slidenumber6" style="width: 600px;">
+                                                <div class="item-img" data-thumb="https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-5-200x200.jpg">
+                                                    <img class="owl-lazy" title="Loa Bluetooth JBL Go 3" alt="Loa Bluetooth JBL Go 3" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-5-650x650.jpg" width="650" height="650" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-5-650x650.jpg" style="opacity: 1;">
+                                                </div>
+                                            </div><div class="owl-item slidenumber7" style="width: 600px;">
+                                                <div class="item-img" data-thumb="https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-6-200x200.jpg">
+                                                    <img class="owl-lazy" title="Loa Bluetooth JBL Go 3" alt="Loa Bluetooth JBL Go 3" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-6-650x650.jpg" width="650" height="650" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-6-650x650.jpg" style="opacity: 1;">
+                                                </div>
+                                            </div>
+                                            <div class="owl-item slidenumber8" style="width: 600px;">
+                                                <div class="item-img" data-thumb="https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-7-200x200.jpg">
+                                                    <img class="owl-lazy" title="Loa Bluetooth JBL Go 3" alt="Loa Bluetooth JBL Go 3" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-7-650x650.jpg" width="650" height="650" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-7-650x650.jpg" style="opacity: 1;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class=" slider-nav">
+                                            <img class="theImg" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_75,s_100x100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-xanh-tn-200x200.png" alt="Loa Bluetooth JBL Go 3 Màu Xanh Dương" title="Loa Bluetooth JBL Go 3 Màu Xanh Dương">
+                                            <img class="theImg" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_75,s_100x100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-1-200x200.jpg" alt="Loa Bluetooth JBL Go 3" title="Loa Bluetooth JBL Go 3">
+                                            <img class="theImg" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_75,s_100x100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-2-200x200.jpg" alt="Loa Bluetooth JBL Go 3" title="Loa Bluetooth JBL Go 3">
+                                            <img class="theImg" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_75,s_100x100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-3-200x200.jpg" alt="Loa Bluetooth JBL Go 3" title="Loa Bluetooth JBL Go 3">
+                                            <img class="theImg" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_75,s_100x100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-4-200x200.jpg" alt="Loa Bluetooth JBL Go 3" title="Loa Bluetooth JBL Go 3">
+                                            <img class="theImg" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_75,s_100x100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-5-200x200.jpg" alt="Loa Bluetooth JBL Go 3" title="Loa Bluetooth JBL Go 3">
+                                            <img class="theImg" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_75,s_100x100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-6-200x200.jpg" alt="Loa Bluetooth JBL Go 3" title="Loa Bluetooth JBL Go 3">
+                                            <img class="theImg" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_75,s_100x100/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-den-xanh-duong-7-200x200.jpg" alt="Loa Bluetooth JBL Go 3" title="Loa Bluetooth JBL Go 3">
+
+                                        </div>
+                                        <div class="video-sp"></div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div>
+                                        <h1>Loa Bluetooth JBL Go 3</h1>
+                                        <div class="price-promo-local">
+                                            <span>Giá và khuyến mãi tại: Hồ Chí Minh</span>
+                                            @*  <div class="store-province">
+                                            <div class="SearchContainer">
+                                            <input id="SearchProvince" placeholder="Tìm theo tỉnh thành">
+                                            <i class="topzone-search"></i>
+                                            </div>
+                                            <ul class="Provinces">
+                                            <li class="Item active">
+                                            <a href="javascript:locationConfirm(3)">Hồ Chí Minh</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(5)">Hà Nội</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(9)">Đà Nẵng</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(82)">An Giang</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(102)">Bà Rịa - Vũng Tàu</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(103)">Bắc Giang</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(104)">Bắc Kạn</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(105)">Bạc Liêu</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(106)">Bắc Ninh</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(107)">Bến Tre</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(108)">Bình Định</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(109)">Bình Dương</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(110)">Bình Phước</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(111)">Bình Thuận</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(81)">Cà Mau</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(7)">Cần Thơ</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(112)">Cao Bằng</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(6)">Đắk Lắk</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(113)">Đắk Nông</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(114)">Điện Biên</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(8)">Đồng Nai</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(115)">Đồng Tháp</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(116)">Gia Lai</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(117)">Hà Giang</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(118)">Hà Nam</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(120)">Hà Tĩnh</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(121)">Hải Dương</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(101)">Hải Phòng</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(122)">Hậu Giang</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(123)">Hòa Bình</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(124)">Hưng Yên</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(125)">Khánh Hòa</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(126)">Kiên Giang</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(127)">Kon Tum</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(128)">Lai Châu</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(129)">Lâm Đồng</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(130)">Lạng Sơn</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(131)">Lào Cai</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(132)">Long An</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(133)">Nam Định</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(134)">Nghệ An</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(135)">Ninh Bình</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(136)">Ninh Thuận</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(137)">Phú Thọ</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(138)">Phú Yên</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(139)">Quảng Bình</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(140)">Quảng Nam</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(141)">Quảng Ngãi</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(142)">Quảng Ninh</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(143)">Quảng Trị</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(144)">Sóc Trăng</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(145)">Sơn La</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(146)">Tây Ninh</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(147)">Thái Bình</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(148)">Thái Nguyên</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(149)">Thanh Hóa</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(150)">Thừa Thiên Huế</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(151)">Tiền Giang</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(152)">Trà Vinh</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(153)">Tuyên Quang</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(154)">Vĩnh Long</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(155)">Vĩnh Phúc</a>
+                                            </li>
+                                            <li class="Item ">
+                                            <a href="javascript:locationConfirm(156)">Yên Bái</a>
+                                            </li>
+                                            </ul>
+                                            </div> *@
+                                        </div>
+                                        <strong class="price" data-price="1090000" data-disprice="790000" data-percent="27">
+                                            790.000₫                <strike>1.090.000₫</strike>
+                                            <small>-27%</small>
+                                        </strong>
+                                        <div class="loyalty">
+                                            <div class="loyalty__main">
+                                                <img data-src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/logo.png" class=" ls-is-cached lazyloaded" width="24" height="24" src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/logo.png">
+                                                <p class="loyalty__main__point"><b>+3.950</b> điểm tích lũy Quà Tặng VIP</p>
+                                                <img data-src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/question_mark.png" class="loyalty__main__ic-tooltip ls-is-cached lazyloaded" width="20" height="20" src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/question_mark.png">
+                                            </div>
+                                            <ul class="loyalty__tooltip">
+                                                <li>Đây là điểm tích lũy tạm tính khi mua sản phẩm này. Số điểm thực tế có thể thay đổi và sẽ được hiển thị chính xác sau khi Quý khách hoàn tất đặt hàng.</li>
+                                                <li>Tải <b>app Quà Tặng VIP</b> để tích và sử dụng điểm cho khách hàng thân thiết. <a href="https://www.topzone.vn/tekzone/tat-tan-tat-thong-tin-ve-app-tich-diem-hoan-toan-moi-1480642" target="_blank">Tìm hiểu thêm</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="color-sp">
+                                            <span>Màu: Xanh Dương</span>
+                                            <ul>
+                                                <li class="active" data-idx="4" data-color="4" data-type="2" data-code="0164779000003" data-name="Màu: Xanh Dương">
+                                                    <a href="javascript:;" style="background-color:#405064"></a>
+                                                </li>
+                                                <li class="" data-idx="111" data-color="111" data-type="2" data-code="0164779000075" data-name="Màu: Xanh hồng">
+                                                    <a href="javascript:;" style="background-color:#2d3845">
+                                                        <em style="background-color:#9c3d4e"></em>
+                                                    </a>
+                                                </li>
+                                                <li class="" data-idx="51" data-color="51" data-type="2" data-code="0164779000113" data-name="Màu: Xanh rêu">
+                                                    <a href="javascript:;" style="background-color:#557853"></a>
+                                                </li>
+                                                <li class="" data-idx="142" data-color="142" data-type="2" data-code="0164779000114" data-name="Màu: Xanh mint">
+                                                    <a href="javascript:;" style="background-color:#D9FFEE"></a>
+                                                </li>
+                                                <li class="" data-idx="56" data-color="56" data-type="2" data-code="0164779000115" data-name="Màu: Xám nhạt">
+                                                    <a href="javascript:;" style="background-color:#E7E6E4"></a>
+                                                </li>
+                                                <li class="" data-idx="11" data-color="11" data-type="2" data-code="0164779000002" data-name="Màu: Đen">
+                                                    <a href="javascript:;" style="background-color:Black"></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="pr-item mg-bot10">
+                                            <p>
+                                                <small>Giá và khuyến mãi dự kiến áp dụng đến 23:59 | 30/06</small>
+                                            </p>
+                                        </div>
+                                        <span class="check-goods"><i class="topzone-box"></i>Xem TopZone có hàng</span>
+                                        <div class="buy-sp normal ">
+                                            <a href="javascript:void(0)" onclick="BuyNow($(this))" class="btn-buy full">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+                                        <div class="popup-error">
+                                            <div>
+                                                <a href="javascript:void(0)" class="pe-close">×</a>
+                                                <div></div>
+                                                <a href="/cart" class="pe-btn">Kiểm tra giỏ hàng</a>
+                                                <a href="javascript:void(0)" class="pe-btn btn-confirm">Đồng ý</a>
+                                            </div>
+                                        </div>
+                                        <ul class="policy">
+                                            <li>
+                                                <span>
+                                                    <i class="topzone-doitra"></i>
+                                                    Bảo hành có cam kết <b>12 tháng</b><a href="https://www.topzone.vn/bao-hanh-doi-tra"> Xem chi tiết chính sách bảo hành, đổi trả </a>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span>
+                                                    <i class="topzone-giaohang"></i>
+                                                    Giao hàng nhanh toàn quốc <a href="/giao-hang">Xem chi tiết</a>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span>
+                                                    <i class="topzone-tongdai"></i>
+                                                    Tổng đài: <a href="tel:1900969642">1900.9696.42</a> (7:30 - 22:00)
+                                                </span>
+                                            </li>
+                                        </ul>
+                                        <div class="pr-loyalty">
+                                            <div class="qr-download">
+                                                <img data-src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/qr.png?v=1" class=" ls-is-cached lazyloaded" width="72" height="72" src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/qr.png?v=1">
+                                                <p>Quét để tải App</p>
+                                            </div>
+                                            <div class="text-area">
+                                                <p class="text-area__title"><img data-src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/logo.png" class=" ls-is-cached lazyloaded" width="32" height="32" src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/logo.png"><span>Quà Tặng VIP</span></p>
+                                                <p class="text-area__content">
+                                                    Tích &amp; Sử dụng điểm <br> cho khách hàng thân thiết
+                                                </p>
+                                                <p class="text-area__note">Sản phẩm của tập đoàn MWG</p>
+                                            </div>
+                                            <div class="download-link">
+                                                <a href="http://play.google.com/store/apps/details?id=mwg.tgdd.loyalty" target="_blank">
+                                                    <img data-src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/ggplay.png" class=" ls-is-cached lazyloaded" width="136" height="40" src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/ggplay.png">
+                                                </a>
+                                                <a href="https://apps.apple.com/vn/app/qu%C3%A0-t%E1%BA%B7ng-vip/id1589555369" target="_blank">
+                                                    <img data-src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/appstore.png" class=" ls-is-cached lazyloaded" width="136" height="40" src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/appstore.png">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        @Html.Partial("Description")
+@Html.Partial("_Footer")
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.slider-for').slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: true,
+                fade: true,
+                asNavFor: '.slider-nav'
+            });
+            $('.slider-nav').slick({
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                asNavFor: '.slider-for',
+                centerMode: true,
+                focusOnSelect: true
+            });
+        });
+    </script>
+}
