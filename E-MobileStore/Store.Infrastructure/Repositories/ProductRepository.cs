@@ -22,7 +22,7 @@ namespace Store.Infrastructure.Repositories
             _context.Products.Add(product);
         }
 
-        public void DeleteProductAsync(int productId)
+        public void DeleteProductAsync(Guid productId)
         {
             var product = _context.Products.FirstOrDefault(x=>x.Id == productId);
             if(product != null)
@@ -31,7 +31,9 @@ namespace Store.Infrastructure.Repositories
             }
         }
 
-        public async Task<Product> GetProductByIdAsync(int productId)
+       
+
+        public async Task<Product> GetProductByIdAsync(Guid productId)
         {
             var product = _context.Products
                 .Include(x=>x.Category)
@@ -39,6 +41,8 @@ namespace Store.Infrastructure.Repositories
 
             return product ?? new Product();
         }
+
+     
 
         public async Task<IEnumerable<Product>> GetProductListAsync(int categoryId)
         {

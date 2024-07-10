@@ -21,12 +21,12 @@ namespace Store.ApiService.Services
             _productRepository.AddProductAsync(product);
         }
 
-        public void DeleteProductAsync(int productId)
+        public void DeleteProductAsync(Guid productId)
         {
             _productRepository.DeleteProductAsync(productId);
         }
 
-        public Task<Product> GetProductByIdAsync(int productId)
+        public Task<Product> GetProductByIdAsync(Guid productId)
         {
             return _productRepository.GetProductByIdAsync(productId);
         }

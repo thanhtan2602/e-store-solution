@@ -28,7 +28,7 @@ namespace Store.API.Controllers
 
         [HttpGet]
         [Route("GetProductById")]
-        public async Task<IActionResult> GetProductById(int productId)
+        public async Task<IActionResult> GetProductById(Guid productId)
         {
             var product = await _productService.GetProductByIdAsync(productId);
             return Ok(product);
@@ -44,7 +44,7 @@ namespace Store.API.Controllers
 
         [HttpDelete]
         [Route("DeleteProduct")]
-        public IActionResult DeleteProduct(int productId)
+        public IActionResult DeleteProduct(Guid productId)
         {
             _productService.DeleteProductAsync(productId);
             return Ok(_response);
