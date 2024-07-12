@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Store.Domain.Entities
@@ -15,7 +16,6 @@ namespace Store.Domain.Entities
         [Required]
         
         public decimal Price { get; set; }
-        public decimal PriceSale { get; set; }
         [Required]
         [StringLength(250)]
         public int Quantity { get; set; }
@@ -23,7 +23,12 @@ namespace Store.Domain.Entities
         public string ShortDesc { get; set; }
         public string Description { get; set; }
         public int CategoryId { get; set; }
+
+        [JsonIgnore]
+
         public Category Category { get; set; }
+        public ICollection<FlashSaleProduct> FlashSaleProducts { get; set; }
+
         public ICollection<CartItem> CartItems { get; set; }
         public ICollection<ProductAttribute> ProductAttributes { get; set; }
         public ICollection<ProductImage> ProductImages { get; set; }

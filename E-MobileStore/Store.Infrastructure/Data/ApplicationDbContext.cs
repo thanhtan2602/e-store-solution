@@ -30,6 +30,8 @@ namespace Store.Infrastructure.Data
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<AttributeValue> AttributeValues { get; set; }
         public DbSet<UserInfor> UserInfors { get; set; }
+        public DbSet<FlashSale> FlashSales { get; set; }
+        public DbSet<FlashSaleProduct> FlashSaleProducts { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
         }
@@ -49,6 +51,8 @@ namespace Store.Infrastructure.Data
             builder.ApplyConfiguration(new UserInfoConfiguration());
             builder.ApplyConfiguration(new CouponConfiguration());
             builder.ApplyConfiguration(new NewConfiguration());
+            builder.ApplyConfiguration(new FlashSaleProductConfiguration());
+            builder.ApplyConfiguration(new FlashSaleConfiguration());
             base.OnModelCreating(builder);
         }
     }

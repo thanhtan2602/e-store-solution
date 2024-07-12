@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Store.ApiService.Services.Interfaces;
 using Store.Domain.Entities;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Store.API.Controllers
 {
@@ -20,10 +22,19 @@ namespace Store.API.Controllers
 
         [HttpGet]
         [Route("GetProductList")]
-        public async Task<IActionResult> GetProductList(int categoryId)
+        public async Task<IActionResult> GetProductList(int categoryId, int page=1)
         {
-            var products = _productService.GetProductListAsync(categoryId);
-            return Ok(products);
+            var products = _productService.GetProductListAsync(categoryId, page);
+            var jsonList = JsonSerializer.Serialize(products); 
+            return Content (jsonList,"application/json");
+        }
+        [HttpGet]
+        [Route("GetProductSale")]
+        public async Task<IActionResult> GetProductSale(int flashSaleId)
+        {
+            var products = _productService.GetProductSaleAsync(flashSaleId);
+            var jsonList = JsonSerializer.Serialize(products);
+            return Content(jsonList, "application/json");
         }
 
         [HttpGet]

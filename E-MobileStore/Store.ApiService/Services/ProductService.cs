@@ -1,6 +1,7 @@
 ﻿using Store.ApiService.Services.Interfaces;
 using Store.Domain.Entities;
 using Store.Infrastructure.Repositories.Interfaces;
+using Store.Infrastructure.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Store.ApiService.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-        public ProductService(IProductRepository productRepository)
+        public ProductService( IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }
@@ -31,14 +32,22 @@ namespace Store.ApiService.Services
             return _productRepository.GetProductByIdAsync(productId);
         }
 
-        public Task<IEnumerable<Product>> GetProductListAsync(int categoryId)
+        public Task<IEnumerable<Product>> GetProductListAsync(int categoryId, int page)
         {
-            return _productRepository.GetProductListAsync(categoryId);
+
+            return _productRepository.GetProductListAsync(categoryId,page);
         }
 
+   
         public void UpdateProductAsync(Product product)
         {
             _productRepository.UpdateProductAsync(product);
+        }
+
+        Task<IEnumerable<ProductSaleVM>> IProductService.GetProductSaleAsync(int flashSaleId)
+        {
+            return _productRepository.GetProductSaleAsync(flashSaleId);
+
         }
     }
 }
