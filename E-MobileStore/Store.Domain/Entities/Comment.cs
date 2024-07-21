@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Store.Domain.Entities
 {
-    public class Comment:BaseEntity<Guid>
+    public class Comment : BaseEntity<Guid>
     {
         public string Content { get; set; }
         public Guid ProductId { get; set; }

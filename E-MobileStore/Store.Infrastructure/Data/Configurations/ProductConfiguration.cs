@@ -20,10 +20,6 @@ namespace Store.Infrastructure.Data.Configurations
                    .WithMany(p => p.Products)
                    .HasForeignKey(p => p.CategoryId)
                    .OnDelete(DeleteBehavior.Restrict);
-            //builder.HasOne(o => o.CartItem)
-            //        .WithMany(p => p.Products)
-            //        .HasForeignKey(p => p.ProductId)
-            //        .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

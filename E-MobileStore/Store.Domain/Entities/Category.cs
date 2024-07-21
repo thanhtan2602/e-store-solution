@@ -15,7 +15,7 @@ namespace Store.Domain.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public string ImageURL { get; set; }
-        public bool isDeleted { get; set; }=false;
+        public bool isDeleted { get; set; } = false;
         public ICollection<Banner> Banners { get; set; }
         public ICollection<New> News { get; set; }
         public ICollection<Product> Products { get; set; }

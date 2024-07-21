@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Store.Domain.Entities
 {
-    public class Coupon:BaseEntity<int>
+    public class Coupon : BaseEntity<int>
     {
         [Required]
         [StringLength(100)]

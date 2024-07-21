@@ -12,6 +12,6 @@ namespace Store.Domain.Entities
         public string UserName { get; set; }
         public DateTime CreatedDate { get; set; }
         public decimal TotalAmount { get; set; }
-        public ICollection<CartItem> CartItems { get; set;}
+        public ICollection<CartItem> CartItems { get; set; }
     }
 }

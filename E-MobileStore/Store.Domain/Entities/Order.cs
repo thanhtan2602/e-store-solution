@@ -12,7 +12,7 @@ namespace Store.Domain.Entities
         public string UserName { get; set; }
         public string FullName { get; set; }
         public string HouseNumber { get; set; }
-        public string Ward {  get; set; }
+        public string Ward { get; set; }
         public string District { get; set; }
         public DateTime CreatedDate { get; set; }
         public string OrderStatus { get; set; }

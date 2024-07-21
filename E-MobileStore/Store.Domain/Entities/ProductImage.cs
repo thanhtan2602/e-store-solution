@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Store.Domain.Entities
 {
-    public class ProductImage:BaseEntity<Guid>
+    public class ProductImage : BaseEntity<Guid>
     {
         public string ImageURL { get; set; }
         [StringLength(150)]

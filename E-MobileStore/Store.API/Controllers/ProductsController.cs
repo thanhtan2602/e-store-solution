@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Store.ApiService.Services.Interfaces;
 using Store.Domain.Entities;
+using Store.Infrastructure.DTOs;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -22,17 +23,17 @@ namespace Store.API.Controllers
 
         [HttpGet]
         [Route("GetProductList")]
-        public async Task<IActionResult> GetProductList(int categoryId, int page=1)
+        public async Task<IActionResult> GetProductList(int categoryId, int page = 1, int pageSize = 2)
         {
-            var products = _productService.GetProductListAsync(categoryId, page);
-            var jsonList = JsonSerializer.Serialize(products); 
-            return Content (jsonList,"application/json");
+            var products = _productService.GetProductListAsync(categoryId, page, pageSize);
+            var jsonList = JsonSerializer.Serialize(products);
+            return Content(jsonList, "application/json");
         }
         [HttpGet]
         [Route("GetProductSale")]
         public async Task<IActionResult> GetProductSale(int flashSaleId)
         {
-            var products = _productService.GetProductSaleAsync(flashSaleId);
+            var products = _productService.GetSaleProductsAsync(flashSaleId);
             var jsonList = JsonSerializer.Serialize(products);
             return Content(jsonList, "application/json");
         }
@@ -45,19 +46,35 @@ namespace Store.API.Controllers
             return Ok(product);
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("InsertProduct")]
-        public IActionResult AddProduct(Product product)
+        public IActionResult AddProduct(ProductDTO product)
         {
             _productService.AddProductAsync(product);
             return Ok(_response);
         }
 
-        [HttpDelete]
+        [HttpPost]
         [Route("DeleteProduct")]
-        public IActionResult DeleteProduct(Guid productId)
+        public IActionResult DeleteProduct(Guid productId, string updateBy)
         {
-            _productService.DeleteProductAsync(productId);
+            _productService.DeleteProductAsync(productId, updateBy);
+            return Ok(_response);
+        }
+
+        [HttpPost]
+        [Route("RestoreProduct")]
+        public IActionResult RestoreProduct(Guid productId, string updateBy)
+        {
+            _productService.ReStoreProductAsync(productId, updateBy);
+            return Ok(_response);
+        }
+
+        [HttpDelete]
+        [Route("PermanentlyDelete")]
+        public IActionResult PermanentlyDelete(Guid productId)
+        {
+            _productService.PermanentlyDeleteAsync(productId);
             return Ok(_response);
         }
 

@@ -22,6 +22,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IAttributeValueRepository, AttributeValueRepository>();
+builder.Services.AddScoped<IAttributeValueService, AttributeValueService>();
 
 
 var app = builder.Build();

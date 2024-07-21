@@ -16,7 +16,6 @@ namespace Store.Infrastructure.Data.Configurations
 
             builder.ToTable("FlashSaleProducts");
             builder.HasKey(fsp => new { fsp.FlashSaleId, fsp.ProductId });
-
             builder.HasOne(fsp => fsp.FlashSale)
                     .WithMany(fs => fs.FlashSaleProducts)
                     .HasForeignKey(fsp => fsp.FlashSaleId);

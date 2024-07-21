@@ -14,21 +14,18 @@ namespace Store.Domain.Entities
         [StringLength(250)]
         public string Name { get; set; }
         [Required]
-        
+
         public decimal Price { get; set; }
         [Required]
         [StringLength(250)]
         public int Quantity { get; set; }
-        public bool isDeleted { get; set; }=false;
+        public bool isDeleted { get; set; } = false;
         public string ShortDesc { get; set; }
         public string Description { get; set; }
         public int CategoryId { get; set; }
-
         [JsonIgnore]
-
         public Category Category { get; set; }
         public ICollection<FlashSaleProduct> FlashSaleProducts { get; set; }
-
         public ICollection<CartItem> CartItems { get; set; }
         public ICollection<ProductAttribute> ProductAttributes { get; set; }
         public ICollection<ProductImage> ProductImages { get; set; }

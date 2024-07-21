@@ -10,7 +10,7 @@ namespace Store.Domain.Entities
     {
         public Guid ProductId { get; set; }
         public int FlashSaleId { get; set; }
-        public decimal PriceSale {  get; set; }
+        public decimal PriceSale { get; set; }
         public Product Product { get; set; }
         public FlashSale FlashSale { get; set; }
     }
