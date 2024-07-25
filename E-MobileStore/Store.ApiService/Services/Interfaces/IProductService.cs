@@ -1,4 +1,6 @@
 ﻿using Store.Domain.Entities;
+using Store.Infrastructure.DTOs;
+using Store.Infrastructure.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +11,15 @@ namespace Store.ApiService.Services.Interfaces
 {
     public interface IProductService
     {
-        Task<IEnumerable<Product>> GetProductListAsync(int categoryId);
-        Task<Product> GetProductByIdAsync(int productId);
-        void AddProductAsync(Product product);
+        Task<IEnumerable<Product>> GetProductListAsync(int categoryId, int page, int pageSize);
+        Task<IEnumerable<ProductsVM>> GetSaleProductsAsync(int flashSaleId);
+
+        Task<Product> GetProductByIdAsync(Guid productId);
+        void AddProductAsync(ProductDTO product);
         void UpdateProductAsync(Product product);
-        void DeleteProductAsync(int productId);
+        void DeleteProductAsync(Guid productId, string updateBy);
+        void ReStoreProductAsync(Guid productId, string updateBy);
+
+        void PermanentlyDeleteAsync(Guid productId);
     }
 }

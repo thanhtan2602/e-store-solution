@@ -15,7 +15,11 @@ namespace Store.Infrastructure.Data.Configurations
         {
             builder.ToTable("Products");
             builder.HasKey(o => o.Id);
-            builder.Property(t => t.Name).IsRequired();
+            builder.HasIndex(t => t.Name).IsUnique();
+            builder.HasOne(o => o.Category)
+                   .WithMany(p => p.Products)
+                   .HasForeignKey(p => p.CategoryId)
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
