@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Store.Infrastructure.ViewModel
+namespace Store.Infrastructure.ViewModels
 {
     public class ProductsVM
     {
@@ -18,16 +18,16 @@ namespace Store.Infrastructure.ViewModel
 
         public int Quantity { get; set; }
         public bool isDeleted { get; set; } = false;
+        public bool isActive { get; set; }
+
         public string ShortDesc { get; set; }
         public string Description { get; set; }
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
 
-        public ICollection<ProductImage> ProductImages { get; set; }
-        public ICollection<ProductAttribute> ProductAttributes { get; set; }
+        public ICollection<ProductImagesVM> ProductImages { get; set; }
+        public ICollection<ProductAttributesVM> ProductAttributes { get; set; }
         public ICollection<Rate> Rates { get; set; }
         public ICollection<Comment> Comments { get; set; }
-        public bool IsDeleted { get; set; }
-        public bool IsActive { get; set; }
     }
 }

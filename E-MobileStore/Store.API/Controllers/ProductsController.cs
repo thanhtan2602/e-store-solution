@@ -30,8 +30,8 @@ namespace Store.API.Controllers
             return Content(jsonList, "application/json");
         }
         [HttpGet]
-        [Route("GetProductSale")]
-        public async Task<IActionResult> GetProductSale(int flashSaleId)
+        [Route("GetSaleProducts")]
+        public async Task<IActionResult> GetSaleProducts(int flashSaleId)
         {
             var products = _productService.GetSaleProductsAsync(flashSaleId);
             var jsonList = JsonSerializer.Serialize(products);
@@ -43,7 +43,8 @@ namespace Store.API.Controllers
         public async Task<IActionResult> GetProductById(Guid productId)
         {
             var product = await _productService.GetProductByIdAsync(productId);
-            return Ok(product);
+            var jsonResult = JsonSerializer.Serialize(product);
+            return Content(jsonResult, "application/json");
         }
 
         [HttpPost]
@@ -80,9 +81,9 @@ namespace Store.API.Controllers
 
         [HttpPost]
         [Route("UpdateProduct")]
-        public IActionResult UpdateProduct(Product product)
+        public IActionResult UpdateProduct(ProductDTO product, Guid productId)
         {
-            _productService.UpdateProductAsync(product);
+            _productService.UpdateProductAsync(product, productId);
             return Ok(_response);
         }
     }

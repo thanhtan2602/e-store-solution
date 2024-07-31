@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Store.Domain.Entities
+namespace Store.Infrastructure.DTOs
 {
-    public class ProductImage : BaseEntity<Guid>
+    public class ProductImageDTO
     {
+        public Guid Id { get; set; }
         public string ImageURL { get; set; }
-        [StringLength(150)]
         public string ImageName { get; set; }
-        [StringLength(150)]
         public string Position { get; set; }
         public bool isDeleted { get; set; } = false;
-        public Guid ProductId { get; set; }
-        [JsonIgnore]
-        public Product Product { get; set; }
+        public bool isActive { get; set; } = true;
+        public string CreatedBy { get; set; }
+        public string UpdatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime UpdateDate { get; set; }
     }
 }
