@@ -19,12 +19,12 @@ namespace Store.Infrastructure.Data.Configurations
             builder.HasOne(o => o.Product)
                 .WithMany(o => o.ProductAttributes)
                 .HasForeignKey(o => o.ProductId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(o => o.AttributeValue)
                 .WithMany(o => o.ProductAttributes)
                 .HasForeignKey(o => o.AttributeId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

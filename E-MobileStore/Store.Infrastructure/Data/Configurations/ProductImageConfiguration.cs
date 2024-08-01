@@ -18,7 +18,7 @@ namespace Store.Infrastructure.Data.Configurations
             builder.HasOne(o => o.Product)
                 .WithMany(o => o.ProductImages)
                 .HasForeignKey(o => o.ProductId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -2,7 +2,7 @@
 using Store.Domain.Entities;
 using Store.Infrastructure.DTOs;
 using Store.Infrastructure.Repositories.Interfaces;
-using Store.Infrastructure.ViewModel;
+using Store.Infrastructure.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,20 +33,20 @@ namespace Store.ApiService.Services
             _productRepository.PermanentlyDeleteAsync(productId);
         }
 
-        public Task<Product> GetProductByIdAsync(Guid productId)
+        public Task<ProductsVM> GetProductByIdAsync(Guid productId)
         {
             return _productRepository.GetProductByIdAsync(productId);
         }
 
-        public Task<IEnumerable<Product>> GetProductListAsync(int categoryId, int page, int pageSize)
+        public Task<IEnumerable<ProductsVM>> GetProductListAsync(int categoryId, int page, int pageSize)
         {
             return _productRepository.GetProductListAsync(categoryId, page, pageSize);
         }
 
 
-        public void UpdateProductAsync(Product product)
+        public void UpdateProductAsync(ProductDTO product, Guid productId)
         {
-            _productRepository.UpdateProductAsync(product);
+            _productRepository.UpdateProductAsync(product, productId);
         }
 
         Task<IEnumerable<ProductsVM>> IProductService.GetSaleProductsAsync(int flashSaleId)
