@@ -175,14 +175,14 @@ namespace Store.Infrastructure.Repositories
                 {
                     foreach (var paDTOs in product.ProductAttributes)
                     {
-                            var newAttribute = new ProductAttribute
-                            {
-                                Id = Guid.NewGuid(),
-                                AttributeContent = paDTOs.AttributeContent,
-                                AttributeId = paDTOs.AttributeValueId,
-                                ProductId = existingProduct.Id,
-                            };
-                            _context.ProductAttributes.Add(newAttribute);
+                        var newAttribute = new ProductAttribute
+                        {
+                            Id = Guid.NewGuid(),
+                            AttributeContent = paDTOs.AttributeContent,
+                            AttributeId = paDTOs.AttributeValueId,
+                            ProductId = existingProduct.Id,
+                        };
+                        _context.ProductAttributes.Add(newAttribute);
                     }
                     //remove old attribute
                     var oldAttribute = _context.ProductAttributes.Select(pa => pa.Id).ToList();
@@ -211,21 +211,21 @@ namespace Store.Infrastructure.Repositories
                 {
                     foreach (var piDTOs in product.ProductImages)
                     {
-                            var newImage = new ProductImage
-                            {
-                                Id = Guid.NewGuid(),
-                                ImageURL = piDTOs.ImageURL,
-                                ImageName = piDTOs.ImageName,
-                                Position = piDTOs.Position,
-                                isActive = existingProduct.isActive,
-                                isDeleted = existingProduct.isDeleted,
-                                CreatedBy = existingProduct.CreatedBy,
-                                CreatedDate = DateTime.Now,
-                                ProductId = existingProduct.Id,
-                                UpdatedBy = existingProduct.UpdatedBy,
-                                UpdateDate = DateTime.Now,
-                            };
-                            _context.ProductImages.Add(newImage);
+                        var newImage = new ProductImage
+                        {
+                            Id = Guid.NewGuid(),
+                            ImageURL = piDTOs.ImageURL,
+                            ImageName = piDTOs.ImageName,
+                            Position = piDTOs.Position,
+                            isActive = existingProduct.isActive,
+                            isDeleted = existingProduct.isDeleted,
+                            CreatedBy = existingProduct.CreatedBy,
+                            CreatedDate = DateTime.Now,
+                            ProductId = existingProduct.Id,
+                            UpdatedBy = existingProduct.UpdatedBy,
+                            UpdateDate = DateTime.Now,
+                        };
+                        _context.ProductImages.Add(newImage);
                     }
                     // remove old image
                     var oldImage = _context.ProductImages.Select(pa => pa.Id).ToList();

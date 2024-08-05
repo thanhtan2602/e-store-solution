@@ -18,7 +18,8 @@ namespace Store.Infrastructure.Data.Configurations
             builder.HasKey(fsp => new { fsp.FlashSaleId, fsp.ProductId });
             builder.HasOne(fsp => fsp.FlashSale)
                     .WithMany(fs => fs.FlashSaleProducts)
-                    .HasForeignKey(fsp => fsp.FlashSaleId);
+                    .HasForeignKey(fsp => fsp.FlashSaleId)
+                    .OnDelete(DeleteBehavior.Cascade);
             builder.HasOne(fsp => fsp.Product)
                     .WithMany(p => p.FlashSaleProducts)
                     .HasForeignKey(fsp => fsp.ProductId);
