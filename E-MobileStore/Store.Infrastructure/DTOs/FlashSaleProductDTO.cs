@@ -4,16 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Store.Domain.Entities
+namespace Store.Infrastructure.DTOs
 {
-    public class FlashSaleProduct
+    public class FlashSaleProductDTO
     {
         public Guid ProductId { get; set; }
-        public int FlashSaleId { get; set; }
         public decimal PriceSale { get; set; }
         public bool IsActive { get; set; } = true;
-        public bool IsDeleted { get; set; } = false;
-        public Product Product { get; set; }
-        public FlashSale FlashSale { get; set; }
+        public bool isDeleted { get; set; } = false;
     }
 }
