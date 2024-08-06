@@ -126,7 +126,7 @@ namespace Store.Infrastructure.Repositories
         public async Task<IEnumerable<ProductsVM>> GetProductListAsync(int categoryId, int page = 1, int pageSize = 2)
         {
             var product = _context.Products.Include(p => p.Category).Include(p => p.ProductImages).AsNoTracking();
-            var productlist = product.Select(x => new ProductsVM
+            var productlist = product.Where(x=>x.Category.isDeleted==false && x.Category.isActive== true).Select(x => new ProductsVM
             {
                 Id = x.Id,
                 Name = x.Name,
@@ -145,7 +145,7 @@ namespace Store.Infrastructure.Repositories
                 }).ToList(),
                 Price = x.Price,
                 Quantity = x.Quantity,
-            }).Where(p => p.CategoryId == categoryId && p.isDeleted == false && p.isActive == true).ToList();
+            }).Where(p => p.CategoryId == categoryId  && p.isDeleted == false && p.isActive == true).ToList();
             var result = productlist.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             return result;
         }
