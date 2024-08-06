@@ -25,7 +25,10 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IAttributeValueRepository, AttributeValueRepository>();
 builder.Services.AddScoped<IAttributeValueService, AttributeValueService>();
-
+builder.Services.AddScoped<IFlashSaleRepository, FlashSaleRepository>();
+builder.Services.AddScoped<IFlashSaleService, FlashSaleService>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 

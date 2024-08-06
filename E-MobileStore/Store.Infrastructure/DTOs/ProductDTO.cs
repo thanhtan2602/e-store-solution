@@ -23,7 +23,7 @@ namespace Store.Infrastructure.DTOs
         public string? UpdatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdateDate { get; set; }
-        public List<ProductImageDTO> ProductImages { get; set; }
-        public List<ProductAttributeDTO> ProductAttributes { get; set; }
+        public List<ProductImageDTO>? ProductImages { get; set; }
+        public List<ProductAttributeDTO>? ProductAttributes { get; set; }
     }
 }

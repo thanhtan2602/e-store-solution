@@ -10,6 +10,6 @@ namespace Store.Infrastructure.DTOs
     {
         public Guid Id { get; set; }
         public Guid AttributeValueId { get; set; }
-        public string AttributeContent { get; set; }
+        public string? AttributeContent { get; set; }
     }
 }

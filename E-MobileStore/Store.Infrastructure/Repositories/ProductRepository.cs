@@ -126,7 +126,7 @@ namespace Store.Infrastructure.Repositories
         public async Task<IEnumerable<ProductsVM>> GetProductListAsync(int categoryId, int page = 1, int pageSize = 2)
         {
             var product = _context.Products.Include(p => p.Category).Include(p => p.ProductImages).AsNoTracking();
-            var productlist = product.Select(x => new ProductsVM
+            var productlist = product.Where(x=>x.Category.isDeleted==false && x.Category.isActive== true).Select(x => new ProductsVM
             {
                 Id = x.Id,
                 Name = x.Name,
@@ -145,7 +145,7 @@ namespace Store.Infrastructure.Repositories
                 }).ToList(),
                 Price = x.Price,
                 Quantity = x.Quantity,
-            }).Where(p => p.CategoryId == categoryId && p.isDeleted == false && p.isActive == true).ToList();
+            }).Where(p => p.CategoryId == categoryId  && p.isDeleted == false && p.isActive == true).ToList();
             var result = productlist.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             return result;
         }
@@ -175,14 +175,14 @@ namespace Store.Infrastructure.Repositories
                 {
                     foreach (var paDTOs in product.ProductAttributes)
                     {
-                            var newAttribute = new ProductAttribute
-                            {
-                                Id = Guid.NewGuid(),
-                                AttributeContent = paDTOs.AttributeContent,
-                                AttributeId = paDTOs.AttributeValueId,
-                                ProductId = existingProduct.Id,
-                            };
-                            _context.ProductAttributes.Add(newAttribute);
+                        var newAttribute = new ProductAttribute
+                        {
+                            Id = Guid.NewGuid(),
+                            AttributeContent = paDTOs.AttributeContent,
+                            AttributeId = paDTOs.AttributeValueId,
+                            ProductId = existingProduct.Id,
+                        };
+                        _context.ProductAttributes.Add(newAttribute);
                     }
                     //remove old attribute
                     var oldAttribute = _context.ProductAttributes.Select(pa => pa.Id).ToList();
@@ -211,21 +211,21 @@ namespace Store.Infrastructure.Repositories
                 {
                     foreach (var piDTOs in product.ProductImages)
                     {
-                            var newImage = new ProductImage
-                            {
-                                Id = Guid.NewGuid(),
-                                ImageURL = piDTOs.ImageURL,
-                                ImageName = piDTOs.ImageName,
-                                Position = piDTOs.Position,
-                                isActive = existingProduct.isActive,
-                                isDeleted = existingProduct.isDeleted,
-                                CreatedBy = existingProduct.CreatedBy,
-                                CreatedDate = DateTime.Now,
-                                ProductId = existingProduct.Id,
-                                UpdatedBy = existingProduct.UpdatedBy,
-                                UpdateDate = DateTime.Now,
-                            };
-                            _context.ProductImages.Add(newImage);
+                        var newImage = new ProductImage
+                        {
+                            Id = Guid.NewGuid(),
+                            ImageURL = piDTOs.ImageURL,
+                            ImageName = piDTOs.ImageName,
+                            Position = piDTOs.Position,
+                            isActive = existingProduct.isActive,
+                            isDeleted = existingProduct.isDeleted,
+                            CreatedBy = existingProduct.CreatedBy,
+                            CreatedDate = DateTime.Now,
+                            ProductId = existingProduct.Id,
+                            UpdatedBy = existingProduct.UpdatedBy,
+                            UpdateDate = DateTime.Now,
+                        };
+                        _context.ProductImages.Add(newImage);
                     }
                     // remove old image
                     var oldImage = _context.ProductImages.Select(pa => pa.Id).ToList();
