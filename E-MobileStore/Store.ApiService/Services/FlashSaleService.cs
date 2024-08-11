@@ -20,34 +20,35 @@ namespace Store.ApiService.Services
         {
             _flashSaleRepository = flashSaleRepository;
         }
-        public void AddFlashSaleAsync(FlashSaleDTO flashSale)
+
+        public void AddOrUpdateFlashSale(FlashSaleDTO flashSaleDTO)
         {
-            _flashSaleRepository.AddFlashSaleAsync(flashSale);
+            _flashSaleRepository.AddOrUpdateFlashSale(flashSaleDTO);
         }
 
-        public void AddFlashSaleProductAsync(List<FlashSaleProductDTO> flashSaleProductDTO, int flashSaleId)
+        public void AddListFlashSaleProduct(List<FlashSaleProductDTO> flashSaleProductDTO, int flashSaleId)
         {
-            _flashSaleRepository.AddFlashSaleProductAsync(flashSaleProductDTO, flashSaleId);
+            _flashSaleRepository.AddListFlashSaleProduct(flashSaleProductDTO, flashSaleId);
         }
 
-        public Task<IEnumerable<FlashSalesVM>> GetAllAsync(int page, int pageSize)
+        public Task<IEnumerable<FlashSalesVM>> GetAllFlashSale(int page, int pageSize)
         {
-            return _flashSaleRepository.GetAllAsync(page, pageSize);
+            return _flashSaleRepository.GetAllFlashSale(page, pageSize);
         }
 
-        public void PermanentlyDeletedAsync(int flashSaleId)
+        public void UpdateFlashSaleProduct(FlashSaleProductDTO flashSaleProductDTO)
         {
-            _flashSaleRepository.PermanentlyDeletedAsync(flashSaleId);
+            _flashSaleRepository.UpdateFlashSaleProduct(flashSaleProductDTO);
         }
 
-        public void ManageFlashSaleAsync(int flashSaleId, FlashSaleDTO flashSaleDTO, int action)
+        public void DeletedFlashSale(int flashSaleId)
         {
-            _flashSaleRepository.ManageFlashSaleAsync(flashSaleId, flashSaleDTO, action);
+            _flashSaleRepository.DeletedFlashSale(flashSaleId);
         }
 
-        public void ManageFlashSaleProductAsync(FlashSaleProductDTO flashSaleProductDTO, int flashSaleId, Guid productId, int action)
+        public void DeletedFlashSaleProduct(FlashSaleProductDTO flashSaleProductDTO)
         {
-            _flashSaleRepository.ManageFlashSaleProductAsync(flashSaleProductDTO, flashSaleId, productId, action);
+            _flashSaleRepository.DeletedFlashSaleProduct(flashSaleProductDTO);
         }
     }
 }

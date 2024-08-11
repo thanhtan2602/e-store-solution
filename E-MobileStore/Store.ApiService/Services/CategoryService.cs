@@ -18,30 +18,22 @@ namespace Store.ApiService.Services
         {
             _categoryRepository = categoryRepository;
         }
-        public void AddCategoriesAsync(CategoryDTO category)
+        public async Task<IEnumerable<CategoryVM>> GetAllCategories(int page, int pageSize)
         {
-            _categoryRepository.AddCategoriesAsync(category);
-        }
-
-        public async Task<IEnumerable<CategoryVM>> GetAllCategoriesAsync(int page, int pageSize)
-        {
-            return await _categoryRepository.GetAllCategoriesAsync(page, pageSize);
+            return await _categoryRepository.GetAllCategories(page, pageSize);
 
         }
-
-        public async Task<CategoryVM> GetByIdAsync(int categoryId)
+        public async Task<CategoryVM> GetById(int categoryId)
         {
-            return await _categoryRepository.GetByIdAsync(categoryId);
+            return await _categoryRepository.GetById(categoryId);
         }
-
-        public void ManageCategoriesAsync(CategoryDTO category, int categoryId, int action)
+        public void AddOrUpdateCategory(CategoryDTO category)
         {
-            _categoryRepository.ManageCategoriesAsync(category, categoryId, action);
+            _categoryRepository.AddOrUpdateCategory(category);
         }
-
-        public void ParmanentlyCategoriesAsync(int categoryId)
+        public void DeleteCategory(int categoryId)
         {
-            _categoryRepository.ParmanentlyCategoriesAsync(categoryId);
+            _categoryRepository.DeleteCategory(categoryId);
         }
     }
 }

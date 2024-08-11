@@ -11,7 +11,7 @@ namespace Store.API
         public HttpStatusCode StatusCode { get; set; } = HttpStatusCode.OK;
         public bool IsSuccess { get; set; } = true;
         public List<string> ErrorMessages { get; set; }
-        public object Result { get; set; }
+        public object Result { get; set; } 
         public string Message { get; set; }
 
         public BaseApiResponse Success(object result = null)

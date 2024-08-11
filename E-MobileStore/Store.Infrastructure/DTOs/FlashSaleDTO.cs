@@ -8,13 +8,14 @@ namespace Store.Infrastructure.DTOs
 {
     public class FlashSaleDTO
     {
+        public int Id { get; set; }
         public DateTime DateOpen { get; set; }
         public DateTime DateClose { get; set; }
-        public string? Title { get; set; }
-        public string? Description { get; set; } = string.Empty;
-        public bool isDeleted { get; set; } = false;
-        public bool isActive { get; set; } = true;
-        public string? CreatedBy { get; set; }
-        public string? UpdatedBy { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public bool IsDeleted { get; set; } = false;
+        public bool IsActive { get; set; } = true;
+        public string CreatedBy { get; set; } = string.Empty;
+        public string UpdatedBy { get; set; } = string.Empty;
     }
 }
