@@ -11,11 +11,11 @@ namespace Store.ApiService.Services.Interfaces
 {
     public interface IFlashSaleService
     {
-        void AddFlashSaleAsync(FlashSaleDTO flashSale);
-        void AddFlashSaleProductAsync(List<FlashSaleProductDTO> flashSaleProductDTO, int flashSaleId);
-        void ManageFlashSaleProductAsync(FlashSaleProductDTO flashSaleProductDTO, int flashSaleId, Guid productId, int action);
-        void ManageFlashSaleAsync(int flashSaleId, FlashSaleDTO flashSaleDTO, int action);
-        void PermanentlyDeletedAsync(int flashSaleId);
-        Task<IEnumerable<FlashSalesVM>> GetAllAsync(int page, int pageSize);
+        void AddOrUpdateFlashSale(FlashSaleDTO flashSaleDTO);
+        void AddListFlashSaleProduct(List<FlashSaleProductDTO> flashSaleProductDTO, int flashSaleId);
+        Task<IEnumerable<FlashSalesVM>> GetAllFlashSale(int page, int pageSize);
+        void UpdateFlashSaleProduct(FlashSaleProductDTO flashSaleProductDTO);
+        void DeletedFlashSale(int flashSaleId);
+        void DeletedFlashSaleProduct(FlashSaleProductDTO flashSaleProductDTO);
     }
 }

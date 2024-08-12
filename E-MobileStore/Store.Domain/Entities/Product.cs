@@ -19,7 +19,7 @@ namespace Store.Domain.Entities
         [Required]
         [StringLength(250)]
         public int Quantity { get; set; }
-        public bool isDeleted { get; set; } = false;
+        public bool IsDeleted { get; set; } = false;
         public string ShortDesc { get; set; }
         public string Description { get; set; }
         public int CategoryId { get; set; }

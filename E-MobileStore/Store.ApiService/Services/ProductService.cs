@@ -18,45 +18,25 @@ namespace Store.ApiService.Services
         {
             _productRepository = productRepository;
         }
-        public void AddProductAsync(ProductDTO product)
+        public void AddOrUpdateProduct(ProductDTO product)
         {
-            _productRepository.AddProductAsync(product);
+            _productRepository.AddOrUpdateProduct(product);
         }
-
-        public void DeleteProductAsync(Guid productId, string updateBy)
+        public void DeleteProduct(Guid productId)
         {
-            _productRepository.DeleteProductAsync(productId, updateBy);
+            _productRepository.DeleteProduct(productId);
         }
-
-        public void PermanentlyDeleteAsync(Guid productId)
+        public Task<ProductsVM> GetProductById(Guid productId)
         {
-            _productRepository.PermanentlyDeleteAsync(productId);
+            return _productRepository.GetProductById(productId);
         }
-
-        public Task<ProductsVM> GetProductByIdAsync(Guid productId)
+        public Task<IEnumerable<ProductsVM>> GetProductList(int categoryId, int page, int pageSize)
         {
-            return _productRepository.GetProductByIdAsync(productId);
+            return _productRepository.GetProductList(categoryId, page, pageSize);
         }
-
-        public Task<IEnumerable<ProductsVM>> GetProductListAsync(int categoryId, int page, int pageSize)
+        public Task<IEnumerable<ProductsVM>> GetSaleProducts(int flashSaleId)
         {
-            return _productRepository.GetProductListAsync(categoryId, page, pageSize);
-        }
-
-
-        public void UpdateProductAsync(ProductDTO product, Guid productId)
-        {
-            _productRepository.UpdateProductAsync(product, productId);
-        }
-
-        Task<IEnumerable<ProductsVM>> IProductService.GetSaleProductsAsync(int flashSaleId)
-        {
-            return _productRepository.GetSaleProductsAsync(flashSaleId);
-        }
-
-        public void ReStoreProductAsync(Guid productId, string updateBy)
-        {
-            _productRepository.ReStoreProductAsync(productId, updateBy);
+            return _productRepository.GetSaleProducts(flashSaleId);
         }
     }
 }

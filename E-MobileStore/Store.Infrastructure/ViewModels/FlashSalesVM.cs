@@ -11,11 +11,11 @@ namespace Store.Infrastructure.ViewModels
     {
         public int FlashSaleId { get; set; }
         public decimal PriceSale { get; set; }
-        public string FlashSaleTitle { get; set; }
-        public string FlashSaleDescription { get; set; }
-        public string DateOpen { get; set; }
-        public string DateClose { get; set; }
-        public bool isActive { get; set; }
-        public bool isDelete { get; set; }
+        public string FlashSaleTitle { get; set; } = string.Empty;
+        public string FlashSaleDescription { get; set; } = string.Empty;
+        public string DateOpen { get; set; } = string.Empty;
+        public string DateClose { get; set; } = string.Empty;
+        public bool IsActive { get; set; }
+        public bool IsDelete { get; set; }
     }
 }
