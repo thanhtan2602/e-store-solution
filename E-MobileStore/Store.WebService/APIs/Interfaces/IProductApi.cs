@@ -9,5 +9,6 @@ namespace Store.WebService.APIs.Interfaces
     public interface IProductApi
     {
         string GetProductById(int productId);
+        string GetProductListByCateId(int cateId);
     }
 }

@@ -2,14 +2,8 @@
 using Store.Domain.Entities;
 using Store.Infrastructure.Data;
 using Store.Infrastructure.DTOs;
-using Store.Infrastructure.Migrations;
 using Store.Infrastructure.Repositories.Interfaces;
 using Store.Infrastructure.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Store.Infrastructure.Repositories
 {

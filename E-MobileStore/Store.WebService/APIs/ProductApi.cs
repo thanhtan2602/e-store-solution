@@ -1,4 +1,5 @@
-﻿using Store.WebService.APIs.Interfaces;
+﻿using Store.Domain.Entities;
+using Store.WebService.APIs.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,11 @@ namespace Store.WebService.APIs
         public string GetProductById(int productId)
         {
             return $"{baseUrl}/api/products/getproductbyid?productid={productId}";
+        }
+
+        public string GetProductListByCateId(int cateId)
+        {
+            return $"{baseUrl}/api/products/getproductlistbycateid?cateid={cateId}";
         }
     }
 }

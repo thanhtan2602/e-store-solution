@@ -53,5 +53,35 @@ namespace Store.WebService.Services
                 return new vmProduct();
             }
         }
+
+        public async Task<List<vmProduct>> GetProductListByCateId(int cateId)
+        {
+            try
+            {
+                var products = new List<vmProduct>();
+                var uri = _productApi.GetProductListByCateId(cateId);
+                var response = await _httpClient.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var product = JsonConvert.DeserializeObject<Product>(content);
+                    if (product != null)
+                    {
+                        products.Add(new vmProduct
+                        {
+                            ProductId = product.Id,
+                            ProductName = product.Name,
+                            Price = product.Price,
+                        });
+                    }
+                }
+
+                return products;
+            }
+            catch (Exception ex)
+            {
+                return new List<vmProduct>();
+            }
+        }
     }
 }

@@ -17,8 +17,8 @@ namespace Store.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var response = await _productWebService.GetProductDetail(1);
-            return View("/Views/Common/ProductBox.cshtml", response);
+            var test = await _productWebService.GetProductListByCateId(5);    
+            return View("/Views/Common/ProductBox.cshtml");
         }
         public IActionResult FlashSale()
         {

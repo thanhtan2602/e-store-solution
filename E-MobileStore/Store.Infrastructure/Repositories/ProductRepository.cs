@@ -239,5 +239,11 @@ namespace Store.Infrastructure.Repositories
                 return Task.FromResult<IEnumerable<ProductsVM>>(result);
             }
         }
+
+        public async Task<IEnumerable<Product>> GetProductListByCateId(int cateId)
+        {
+            var products = await _context.Products.Where(x => x.CategoryId == cateId).ToListAsync();
+            return products != null ? products : new List<Product>();
+        }
     }
 }

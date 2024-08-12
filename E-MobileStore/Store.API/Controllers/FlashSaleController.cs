@@ -1,12 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Store.ApiService.Services.Interfaces;
-using Store.Domain.Entities;
 using Store.Infrastructure.DTOs;
-using Store.Infrastructure.Migrations;
-using Store.Infrastructure.ViewModels;
 using System.Net;
-using System.Text.Json;
 
 namespace Store.API.Controllers
 {

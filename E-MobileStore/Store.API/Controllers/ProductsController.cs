@@ -1,13 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Store.ApiService.Services.Interfaces;
-using Store.Domain.Entities;
 using Store.Infrastructure.DTOs;
-using Store.Infrastructure.ViewModels;
 using System.Net;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Store.API.Controllers
 {
@@ -131,6 +125,20 @@ namespace Store.API.Controllers
                 _response.IsSuccess = false;
                 return BadRequest(_response);
             }
+        }
+
+        [HttpGet]
+        [Route("GetProductListByCateId")]
+        public async Task<IActionResult> GetProductListByCate(int cateId)
+        {
+            var products =  await _productService.GetProductListByCateId(cateId);
+            if(products == null)
+            {
+                _response.StatusCode = HttpStatusCode.NotFound;
+            }
+
+            _response.Result = products;
+            return Ok(_response);
         }
     }
 }

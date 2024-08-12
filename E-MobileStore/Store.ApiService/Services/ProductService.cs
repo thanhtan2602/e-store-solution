@@ -34,6 +34,12 @@ namespace Store.ApiService.Services
         {
             return _productRepository.GetProductList(categoryId, page, pageSize);
         }
+
+        public async Task<IEnumerable<Product>> GetProductListByCateId(int cateId)
+        {
+            return await _productRepository.GetProductListByCateId(cateId);
+        }
+
         public Task<IEnumerable<ProductsVM>> GetSaleProducts(int flashSaleId)
         {
             return _productRepository.GetSaleProducts(flashSaleId);

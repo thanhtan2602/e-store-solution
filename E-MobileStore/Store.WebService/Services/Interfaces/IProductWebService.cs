@@ -9,6 +9,7 @@ namespace Store.WebService.Services.Interfaces
 {
     public interface IProductWebService
     {
-        Task<vmProduct> GetProductDetail(int  productId);
+        Task<vmProduct> GetProductDetail(int productId);
+        Task<List<vmProduct>> GetProductListByCateId(int cateId);
     }
 }

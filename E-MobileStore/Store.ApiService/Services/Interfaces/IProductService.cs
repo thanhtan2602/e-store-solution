@@ -16,5 +16,6 @@ namespace Store.ApiService.Services.Interfaces
         Task<ProductsVM> GetProductById(Guid productId);
         void AddOrUpdateProduct(ProductDTO product);
         void DeleteProduct(Guid productId);
+        Task<IEnumerable<Product>> GetProductListByCateId(int cateId);
     }
 }
