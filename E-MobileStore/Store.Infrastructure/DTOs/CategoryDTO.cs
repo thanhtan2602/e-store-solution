@@ -8,13 +8,14 @@ namespace Store.Infrastructure.DTOs
 {
     public class CategoryDTO
     {
-        public string? Name { get; set; }
-        public string? Description { get; set; }
-        public string? ImageURL { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public string ImageURL { get; set; } = string.Empty;
         public bool isActive { get; set; } = true;
         public bool isDeleted { get; set; } = false;
-        public string? CreatedBy { get; set; }
-        public string? UpdatedBy { get; set; }
+        public string CreatedBy { get; set; } = string.Empty;
+        public string UpdatedBy { get; set; } = string.Empty;
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
     }

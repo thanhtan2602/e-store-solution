@@ -9,21 +9,21 @@ namespace Store.Infrastructure.DTOs
 {
     public class ProductDTO
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public decimal PriceSale { get; set; }
         public int Quantity { get; set; }
-        public string ShortDesc { get; set; }
-        public string Description { get; set; }
+        public string ShortDesc { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public int CategoryId { get; set; }
         public bool isDeleted { get; set; } = false;
         public bool isActive { get; set; } = true;
-        public string? CreatedBy { get; set; }
-        public string? UpdatedBy { get; set; }
+        public string CreatedBy { get; set; } = string.Empty;
+        public string UpdatedBy { get; set; } = string.Empty;
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdateDate { get; set; }
-        public List<ProductImageDTO>? ProductImages { get; set; }
-        public List<ProductAttributeDTO>? ProductAttributes { get; set; }
+        //public ICollection<ProductImage> ProductImages { get; set; }
+        //public List<ProductAttributeDTO>? ProductAttributes { get; set; }
     }
 }

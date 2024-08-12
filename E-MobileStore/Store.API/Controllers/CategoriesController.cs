@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Store.ApiService.Services.Interfaces;
+using Store.Domain.Entities;
 using Store.Infrastructure.DTOs;
+using System.Net;
 using System.Text.Json;
 
 namespace Store.API.Controllers
@@ -17,48 +19,92 @@ namespace Store.API.Controllers
         public CategoriesController(ICategoryService category)
         {
             _category = category;
+            _response = new BaseApiResponse();
         }
 
         [HttpGet]
         [Route("GetAllCategory")]
-        public async Task<IActionResult> GetAllCategory(int page = 1, int pageSize = 2)
+        public async Task<IActionResult> GetAllCategoriesAsync(int page = 1, int pageSize = 2)
         {
-            var listCate = _category.GetAllCategoriesAsync(page, pageSize);
-            var result = JsonSerializer.Serialize(listCate);
-            return Content(result, "application/json");
+            try
+            {
+                var listCate = await _category.GetAllCategories(page, pageSize);
+                _response.IsSuccess = true;
+                _response.Result = listCate;
+                return Ok(_response);
+            }
+            catch(Exception ex) 
+            {
+                var statuscode =  _response.StatusCode=HttpStatusCode.BadRequest;
+                var errorMessenger = _response.ErrorMessages = new List<string> { ex.Message};
+                _response.IsSuccess = false;
+                _response.Failed(statuscode, errorMessenger);
+                return BadRequest(_response);
+            }
         }
 
         [HttpGet]
         [Route("GetCategoryById")]
-        public async Task<IActionResult> GetCategoryById(int categoryId)
+        public async Task<IActionResult> GetCategoryByIdAsync(int categoryId)
         {
-            var cate = _category.GetByIdAsync(categoryId);
-            var result = JsonSerializer.Serialize(cate);
-            return Content(result, "application/json");
+            try
+            {
+                var cate = await _category.GetById(categoryId);
+                _response.IsSuccess = true;
+                _response.Result = cate;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                var statuscode = _response.StatusCode = HttpStatusCode.BadRequest;
+                var errorMessenger = _response.ErrorMessages = new List<string> { ex.Message };
+                _response.IsSuccess = false;
+                _response.Failed(statuscode, errorMessenger);
+                return BadRequest(_response);
+            }
         }
 
         [HttpPost]
-        [Route("InsertCategory")]
-        public IActionResult InsertCategory(CategoryDTO category)
+        [Route("InsertOrUpdateCategory")]
+        public IActionResult InsertOrUpdateCategory(CategoryDTO category)
         {
-            _category.AddCategoriesAsync(category);
-            return Ok(_response);
+           
+            try
+            {
+                _category.AddOrUpdateCategory(category);
+                _response.IsSuccess = true;
+                _response.Result = category;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                var statuscode = _response.StatusCode = HttpStatusCode.BadRequest;
+                var errorMessenger = _response.ErrorMessages = new List<string> { ex.Message };
+                _response.IsSuccess = false;
+                _response.Failed(statuscode, errorMessenger);
+                return BadRequest(_response);
+            }
         }
-
         [HttpPut]
-        [Route("ManageCategory")]
-        public IActionResult ManageCategory(CategoryDTO category, int categoryId, int action)
+        [Route("DeleteCategory")]
+        public IActionResult DeleteCategory(int categoryId)
         {
-            _category.ManageCategoriesAsync(category, categoryId, action);
-            return Ok(_response);
-        }
-
-        [HttpDelete]
-        [Route("ParmmanentlyCategory")]
-        public IActionResult ParmanentlyCategory(int categoryId)
-        {
-            _category.ParmanentlyCategoriesAsync(categoryId);
-            return Ok(_response);
+            try
+            {
+                _category.DeleteCategory(categoryId);
+                _response.StatusCode = HttpStatusCode.OK;
+                _response.IsSuccess = true;
+                _response.Message = "This category has been deleted";
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                var statuscode = _response.StatusCode = HttpStatusCode.BadRequest;
+                var errorMessenger = _response.ErrorMessages = new List<string> { ex.Message };
+                _response.IsSuccess = false;
+                _response.Failed(statuscode, errorMessenger);
+                return BadRequest(_response);
+            }
         }
     }
 }

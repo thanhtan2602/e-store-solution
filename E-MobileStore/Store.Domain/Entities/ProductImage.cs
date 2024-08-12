@@ -15,7 +15,7 @@ namespace Store.Domain.Entities
         public string ImageName { get; set; }
         [StringLength(150)]
         public string Position { get; set; }
-        public bool isDeleted { get; set; } = false;
+        public bool IsDeleted { get; set; } = false;
         public Guid ProductId { get; set; }
         [JsonIgnore]
         public Product Product { get; set; }

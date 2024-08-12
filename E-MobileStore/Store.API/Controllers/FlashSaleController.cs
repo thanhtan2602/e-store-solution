@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Store.ApiService.Services.Interfaces;
+using Store.Domain.Entities;
 using Store.Infrastructure.DTOs;
+using Store.Infrastructure.Migrations;
 using Store.Infrastructure.ViewModels;
+using System.Net;
 using System.Text.Json;
 
 namespace Store.API.Controllers
@@ -16,53 +19,160 @@ namespace Store.API.Controllers
         public FlashSaleController(IFlashSaleService flashSale)
         {
             _flashSale = flashSale;
+            _response = new BaseApiResponse();
         }
 
         [HttpPost]
-        [Route("InsertFlashSale")]
-        public IActionResult AddFlashSale(FlashSaleDTO flashSale)
+        [Route("InsertOrUpdateFlashSale")]
+        public IActionResult InsertOrUpdateFlashSale(FlashSaleDTO flashSale)
         {
-            _flashSale.AddFlashSaleAsync(flashSale);
-            return Ok(_response);
+            try
+            {
+                _flashSale.AddOrUpdateFlashSale(flashSale);
+                if (flashSale.Id > 0)
+                {
+                    _response.Message = "Update success";
+                    _response.IsSuccess = true;
+                    _response.Result = flashSale;
+                    return Ok(_response);
+                }
+                else
+                {
+                    _response.Message = "Insert success";
+                    _response.IsSuccess = true;
+                    _response.Result = flashSale;
+                    return Ok(_response);
+                }
+            }
+            catch (Exception ex)
+            {
+                var statusCode = _response.StatusCode = HttpStatusCode.NotFound;
+                var errorMessages = _response.ErrorMessages = new List<string>() { ex.Message };
+                if (flashSale.Id > 0)
+                {
+                    _response.Message = "Update Failed";
+                }
+                else
+                {
+                    _response.Message = "Insert Failed";
+                }
+                _response.IsSuccess = false;
+                _response.Failed(statusCode, errorMessages);
+                return NotFound(_response);
+            }
         }
 
-        [HttpPut]
-        [Route("ManageFlashSale")]
-        public IActionResult ManageFlashSale(int flashSaleId, FlashSaleDTO flashSaleDTO, int action)
-        {
-            _flashSale.ManageFlashSaleAsync(flashSaleId, flashSaleDTO, action);
-            return Ok(_response);
-        }
+
         [HttpPost]
-        [Route("AddFlashSaleProduct")]
-        public IActionResult AddFlashSaleProduct(List<FlashSaleProductDTO> flashSaleProductDTO, int flashSaleId)
+        [Route("InsertListFlashSaleProduct")]
+        public IActionResult AddListFlashSaleProduct(List<FlashSaleProductDTO> flashSaleProductDTO, int flashSaleId)
         {
-            _flashSale.AddFlashSaleProductAsync(flashSaleProductDTO, flashSaleId);
-            return Ok(_response);
+            try
+            {
+                _flashSale.AddListFlashSaleProduct(flashSaleProductDTO, flashSaleId);
+                _response.Message = "Insert success";
+                _response.IsSuccess = true;
+                _response.Result = flashSaleProductDTO;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                var statusCode = _response.StatusCode = HttpStatusCode.NotFound;
+                var errorMessages = _response.ErrorMessages = new List<string>() { ex.Message };
+                _response.IsSuccess = false;
+                _response.Message = "Insert Failed";
+                _response.Failed(statusCode, errorMessages);
+                return NotFound(_response);
+            }
         }
 
         [HttpPut]
-        [Route("ManageFlashSaleProduct")]
-        public IActionResult ManageFlashSaleProduct(FlashSaleProductDTO flashSaleProductDTO, int flashSaleId, Guid productId, int action)
+        [Route("UpdateFlashSaleProduct")]
+        public IActionResult UpdateFlashSaleProduct(FlashSaleProductDTO flashSaleProductDTO)
         {
-            _flashSale.ManageFlashSaleProductAsync(flashSaleProductDTO, flashSaleId, productId, action);
-            return Ok(_response);
+            try
+            {
+                _flashSale.UpdateFlashSaleProduct(flashSaleProductDTO);
+                _response.Message = "Update success";
+                _response.IsSuccess = true;
+                _response.Result = flashSaleProductDTO;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                var statusCode = _response.StatusCode = HttpStatusCode.NotFound;
+                var errorMessages = _response.ErrorMessages = new List<string>() { ex.Message };
+                _response.IsSuccess = false;
+                _response.Message = "Update Failed";
+                _response.Failed(statusCode, errorMessages);
+                return NotFound(_response);
+            }
         }
 
         [HttpGet]
         [Route("GetListFlashSale")]
-        public async Task<IActionResult> GetFlashSale(int page = 1, int pageSize = 2)
+        public async Task<IActionResult> GetFlashSaleAsync(int page = 1, int pageSize = 2)
         {
-            var list = await _flashSale.GetAllAsync(page, pageSize);
-            var result = JsonSerializer.Serialize(list);
-            return Content(result, "application/json");
+            try
+            {
+                var listFlashSale = await _flashSale.GetAllFlashSale(page, pageSize);
+
+                _response.Message = "get success";
+                _response.IsSuccess = true;
+                _response.Result = listFlashSale;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                var statusCode = _response.StatusCode = HttpStatusCode.NotFound;
+                var errorMessages = _response.ErrorMessages = new List<string>() { ex.Message };
+                _response.IsSuccess = false;
+                _response.Message = "get Failed";
+                _response.Failed(statusCode, errorMessages);
+                return NotFound(_response);
+            }
         }
-        [HttpDelete]
-        [Route("ParanentlyDeleted")]
-        public IActionResult ParmanentlyDeleted(int flashSaleId)
+        [HttpPost]
+        [Route("DeleteFlashSale")]
+        public IActionResult DeleteFlashSale(int flashSaleId)
         {
-            _flashSale.PermanentlyDeletedAsync(flashSaleId);
-            return Ok(_response);
+            try
+            {
+                _flashSale.DeletedFlashSale(flashSaleId);
+                _response.Message = "Deleted success";
+                _response.IsSuccess = true;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                var statusCode = _response.StatusCode = HttpStatusCode.NotFound;
+                var errorMessages = _response.ErrorMessages = new List<string>() { ex.Message };
+                _response.IsSuccess = false;
+                _response.Message = "Deleted Failed";
+                _response.Failed(statusCode, errorMessages);
+                return NotFound(_response);
+            }
+        }
+        [HttpPost]
+        [Route("DeleteFlashSaleProduct")]
+        public IActionResult DeleteFlashSaleProduct(FlashSaleProductDTO flashSaleProductDTO)
+        {
+            try
+            {
+                _flashSale.DeletedFlashSaleProduct(flashSaleProductDTO);
+                _response.Message = "Deleted success";
+                _response.IsSuccess = true;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                var statusCode = _response.StatusCode = HttpStatusCode.NotFound;
+                var errorMessages = _response.ErrorMessages = new List<string>() { ex.Message };
+                _response.IsSuccess = false;
+                _response.Message = "Deleted Failed";
+                _response.Failed(statusCode, errorMessages);
+                return NotFound(_response);
+            }
         }
     }
 }

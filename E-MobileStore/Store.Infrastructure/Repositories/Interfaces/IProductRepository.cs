@@ -11,13 +11,10 @@ namespace Store.Infrastructure.Repositories.Interfaces
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<ProductsVM>> GetProductListAsync(int categoryId, int page, int pageSize);
-        Task<IEnumerable<ProductsVM>> GetSaleProductsAsync(int flashSaleId);
-        Task<ProductsVM> GetProductByIdAsync(Guid productId);
-        void AddProductAsync(ProductDTO product);
-        void UpdateProductAsync(ProductDTO product, Guid productId);
-        void DeleteProductAsync(Guid productId, string updateBy);
-        void ReStoreProductAsync(Guid productId, string updateBy);
-        void PermanentlyDeleteAsync(Guid productId);
+        Task<IEnumerable<ProductsVM>> GetProductList(int categoryId, int page, int pageSize);
+        Task<IEnumerable<ProductsVM>> GetSaleProducts(int flashSaleId);
+        Task<ProductsVM> GetProductById(Guid productId);
+        void AddOrUpdateProduct(ProductDTO product);
+        void DeleteProduct(Guid productId);
     }
 }

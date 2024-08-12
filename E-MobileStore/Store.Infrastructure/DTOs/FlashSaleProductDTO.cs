@@ -8,9 +8,10 @@ namespace Store.Infrastructure.DTOs
 {
     public class FlashSaleProductDTO
     {
+        public int FlashSaleId { get; set; }
         public Guid ProductId { get; set; }
         public decimal PriceSale { get; set; }
         public bool IsActive { get; set; } = true;
-        public bool isDeleted { get; set; } = false;
+        public bool IsDeleted { get; set; } = false;
     }
 }

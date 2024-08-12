@@ -10,10 +10,9 @@ namespace Store.ApiService.Services.Interfaces
 {
     public interface ICategoryService
     {
-        void AddCategoriesAsync(CategoryDTO category);
-        void ManageCategoriesAsync(CategoryDTO category, int categoryId, int action);
-        Task<IEnumerable<CategoryVM>> GetAllCategoriesAsync(int page, int pageSize);
-        Task<CategoryVM> GetByIdAsync(int categoryId);
-        void ParmanentlyCategoriesAsync(int categoryId);
+        void AddOrUpdateCategory(CategoryDTO category);
+        Task<IEnumerable<CategoryVM>> GetAllCategories(int page, int pageSize);
+        Task<CategoryVM> GetById(int categoryId);
+        void DeleteCategory(int categoryId);
     }
 }
