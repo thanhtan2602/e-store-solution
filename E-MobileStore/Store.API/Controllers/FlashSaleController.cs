@@ -106,11 +106,11 @@ namespace Store.API.Controllers
 
         [HttpGet]
         [Route("GetListFlashSale")]
-        public async Task<IActionResult> GetFlashSaleAsync(int page = 1, int pageSize = 2)
+        public async Task<IActionResult> GetFlashSaleAsync()
         {
             try
             {
-                var listFlashSale = await _flashSale.GetAllFlashSale(page, pageSize);
+                var listFlashSale = await _flashSale.GetAllFlashSale();
 
                 _response.Message = "get success";
                 _response.IsSuccess = true;

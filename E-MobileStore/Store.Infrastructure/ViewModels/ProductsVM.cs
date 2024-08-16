@@ -17,8 +17,8 @@ namespace Store.Infrastructure.ViewModels
         public decimal PriceSale { get; set; }
 
         public int Quantity { get; set; }
-        public bool isDeleted { get; set; } = false;
-        public bool isActive { get; set; }
+        public bool IsDeleted { get; set; } = false;
+        public bool IsActive { get; set; }
 
         public string ShortDesc { get; set; }
         public string Description { get; set; }

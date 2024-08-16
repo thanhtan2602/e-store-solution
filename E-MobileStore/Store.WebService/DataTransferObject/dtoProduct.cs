@@ -25,9 +25,10 @@ namespace Store.WebService.DataTransferObject
         public int CategoryId { get; set; }
         public string CategoryName { get; set; } = string.Empty;
 
-        public ICollection<vmProductImage> ProductImages { get; set; }
+        public List<vmProductImage> ProductImages { get; set; }
         //public ICollection<ProductAttributesVM> ProductAttributes { get; set; }
         public ICollection<Rate> Rates { get; set; }
         public ICollection<Comment> Comments { get; set; }
+        public ICollection<ProductAttribute> ProductAttributes { get; internal set; }
     }
 }

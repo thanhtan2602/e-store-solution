@@ -13,7 +13,7 @@ namespace Store.Infrastructure.Repositories.Interfaces
     {
         void AddOrUpdateFlashSale(FlashSaleDTO flashSaleDTO);
         void AddListFlashSaleProduct(List<FlashSaleProductDTO> flashSaleProductDTO, int flashSaleId);
-        Task<IEnumerable<FlashSalesVM>> GetAllFlashSale(int page, int pageSize);
+        Task<IEnumerable<FlashSale>> GetAllFlashSale();
         void UpdateFlashSaleProduct(FlashSaleProductDTO flashSaleProductDTO);
         void DeletedFlashSale(int flashSaleId);
         void DeletedFlashSaleProduct(FlashSaleProductDTO flashSaleProductDTO);

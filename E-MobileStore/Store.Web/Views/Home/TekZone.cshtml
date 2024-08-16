@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Store.WebService.ViewModels.vmNews>
+@{
+}
+<div class="box-slide">
+    <a href="/tekzone" class="logo-cate  "><h2>TekZone</h2></a>
+    <div class="slide-topnews owl-carousel owl-theme owl-loaded filtering" data-slick='{"slidesToShow": 3, "slidesToScroll": 3}' data-block="TekZone">
+        @if(Model !=null )
+        {
+            var sortNews = Model.OrderByDescending(x => x.CreatedDate).Take(6).ToList();
+            @foreach (var news in sortNews)
+            {
+                var timeSpan = DateTime.Now - news.CreatedDate;
+                string timeAgo;
+                if(timeSpan.TotalDays > 1)
+                {
+                    timeAgo = $"{(int)timeSpan.TotalDays} ngày trước";
+                }
+                else if(timeSpan.TotalHours > 1)
+                {
+                    timeAgo = $"{(int)timeSpan.TotalHours} giờ trước";
+
+                }
+                else if(timeSpan.TotalMinutes > 1)
+                {
+                    timeAgo = $"{(int)timeSpan.TotalMinutes} phút trước";
+                }
+                else
+                {
+                    timeAgo = "Vừa xong";
+
+                }
+                <div class="owl-item" style="width: 393.333px; margin-right: 10px;">
+                    <div class="item">
+                        <a href="/tekzone/@news.Id">
+                            <div class="img-slide">
+                                <img data-src="@news.ImageURL" alt="@news.ShortDesc" class=" lazyloaded" width="376" height="150" src="@news.ImageURL">
+                            </div>
+                            <h3>@news.ShortDesc</h3>
+                            <span class="timepost">@timeAgo</span>
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.filtering').slick({
+                slidesToShow: 4,
+                slidesToScroll: 2,
+                arrows: true,
+
+            });
+
+
+
+        });
+
+
+    </script>
+}

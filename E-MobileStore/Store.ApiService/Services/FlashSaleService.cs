@@ -31,9 +31,9 @@ namespace Store.ApiService.Services
             _flashSaleRepository.AddListFlashSaleProduct(flashSaleProductDTO, flashSaleId);
         }
 
-        public Task<IEnumerable<FlashSalesVM>> GetAllFlashSale(int page, int pageSize)
+        public async Task<IEnumerable<FlashSale>> GetAllFlashSale()
         {
-            return _flashSaleRepository.GetAllFlashSale(page, pageSize);
+            return await _flashSaleRepository.GetAllFlashSale();
         }
 
         public void UpdateFlashSaleProduct(FlashSaleProductDTO flashSaleProductDTO)

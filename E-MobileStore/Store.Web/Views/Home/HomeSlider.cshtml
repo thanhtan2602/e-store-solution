@@ -1,33 +1,7 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
+﻿@model IEnumerable<Store.WebService.ViewModels.vmBanner>
 @{
 	ViewData["Title"] = "HomeSlider";
 }
-@* <div class="container-xxl" style="width:max-content;">
-    <div class="slide-home owl-carousel owl-theme owl-loaded owl-drag">
-        <div class="owl-stage-outer">
-            <div class="owl-stage" style="transform: translate3d(-13391px, 0px, 0px); transition: all 0.25s ease 0s; width: 15304px;">
-                <div class="owl-item" style="width: 1903px; margin-right: 10px;">
-                    <a aria-label="slide" data-cate="0" data-place="1733" href="https://www.topzone.vn/ipad-pro-m4#c=522&amp;p=287094&amp;o=2&amp;pi=0" onclick="jQuery.ajax({ url: '/bannertracking?bid=90680&amp;r='+ (new Date).getTime(), async: true, cache: false });">
-                        <img width="1920" height="400" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/06/banner/2880x800-1920x533.png" alt="NTT iPad Pro M4">
-                    </a>
-                </div>
-                <div class="owl-item" style="width: 1903px; margin-right: 10px;">
-                    <a aria-label="slide" data-cate="0" data-place="1733" href="https://www.topzone.vn/khuyen-mai-ipad" onclick="jQuery.ajax({ url: '/bannertracking?bid=91531&amp;r='+ (new Date).getTime(), async: true, cache: false });">
-                        <img width="1920" height="400" loading="lazy" class="owl-lazy lazyloaded" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/06/banner/2880x800--1---1--1920x533.png" alt="NTT iPad Pro M4" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/06/banner/2880x800--1---1--1920x533.png" style="opacity: 1;"></a>
-                </div>
-                <div class="owl-item" style="width: 1903px; margin-right: 10px;"
-                ><a aria-label="slide" data-cate="0" data-place="1733" href="https://www.topzone.vn/khuyen-mai-soc-apple" onclick="jQuery.ajax({ url: '/bannertracking?bid=89976&amp;r='+ (new Date).getTime(), async: true, cache: false });">
-                    <img width="1920" height="400" loading="lazy" class="owl-lazy lazyloaded" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/04/banner/dandau-2880-800--1--1920x533.png" alt="ốp lưng" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/04/banner/dandau-2880-800--1--1920x533.png" style="opacity: 1;"></a></div><div class="owl-item" style="width: 1903px; margin-right: 10px;"><a aria-label="slide" data-cate="0" data-place="1733" href="https://www.topzone.vn/iphone-15" onclick="jQuery.ajax({ url: '/bannertracking?bid=88434&amp;r='+ (new Date).getTime(), async: true, cache: false });"><img width="1920" height="400" loading="lazy" class="owl-lazy lazyloaded" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/06/banner/2880-800-1920x533-1.png" alt="tai nghe airpods" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/06/banner/2880-800-1920x533-1.png" style="opacity: 1;"></a></div><div class="owl-item" style="width: 1903px; margin-right: 10px;"><a aria-label="slide" data-cate="0" data-place="1733" href="https://www.topzone.vn/mac/apple-macbook-air-m2-2023" onclick="jQuery.ajax({ url: '/bannertracking?bid=88437&amp;r='+ (new Date).getTime(), async: true, cache: false });"><img width="1920" height="400" loading="lazy" class="owl-lazy lazyloaded" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/04/banner/MAC-Air-M2-DD-2880-800-1920x533.png" alt="ốp lưng" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/04/banner/MAC-Air-M2-DD-2880-800-1920x533.png" style="opacity: 1;"></a></div><div class="owl-item" style="width: 1903px; margin-right: 10px;"><a aria-label="slide" data-cate="0" data-place="1733" href="https://www.topzone.vn/ipad/ipad-gen-9" onclick="jQuery.ajax({ url: '/bannertracking?bid=88439&amp;r='+ (new Date).getTime(), async: true, cache: false });"><img width="1920" height="400" loading="lazy" class="owl-lazy lazyloaded" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/04/banner/iPad-9-2880-800-1920x533-2.png" alt="tai nghe airpods" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/04/banner/iPad-9-2880-800-1920x533-2.png" style="opacity: 1;"></a></div><div class="owl-item" style="width: 1903px; margin-right: 10px;"><a aria-label="slide" data-cate="0" data-place="1733" href="https://www.topzone.vn/apple-watch-se-2023" onclick="jQuery.ajax({ url: '/bannertracking?bid=88343&amp;r='+ (new Date).getTime(), async: true, cache: false });"><img width="1920" height="400" loading="lazy" class="owl-lazy lazyloaded" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/04/banner/AW-SE-DD-2880-800-1920x533.png" alt="tai nghe airpods" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/04/banner/AW-SE-DD-2880-800-1920x533.png" style="opacity: 1;"></a></div><div class="owl-item active" style="width: 1903px; margin-right: 10px;"><a aria-label="slide" data-cate="0" data-place="1733" href="https://www.topzone.vn/tai-nghe/tai-nghe-bluetooth-airpods-pro-gen-2-magsafe-charge-usb-c-apple-mtjv3" onclick="jQuery.ajax({ url: '/bannertracking?bid=88432&amp;r='+ (new Date).getTime(), async: true, cache: false });"><img width="1920" height="400" loading="lazy" class="owl-lazy lazyloaded" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/04/banner/AirPods-Pro-2-2880-800-1920x533.png" alt="ốp lưng" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/04/banner/AirPods-Pro-2-2880-800-1920x533.png" style="opacity: 1;"></a></div>
-            </div>
-        </div><div class="owl-nav"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next disabled"><span aria-label="Next">›</span></button></div><div class="owl-dots">
-            <button role="button" class="owl-dot"><span></span></button><button role="button" class="owl-dot"><span></span></button><button role="button" class="owl-dot"><span></span></button><button role="button" class="owl-dot"><span></span></button><button role="button" class="owl-dot"><span></span></button><button role="button" class="owl-dot"><span></span></button><button role="button" class="owl-dot"><span></span></button><button role="button" class="owl-dot active"><span></span></button>
-        </div>
-    </div>
-</div>
-</div> *@
 <style>
    /*  .owl-dot {
     position: relative;
@@ -104,44 +78,32 @@
 		<span></span>
 
 	</div>
-	<div class="carousel-inner">
-		<div class="carousel-item active">
-			<a aria-label="slide" data-cate="0" data-place="1733" href="https://www.topzone.vn/ipad-pro-m4#c=522&amp;p=287094&amp;o=2&amp;pi=0" ">
-				<img width="100%" height="100%" class="d-" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/06/banner/2880x800-1920x533.png" alt="NTT iPad Pro M4">
-			</a>
-		</div>
-		<div class="carousel-item">
-			<a aria-label="slide" data-cate="0" data-place="1733" href="https://www.topzone.vn/khuyen-mai-ipad" ">
-				<img width="100%" height="100%" loading="lazy" class="owl-lazy lazyloaded" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/06/banner/2880x800--1---1--1920x533.png" alt="NTT iPad Pro M4" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/06/banner/2880x800--1---1--1920x533.png" style="opacity: 1;">
-			</a>
-		</div>
-		<div class="carousel-item">
-			<a aria-label="slide" data-cate="0" data-place="1733" href="https://www.topzone.vn/khuyen-mai-soc-apple" onclick="jQuery.ajax({ url: '/bannertracking?bid=89976&amp;r='+ (new Date).getTime(), async: true, cache: false });">
-				<img width="100%" height="100%" loading="lazy" class="owl-lazy lazyloaded" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/04/banner/dandau-2880-800--1--1920x533.png" alt="ốp lưng" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/04/banner/dandau-2880-800--1--1920x533.png" style="opacity: 1;">
-			</a>
-		</div>
-		<div class="carousel-item">
-			<a aria-label="slide" data-cate="0" data-place="1733" href="https://www.topzone.vn/iphone-15">
-				<img width="100%" height="100%" loading="lazy" class="owl-lazy lazyloaded" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/06/banner/2880-800-1920x533-1.png" alt="tai nghe airpods" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/06/banner/2880-800-1920x533-1.png" style="opacity: 1;">
-			</a>
-		</div>
-		<div class="carousel-item">
-			<a aria-label="slide" data-cate="0" data-place="1733" href="https://www.topzone.vn/mac/apple-macbook-air-m2-2023">
-				<img width="100%" height="100%" loading="lazy" class="owl-lazy lazyloaded" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/04/banner/MAC-Air-M2-DD-2880-800-1920x533.png" alt="ốp lưng" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/04/banner/MAC-Air-M2-DD-2880-800-1920x533.png" style="opacity: 1;">
-			</a>
-		</div>
-		<div class="carousel-item">
-			<a aria-label="slide" data-cate="0" data-place="1733" href="https://www.topzone.vn/apple-watch-se-2023">
-				<img width="100%" height="100%" loading="lazy" class="owl-lazy lazyloaded" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/04/banner/AW-SE-DD-2880-800-1920x533.png" alt="tai nghe airpods" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/04/banner/AW-SE-DD-2880-800-1920x533.png" style="opacity: 1;">
-			</a>
-		</div>
-		<div class="carousel-item">
-			<a aria-label="slide" data-cate="0" data-place="1733" href="https://www.topzone.vn/tai-nghe/tai-nghe-bluetooth-airpods-pro-gen-2-magsafe-charge-usb-c-apple-mtjv3">
-				<img width="100%" height="100%" loading="lazy" class="owl-lazy lazyloaded" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/04/banner/AirPods-Pro-2-2880-800-1920x533.png" alt="ốp lưng" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2024/04/banner/AirPods-Pro-2-2880-800-1920x533.png" style="opacity: 1;">
-			</a>
-		</div>
-	</div>
+    <div class="carousel-inner">
+        @if (Model != null)
+        {
+            int index = 0; // Initialize index outside of the loop
 
+            @foreach (var banner in Model)
+            {
+                if (index == 0)
+                {
+                    <div class="carousel-item active">
+                        <a aria-label="slide" data-cate="0" data-place="1733" href="https://www.topzone.vn/ipad-pro-m4#c=522&amp;p=287094&amp;o=2&amp;pi=0">
+                            <img width="100%" height="100%" class="d-" src="@banner.ImageURL" alt="@banner.BannerAlt">
+                        </a>
+                    </div>
+                } else
+                {
+                    <div class="carousel-item">
+                        <a aria-label="slide" data-cate="0" data-place="1733" href="https://www.topzone.vn/khuyen-mai-ipad" ">
+                            <img width="100%" height="100%" loading="lazy" class="owl-lazy lazyloaded" data-src=@banner.ImageURL" alt="@banner.BannerAlt" src="@banner.ImageURL" style="opacity: 1;">
+                        </a>
+                    </div>
+                }
+                index++; // Increment index after each iteration
+            }
+        }
+    </div>
 	<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
 		<i class="fas fa-arrow-left" style="width:60px; background-color: rgba(0, 0, 0, 0.5);
             border-radius: 50%;

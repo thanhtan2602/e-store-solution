@@ -32,7 +32,7 @@ namespace Store.Infrastructure.Repositories
                     _flashSale.DateClose = flashSale.DateClose;
                     _flashSale.DateOpen = flashSale.DateOpen;
                     _flashSale.UpdatedBy = flashSale.UpdatedBy;
-                    _flashSale.UpdateDate = DateTime.Now;
+                    _flashSale.UpdatedDate = DateTime.Now;
                     _flashSale.Description = flashSale.Description;
                     _context.FlashSales.Update(_flashSale);
                 }
@@ -47,7 +47,7 @@ namespace Store.Infrastructure.Repositories
                     Description = flashSale.Description,
                     IsActive = true,
                     UpdatedBy = flashSale.UpdatedBy,
-                    UpdateDate = DateTime.Now,
+                    UpdatedDate = DateTime.Now,
                     DateOpen = flashSale.DateOpen,
                     DateClose = flashSale.DateClose,
                 };
@@ -87,24 +87,15 @@ namespace Store.Infrastructure.Repositories
                 }
             }
         }
-        public async Task<IEnumerable<FlashSalesVM>> GetAllFlashSale(int page = 1, int pageSize = 2)
+        public async Task<IEnumerable<FlashSale>> GetAllFlashSale()
         {
-            var flashsales = _context.FlashSales
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .Where(f => f.IsDeleted == false && f.IsActive == true)
-                .AsNoTracking();
-            var listFlasSale = flashsales.Select(x => new FlashSalesVM
-            {
-                FlashSaleId = x.Id,
-                FlashSaleTitle = x.Title,
-                FlashSaleDescription = x.Description,
-                DateOpen = x.DateOpen.ToLocalTime().ToString("HH:mm dd-MM-yyyy"),
-                DateClose = x.DateClose.ToLocalTime().ToString("HH:mm dd-MM-yyyy"),
-                IsDelete = x.IsDeleted,
-                IsActive = x.IsActive
-            });
-            return listFlasSale;
+            var flashsales = await _context.FlashSales
+                .Include(x=>x.FlashSaleProducts)
+                .ThenInclude(x=>x.Product)
+                .ThenInclude(x=>x.ProductImages)
+                .ToListAsync();
+            
+            return  flashsales != null ? flashsales : new List<FlashSale>();
         }
         public void DeletedFlashSale(int flashSaleId)
         {

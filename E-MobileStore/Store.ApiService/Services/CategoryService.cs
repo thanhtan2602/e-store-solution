@@ -1,4 +1,5 @@
 ﻿using Store.ApiService.Services.Interfaces;
+using Store.Domain.Entities;
 using Store.Infrastructure.DTOs;
 using Store.Infrastructure.Repositories.Interfaces;
 using Store.Infrastructure.ViewModels;
@@ -18,9 +19,9 @@ namespace Store.ApiService.Services
         {
             _categoryRepository = categoryRepository;
         }
-        public async Task<IEnumerable<CategoryVM>> GetAllCategories(int page, int pageSize)
+        public async Task<IEnumerable<Category>> GetAllCategories()
         {
-            return await _categoryRepository.GetAllCategories(page, pageSize);
+            return await _categoryRepository.GetAllCategories();
 
         }
         public async Task<CategoryVM> GetById(int categoryId)

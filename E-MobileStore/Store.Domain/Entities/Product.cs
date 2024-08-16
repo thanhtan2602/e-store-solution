@@ -23,7 +23,6 @@ namespace Store.Domain.Entities
         public string ShortDesc { get; set; }
         public string Description { get; set; }
         public int CategoryId { get; set; }
-        [JsonIgnore]
         public Category Category { get; set; }
         public ICollection<FlashSaleProduct> FlashSaleProducts { get; set; }
         public ICollection<CartItem> CartItems { get; set; }
