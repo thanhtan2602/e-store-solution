@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Store.WebService.ViewModels.vmCategory>;
+@{
+    ViewData["Title"] = "ChosseCate";
+}
+
+<ul class="choose-cate  ">
+    @if(Model != null)
+    {
+        @foreach(var category in Model)
+        {
+            <li>
+                <a href="/@category.Id">
+                    <div class="img-catesp cateiphone">
+                        <img src="@category.ImageURL" alt="@category.Name" width="102" height="112">
+                    </div>
+                    <span>@category.Name</span>
+                </a>
+            </li>
+        }
+    }
+</ul>
+
+

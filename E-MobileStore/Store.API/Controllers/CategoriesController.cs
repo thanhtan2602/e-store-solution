@@ -24,11 +24,11 @@ namespace Store.API.Controllers
 
         [HttpGet]
         [Route("GetAllCategory")]
-        public async Task<IActionResult> GetAllCategoriesAsync(int page = 1, int pageSize = 2)
+        public async Task<IActionResult> GetAllCategoriesAsync()
         {
             try
             {
-                var listCate = await _category.GetAllCategories(page, pageSize);
+                var listCate = await _category.GetAllCategories();
                 _response.IsSuccess = true;
                 _response.Result = listCate;
                 return Ok(_response);

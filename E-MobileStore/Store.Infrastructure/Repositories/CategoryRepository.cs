@@ -21,36 +21,13 @@ namespace Store.Infrastructure.Repositories
         {
             _context = context;
         }
-        public Task<IEnumerable<CategoryVM>> GetAllCategories(int page = 1, int pageSize = 2)
+        public async Task<IEnumerable<Category>> GetAllCategories()
         {
-            var listCate = _context.Categories
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .Where(x => x.IsActive)
-                .AsNoTracking();
-            var result = listCate.Select(x => new CategoryVM
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Description = x.Description,
-                ImageURL = x.ImageURL,
-                CreatedBy = x.CreatedBy,
-                CreatedDate = x.CreatedDate.ToLocalTime().ToString("HH:mm dd:MM:yyyy"),
-                isActive = x.IsActive,
-                isDeleted = x.isDeleted,
-                UpdatedBy = x.UpdatedBy,
-                UpdatedDate = x.UpdateDate.ToLocalTime().ToString("HH:mm dd:MM:yyyy")
-            }).Where(c => c.isDeleted == false).ToList();
-            if (result == null)
-            {
-                throw new Exception("There are no category");
-            }
-            else
-            {
-                return Task.FromResult<IEnumerable<CategoryVM>>(result);
-            }
-        }
+            var result = await _context.Categories.Include(x=>x.Products).ThenInclude(x=>x.ProductImages)
+                .Where(x => x.IsActive && !x.IsDeleted).ToListAsync();
+            return result != null ? result : new List<Category>();
 
+        }
         public Task<CategoryVM> GetById(int categoryId)
         {
             var cate = _context.Categories.FirstOrDefault(x => x.Id == categoryId);
@@ -67,12 +44,12 @@ namespace Store.Infrastructure.Repositories
                     Name = cate.Name,
                     Description = cate.Description,
                     ImageURL = cate.ImageURL,
-                    isActive = cate.IsActive,
-                    isDeleted = cate.isDeleted,
+                    IsActive = cate.IsActive,
+                    IsDeleted = cate.IsDeleted,
                     CreatedBy = cate.CreatedBy,
                     CreatedDate = cate.CreatedDate.ToLocalTime().ToString("HH:mm dd:MM:yyyy"),
                     UpdatedBy = cate.UpdatedBy,
-                    UpdatedDate = cate.UpdateDate.ToLocalTime().ToString("HH:mm dd:MM:yyyy")
+                    UpdatedDate = cate.UpdatedDate.ToLocalTime().ToString("HH:mm dd:MM:yyyy")
                 };
                 return Task.FromResult(result);
             }
@@ -92,9 +69,9 @@ namespace Store.Infrastructure.Repositories
                     cate.Description = category.Description;
                     cate.ImageURL = category.ImageURL;
                     cate.IsActive = category.isActive;
-                    cate.isDeleted = category.isDeleted;
+                    cate.IsDeleted = category.isDeleted;
                     cate.UpdatedBy = category.UpdatedBy;
-                    cate.UpdateDate = DateTime.Now;
+                    cate.UpdatedDate = DateTime.Now;
                     _context.Categories.Update(cate);
                 }
             }
@@ -115,7 +92,7 @@ namespace Store.Infrastructure.Repositories
                         CreatedBy = category.CreatedBy,
                         CreatedDate = DateTime.Now,
                         IsActive = category.isActive,
-                        isDeleted = false,
+                        IsDeleted = false,
                         UpdatedBy = string.Empty,
                     };
                     _context.Categories.Add(newCategory);
@@ -124,17 +101,16 @@ namespace Store.Infrastructure.Repositories
             _context.SaveChanges();
         }
         public void DeleteCategory(int categoryId)
-        {
+           {
             var cate = _context.Categories.FirstOrDefault(c => c.Id == categoryId);
             if (cate == null)
             {
                 throw new Exception("Category was not found");
-
             }
             else
             {
-                cate.isDeleted = true;
-                cate.UpdateDate = DateTime.Now;
+                cate.IsDeleted = true;
+                cate.UpdatedDate = DateTime.Now;
                 _context.Categories.Update(cate);
                 _context.SaveChanges();
             };

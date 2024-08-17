@@ -11,6 +11,14 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 //Register services
 builder.Services.AddScoped<IProductApi, ProductApi>();
 builder.Services.AddScoped<IProductWebService, ProductWebService>();
+builder.Services.AddScoped<ICategoryApi, CategoryApi>();
+builder.Services.AddScoped<ICategoryWebService, CategoryWebService>();
+builder.Services.AddScoped<IBannerApi, BannerApi>();
+builder.Services.AddScoped<IBannerWebService, BannerWebService>();
+builder.Services.AddScoped<INewsApi, NewsApi>();
+builder.Services.AddScoped<INewsWebService, NewsWebService>();
+builder.Services.AddScoped<IFlashSaleApi, FlashSaleApi>();
+builder.Services.AddScoped<IFlashSaleWebService, FlashSaleWebService>();
 
 var app = builder.Build();
 

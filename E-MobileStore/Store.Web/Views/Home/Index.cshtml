@@ -1,9 +1,44 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-    Layout = "_Layout";
+﻿@model Store.Web.ViewsModel.HomeVM
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@Html.Partial("_Header", Model.ChosseCate)
+@Html.Partial("HomeSlider", Model.HomeSlider)
+@Html.Partial("FlashSale", Model.FlashSale);
+@*ChooseCate*@
+@Html.Partial("ChosseCate", Model.ChosseCate)
+@Html.Partial("ProductByCate", Model.ProductByCate)
+@*iPhone*@
+
+
+@*TekZone*@
+@Html.Partial("TekZone", Model.TekZone)
+
+@*Listsieuthi*@
+@Html.Partial("ListBranch")
+
+@*poli*@
+@Html.Partial("Privacy")
+
+@Html.Partial("_Footer")
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.filtering').slick({
+                slidesToShow: 4,
+                slidesToScroll: 2,
+                arrows: true,
+
+            });
+
+
+
+        });
+
+
+    </script>
+}

@@ -34,7 +34,7 @@ namespace Store.Infrastructure.Repositories
             else
             {
                 product.IsDeleted = true;
-                product.UpdateDate = DateTime.Now;
+                product.UpdatedDate = DateTime.Now;
                 _context.Products.Update(product);
                 _context.SaveChanges();
             }
@@ -63,8 +63,8 @@ namespace Store.Infrastructure.Repositories
                     //PriceSale=x.FlashSaleProducts
                     CategoryId = product.CategoryId,
                     CategoryName = product.Category.Name,
-                    isActive = product.IsActive,
-                    isDeleted = product.IsDeleted,
+                    IsActive = product.IsActive,
+                    IsDeleted = product.IsDeleted,
                     Rates = product.Rates,
                     Comments = product.Comments,
                     ProductImages = product.ProductImages.Where(p => p.IsActive && !p.IsDeleted).Select(img => new ProductImagesVM
@@ -96,7 +96,7 @@ namespace Store.Infrastructure.Repositories
                 .Take(pageSize)
                 .AsNoTracking();
             var productlist = product
-                .Where(x => x.Category.isDeleted == false && x.Category.IsActive == true)
+                .Where(x => x.Category.IsDeleted == false && x.Category.IsActive == true)
                 .Select(x => new ProductsVM
                 {
                     Id = x.Id,
@@ -105,8 +105,8 @@ namespace Store.Infrastructure.Repositories
                     Description = x.Description,
                     CategoryId = x.CategoryId,
                     CategoryName = x.Category.Name,
-                    isActive = x.IsActive,
-                    isDeleted = x.IsDeleted,
+                    IsActive = x.IsActive,
+                    IsDeleted = x.IsDeleted,
                     ProductImages = x.ProductImages
                     .Where(p => p.IsActive && !p.IsDeleted)
                     .OrderBy(p => p.Position)
@@ -119,7 +119,7 @@ namespace Store.Infrastructure.Repositories
                     }).ToList(),
                     Price = x.Price,
                     Quantity = x.Quantity,
-                }).Where(p => p.CategoryId == categoryId && p.isDeleted == false).ToList();
+                }).Where(p => p.CategoryId == categoryId && p.IsDeleted == false).ToList();
             if (productlist == null)
             {
                 throw new Exception("There are no products");
@@ -153,7 +153,7 @@ namespace Store.Infrastructure.Repositories
                     CreatedBy = product.CreatedBy,
                     CreatedDate = DateTime.Now,
                     UpdatedBy = product.UpdatedBy,
-                    UpdateDate = DateTime.Now,
+                    UpdatedDate = DateTime.Now,
                 };
                 _context.Products.Add(newProduct);
 
@@ -178,7 +178,7 @@ namespace Store.Infrastructure.Repositories
                     existingProduct.CreatedBy = existingProduct.CreatedBy;
                     existingProduct.CreatedDate = existingProduct.CreatedDate;
                     existingProduct.UpdatedBy = product.UpdatedBy;
-                    existingProduct.UpdateDate = DateTime.Now;
+                    existingProduct.UpdatedDate = DateTime.Now;
                     existingProduct.IsActive = product.isActive;
                     existingProduct.IsDeleted = product.isDeleted;
                     _context.Products.Update(existingProduct);
@@ -226,8 +226,8 @@ namespace Store.Infrastructure.Repositories
                     CategoryId = fsp.Product.CategoryId,
                     CategoryName = fsp.Product.Category.Name,
                     ShortDesc = fsp.Product.ShortDesc,
-                    isActive = fsp.Product.IsActive,
-                    isDeleted = fsp.Product.IsDeleted,
+                    IsActive = fsp.Product.IsActive,
+                    IsDeleted = fsp.Product.IsDeleted,
                     ProductImages = fsp.Product.ProductImages.Where(p => p.IsActive && !p.IsDeleted).Select(img => new ProductImagesVM
                     {
                         Id = img.Id,
@@ -242,7 +242,11 @@ namespace Store.Infrastructure.Repositories
 
         public async Task<IEnumerable<Product>> GetProductListByCateId(int cateId)
         {
-            var products = await _context.Products.Where(x => x.CategoryId == cateId).ToListAsync();
+            var products = await _context.Products
+                .Include(x=>x.Category)
+                .Include(x=>x.ProductImages)
+                .Include(x => x.ProductAttributes)
+                .Where(x => x.CategoryId == cateId).ToListAsync();
             return products != null ? products : new List<Product>();
         }
     }
