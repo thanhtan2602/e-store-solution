@@ -9,6 +9,6 @@ namespace Store.WebService.Services.Interfaces
 {
     public interface INewsWebService
     {
-        Task<List<vmNews>> GetAllNews();
+        Task<List<vmNews>> GetAllNews(int page, int pageSize);
     }
 }

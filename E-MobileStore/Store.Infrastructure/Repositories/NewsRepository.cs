@@ -14,62 +14,63 @@ namespace Store.Infrastructure.Repositories
     public class NewsRepository : INewsRepository
     {
         private readonly ApplicationDbContext _context;
-
         public NewsRepository(ApplicationDbContext context)
         {
             _context = context;
         }
-        public void DeleteNew(int id)
+        public void DeleteNews(int newsId)
         {
-            var _new = _context.News.FirstOrDefault(x => x.Id == id);
-            if (_new != null)
+            var news = _context.News.FirstOrDefault(x => x.Id == newsId);
+            if (news != null)
             {
-                _new.IsDeleted = true;
-                _new.UpdatedDate = DateTime.Now;
-                _context.News.Update(_new);
+                news.IsDeleted = true;
+                news.UpdatedDate = DateTime.Now;
+                _context.News.Update(news);
                 _context.SaveChanges();
             }
             throw new Exception("New not found");
         }
-
-        public async Task<New> GetNewByIdAsync(int newId)
+        public async Task<New> GetNewsByIdAsync(int newId)
         {
-            var _new = await _context.News
+            var news = await _context.News
                 .Include(x => x.Category)
                 .Where(x => !x.IsDeleted).FirstOrDefaultAsync(x => x.Id == newId);
-            if (_new != null)
+            if (news != null)
             {
-                return _new;
+                return news;
             }
             else
             {
                 throw new Exception("New not found");
             }
         }
-
-        public async Task<List<New>> GetNewsAsync()
+        public async Task<List<New>> GetNewsAsync(int page, int pageSize)
         {
-            var _news = await _context.News
+            var news = await _context.News
                 .Include(x => x.Category)
-                .Where(x => !x.IsDeleted).ToListAsync();
-            return _news != null ? _news : new List<New>();
+                .Where(x => !x.IsDeleted)
+                .OrderByDescending(x => x.CreatedDate)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .AsNoTracking()
+                .ToListAsync();
+            return news ?? new List<New>();
         }
-
-        public void InsertOrUpdateNew(NewDTO newDTO)
+        public void InsertOrUpdateNews(NewsDTO newsDTO)
         {
-            if (newDTO.Id > 0)
+            if (newsDTO.Id > 0)
             {
-                var updateNew = _context.News.FirstOrDefault(x => x.Id == newDTO.Id);
+                var updateNew = _context.News.FirstOrDefault(x => x.Id == newsDTO.Id);
                 if (updateNew != null)
                 {
-                    updateNew.Title = newDTO.Title;
-                    updateNew.Description = newDTO.Description;
-                    updateNew.ShortDesc = newDTO.ShortDesc;
-                    updateNew.ImageURL = newDTO.ImageURL;
-                    updateNew.UpdatedDate = newDTO.UpdatedDate;
-                    updateNew.UpdatedBy = newDTO.UpdatedBy;
-                    updateNew.CategoryId = newDTO.CategoryId;
-                    updateNew.IsActive = newDTO.IsActive;
+                    updateNew.Title = newsDTO.Title;
+                    updateNew.Description = newsDTO.Description;
+                    updateNew.ShortDesc = newsDTO.ShortDesc;
+                    updateNew.ImageURL = newsDTO.ImageURL;
+                    updateNew.UpdatedDate = newsDTO.UpdatedDate;
+                    updateNew.UpdatedBy = newsDTO.UpdatedBy;
+                    updateNew.CategoryId = newsDTO.CategoryId;
+                    updateNew.IsActive = newsDTO.IsActive;
                     _context.News.Update(updateNew);
                 }
                 else
@@ -81,14 +82,14 @@ namespace Store.Infrastructure.Repositories
             {
                 var insertNew = new New()
                 {
-                    Title = newDTO.Title,
-                    Description = newDTO.Description,
-                    ShortDesc = newDTO.ShortDesc,
-                    ImageURL = newDTO.ImageURL,
-                    CategoryId = newDTO.CategoryId,
-                    CreatedBy = newDTO.CreatedBy,
-                    CreatedDate = newDTO.CreatedDate,
-                    IsActive = newDTO.IsActive,
+                    Title = newsDTO.Title,
+                    Description = newsDTO.Description,
+                    ShortDesc = newsDTO.ShortDesc,
+                    ImageURL = newsDTO.ImageURL,
+                    CategoryId = newsDTO.CategoryId,
+                    CreatedBy = newsDTO.CreatedBy,
+                    CreatedDate = newsDTO.CreatedDate,
+                    IsActive = newsDTO.IsActive,
                     IsDeleted = false,
                 };
                 _context.News.Add(insertNew);

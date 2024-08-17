@@ -4,6 +4,7 @@ using Store.ApiService.Services;
 using Store.ApiService.Services.Interfaces;
 using Store.Infrastructure.DTOs;
 using System.Net;
+using System.Reflection.Metadata;
 
 namespace Store.API.Controllers
 {
@@ -11,22 +12,20 @@ namespace Store.API.Controllers
     [ApiController]
     public class NewsController : ControllerBase
     {
-        private readonly INewsService _newService;
+        private readonly INewsService _newsService;
         private readonly BaseApiResponse _response;
-
         public NewsController(INewsService newsService)
         {
-            _newService = newsService;
+            _newsService = newsService;
             _response = new BaseApiResponse();
         }
         [HttpGet]
         [Route("GetAllNews")]
-        public async Task<IActionResult> GetAllNews()
+        public async Task<IActionResult> GetAllNews(int page, int pageSize)
         {
             try
             {
-                var listNews = await _newService.GetNewsAsync();
-                _response.IsSuccess = true;
+                var listNews = await _newsService.GetNewsAsync(page,pageSize);
                 _response.Result = listNews;
                 return Ok(_response);
             }
@@ -45,9 +44,8 @@ namespace Store.API.Controllers
         {
             try
             {
-                var _new = await _newService.GetNewByIdAsync(newId);
-                _response.IsSuccess = true;
-                _response.Result = _new;
+                var news = await _newsService.GetNewsByIdAsync(newId);
+                _response.Result = news;
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -61,13 +59,11 @@ namespace Store.API.Controllers
         }
         [HttpPost]
         [Route("InsertOrUpdateNews")]
-        public IActionResult InsertOrUpdateNews(NewDTO News)
+        public IActionResult InsertOrUpdateNews(NewsDTO News)
         {
-
             try
             {
-                _newService.InsertOrUpdateNew(News);
-                _response.IsSuccess = true;
+                _newsService.InsertOrUpdateNews(News);
                 _response.Result = News;
                 return Ok(_response);
             }
@@ -82,13 +78,12 @@ namespace Store.API.Controllers
         }
         [HttpPut]
         [Route("DeleteNews")]
-        public IActionResult DeleteNews(int NewsId)
+        public IActionResult DeleteNews(int newsId)
         {
             try
             {
-                _newService.DeleteNew(NewsId);
+                _newsService.DeleteNews(newsId);
                 _response.StatusCode = HttpStatusCode.OK;
-                _response.IsSuccess = true;
                 _response.Message = "This News has been deleted";
                 return Ok(_response);
             }
