@@ -11,10 +11,9 @@ namespace Store.WebService.APIs
     {
         public NewsApi() { }
         private string baseUrl = "http://localhost:5163";
-      
-        public string GetNews()
+        public string GetNews(int page, int pageSize)
         {
-            return $"{baseUrl}/api/news/getallnews";
+            return $"{baseUrl}/api/news/getallnews?page={page}&pageSize={pageSize}";
         }
     }
 }

@@ -10,9 +10,9 @@ namespace Store.Infrastructure.Repositories.Interfaces
 {
     public interface INewsRepository
     {
-        Task<List<New>> GetNewsAsync();
-        Task<New> GetNewByIdAsync(int newId);
-        void InsertOrUpdateNew(NewDTO newDTO);
-        void DeleteNew(int id);
+        Task<List<New>> GetNewsAsync(int page, int pageSize);
+        Task<New> GetNewsByIdAsync(int newsId);
+        void InsertOrUpdateNews(NewsDTO newsDTO);
+        void DeleteNews(int newsId);
     }
 }

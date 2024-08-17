@@ -13,29 +13,25 @@ namespace Store.ApiService.Services
     public class NewsService : INewsService
     {
         private readonly INewsRepository _newRepository;
-
-        public NewsService(INewsRepository newsRepository) 
+        public NewsService(INewsRepository newsRepository)
         {
-            _newRepository=newsRepository;
+            _newRepository = newsRepository;
         }
-        public void DeleteNew(int id)
+        public void DeleteNews(int newsId)
         {
-            _newRepository.DeleteNew(id);
+            _newRepository.DeleteNews(newsId);
         }
-
-        public async Task<New> GetNewByIdAsync(int newId)
+        public async Task<New> GetNewsByIdAsync(int newsId)
         {
-            return await _newRepository.GetNewByIdAsync(newId);
+            return await _newRepository.GetNewsByIdAsync(newsId);
         }
-
-        public async Task<List<New>> GetNewsAsync()
+        public async Task<List<New>> GetNewsAsync(int page, int pageSize)
         {
-            return await _newRepository.GetNewsAsync();
+            return await _newRepository.GetNewsAsync(page, pageSize);
         }
-
-        public void InsertOrUpdateNew(NewDTO newDTO)
+        public void InsertOrUpdateNews(NewsDTO newsDTO)
         {
-            _newRepository.InsertOrUpdateNew(newDTO);
+            _newRepository.InsertOrUpdateNews(newsDTO);
         }
     }
 }

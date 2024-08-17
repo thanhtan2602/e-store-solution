@@ -8,6 +8,6 @@ namespace Store.WebService.APIs.Interfaces
 {
     public interface INewsApi
     {
-        string GetNews();
+        string GetNews(int page, int pageSize);
     }
 }

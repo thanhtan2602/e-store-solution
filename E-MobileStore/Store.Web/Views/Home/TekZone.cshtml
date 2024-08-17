@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Store.WebService.ViewModels.vmNews>
+﻿@using static Store.Web.StaticUtilityClass.UtilitiesClass
+@model IEnumerable<Store.WebService.ViewModels.vmNews>
 @{
 }
 <div class="box-slide">
@@ -9,26 +10,6 @@
             var sortNews = Model.OrderByDescending(x => x.CreatedDate).Take(6).ToList();
             @foreach (var news in sortNews)
             {
-                var timeSpan = DateTime.Now - news.CreatedDate;
-                string timeAgo;
-                if(timeSpan.TotalDays > 1)
-                {
-                    timeAgo = $"{(int)timeSpan.TotalDays} ngày trước";
-                }
-                else if(timeSpan.TotalHours > 1)
-                {
-                    timeAgo = $"{(int)timeSpan.TotalHours} giờ trước";
-
-                }
-                else if(timeSpan.TotalMinutes > 1)
-                {
-                    timeAgo = $"{(int)timeSpan.TotalMinutes} phút trước";
-                }
-                else
-                {
-                    timeAgo = "Vừa xong";
-
-                }
                 <div class="owl-item" style="width: 393.333px; margin-right: 10px;">
                     <div class="item">
                         <a href="/tekzone/@news.Id">
@@ -36,7 +17,7 @@
                                 <img data-src="@news.ImageURL" alt="@news.ShortDesc" class=" lazyloaded" width="376" height="150" src="@news.ImageURL">
                             </div>
                             <h3>@news.ShortDesc</h3>
-                            <span class="timepost">@timeAgo</span>
+                            <span class="timepost">@DisplayTime(news.CreatedDate)</span>
                         </a>
                     </div>
                 </div>
@@ -51,13 +32,7 @@
                 slidesToShow: 4,
                 slidesToScroll: 2,
                 arrows: true,
-
             });
-
-
-
         });
-
-
     </script>
 }
