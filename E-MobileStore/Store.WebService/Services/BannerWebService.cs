@@ -15,18 +15,17 @@ namespace Store.WebService.Services
     {
         private readonly IBannerApi _bannerApi;
         private readonly HttpClient _client;
-
         public BannerWebService(IBannerApi bannerApi)
         {
             _bannerApi = bannerApi;
             _client = new HttpClient();
         }
-        public async Task<List<vmBanner>> GetAllBanner()
+        public async Task<List<vmBanner>> GetAllBanner(int page, int pageSize)
         {
             try
             {
                 var banners = new List<vmBanner>();
-                var uri = _bannerApi.GetAllBanner();
+                var uri = _bannerApi.GetAllBanner(page, pageSize);
                 var response = await _client.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
@@ -38,20 +37,20 @@ namespace Store.WebService.Services
                         {
                             banners.Add(new vmBanner
                             {
-                                Id= banner.Id,
-                                ImageURL= banner.ImageURL,
-                                BannerAlt= banner.BannerAlt,
-                                IsDeleted= banner.IsDeleted,
+                                Id = banner.Id,
+                                ImageURL = banner.ImageURL,
+                                BannerAlt = banner.BannerAlt,
+                                Position = banner.Position,
+                                IsDeleted = banner.IsDeleted,
                                 IsActive = banner.IsActive,
-                                CategoryId= banner.CategoryId,
-                                CreatedDate = banner.CreatedDate,
-                                UpdatedDate = banner.UpdatedDate
+                                CategoryId = banner.CategoryId,
+                                CreatedDate = banner.CreatedDate.ToLocalTime().ToString("HH:mm dd/MM/yyyy"),
+                                UpdatedDate = banner.UpdatedDate.ToLocalTime().ToString("HH:mm dd/MM/yyyy")
                             });
                         }
                     }
                 }
                 return banners;
-
             }
             catch (Exception ex)
             {

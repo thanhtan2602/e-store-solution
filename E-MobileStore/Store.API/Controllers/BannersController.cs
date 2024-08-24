@@ -13,20 +13,18 @@ namespace Store.API.Controllers
     {
         private readonly IBannerService _bannerService;
         private BaseApiResponse _response;
-        public BannersController(IBannerService bannerService) 
+        public BannersController(IBannerService bannerService)
         {
             _bannerService = bannerService;
             _response = new BaseApiResponse();
         }
-
         [HttpGet]
         [Route("GetAllBanner")]
-        public async Task<IActionResult> GetAllBanner()
+        public async Task<IActionResult> GetAllBanner(int page, int pageSize)
         {
             try
             {
-                var listBanner = await _bannerService.GetAllBannerAsync();
-                _response.IsSuccess = true;
+                var listBanner = await _bannerService.GetAllBannerAsync(page, pageSize);
                 _response.Result = listBanner;
                 return Ok(_response);
             }
@@ -43,11 +41,9 @@ namespace Store.API.Controllers
         [Route("InsertOrUpdateBanner")]
         public IActionResult InsertOrUpdateBanner(BannerDTO banner)
         {
-
             try
             {
                 _bannerService.InsertOrUpdateBanner(banner);
-                _response.IsSuccess = true;
                 _response.Result = banner;
                 return Ok(_response);
             }
@@ -68,7 +64,6 @@ namespace Store.API.Controllers
             {
                 _bannerService.DeletedBanner(bannerId);
                 _response.StatusCode = HttpStatusCode.OK;
-                _response.IsSuccess = true;
                 _response.Message = "This banner has been deleted";
                 return Ok(_response);
             }

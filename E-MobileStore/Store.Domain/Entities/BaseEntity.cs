@@ -10,7 +10,6 @@ namespace Store.Domain.Entities
     {
         public virtual T Id { get; set; }
         public bool IsActive { get; set; } = true;
-
         public string CreatedBy { get; set; } = string.Empty;
         public string UpdatedBy { get; set; } = string.Empty;
         public DateTime CreatedDate { get; set; }

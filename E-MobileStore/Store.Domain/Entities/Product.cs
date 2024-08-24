@@ -16,6 +16,7 @@ namespace Store.Domain.Entities
         [Required]
 
         public decimal Price { get; set; }
+        public decimal PriceSale { get; set; }
         [Required]
         [StringLength(250)]
         public int Quantity { get; set; }

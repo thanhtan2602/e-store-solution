@@ -11,11 +11,11 @@ namespace Store.ApiService.Services.Interfaces
 {
     public interface IProductService
     {
-        Task<IEnumerable<ProductsVM>> GetProductList(int categoryId, int page, int pageSize);
         Task<IEnumerable<ProductsVM>> GetSaleProducts(int flashSaleId);
-        Task<ProductsVM> GetProductById(Guid productId);
+        Task<Product> GetProductById(Guid productId);
         void AddOrUpdateProduct(ProductDTO product);
         void DeleteProduct(Guid productId);
-        Task<IEnumerable<Product>> GetProductListByCateId(int cateId);
+        Task<IEnumerable<Product>> GetProductListByCateId(int cateId, int page, int pageSize);
+        Task<IEnumerable<Product>> GetProductSearchAsync(string? search, int page, int pageSize);
     }
 }

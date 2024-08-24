@@ -32,6 +32,7 @@ namespace Store.Infrastructure.Data
         public DbSet<UserInfor> UserInfors { get; set; }
         public DbSet<FlashSale> FlashSales { get; set; }
         public DbSet<FlashSaleProduct> FlashSaleProducts { get; set; }
+        public DbSet<StoreList> Stores { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
         }
@@ -53,6 +54,7 @@ namespace Store.Infrastructure.Data
             builder.ApplyConfiguration(new NewConfiguration());
             builder.ApplyConfiguration(new FlashSaleProductConfiguration());
             builder.ApplyConfiguration(new FlashSaleConfiguration());
+            builder.ApplyConfiguration(new StoreListConfiguration());
             base.OnModelCreating(builder);
         }
     }

@@ -10,6 +10,7 @@ namespace Store.WebService.Services.Interfaces
     public interface IProductWebService
     {
         Task<vmProduct> GetProductDetail(int productId);
-        Task<List<vmProduct>> GetProductListByCateId(int cateId);
+        Task<List<vmProduct>> GetProductListByCateId(int cateId, int page, int pageSize);
+        Task<List<vmProduct>> GetProductSearch(string search, int page, int pageSize);
     }
 }

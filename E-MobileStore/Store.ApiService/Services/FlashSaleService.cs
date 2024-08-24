@@ -15,37 +15,30 @@ namespace Store.ApiService.Services
     public class FlashSaleService : IFlashSaleService
     {
         private readonly IFlashSaleRepository _flashSaleRepository;
-
         public FlashSaleService(IFlashSaleRepository flashSaleRepository)
         {
             _flashSaleRepository = flashSaleRepository;
         }
-
         public void AddOrUpdateFlashSale(FlashSaleDTO flashSaleDTO)
         {
             _flashSaleRepository.AddOrUpdateFlashSale(flashSaleDTO);
         }
-
         public void AddListFlashSaleProduct(List<FlashSaleProductDTO> flashSaleProductDTO, int flashSaleId)
         {
             _flashSaleRepository.AddListFlashSaleProduct(flashSaleProductDTO, flashSaleId);
         }
-
-        public async Task<IEnumerable<FlashSale>> GetAllFlashSale()
+        public async Task<IEnumerable<FlashSale>> GetAllFlashSale(int page, int pageSize)
         {
-            return await _flashSaleRepository.GetAllFlashSale();
+            return await _flashSaleRepository.GetAllFlashSale(page, pageSize);
         }
-
         public void UpdateFlashSaleProduct(FlashSaleProductDTO flashSaleProductDTO)
         {
             _flashSaleRepository.UpdateFlashSaleProduct(flashSaleProductDTO);
         }
-
         public void DeletedFlashSale(int flashSaleId)
         {
             _flashSaleRepository.DeletedFlashSale(flashSaleId);
         }
-
         public void DeletedFlashSaleProduct(FlashSaleProductDTO flashSaleProductDTO)
         {
             _flashSaleRepository.DeletedFlashSaleProduct(flashSaleProductDTO);

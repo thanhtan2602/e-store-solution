@@ -11,35 +11,11 @@ namespace Store.API.Controllers
     {
         private readonly IProductService _productService;
         private BaseApiResponse _response;
-
         public ProductsController(IProductService productService)
         {
             _productService = productService;
             _response = new BaseApiResponse();
         }
-
-        [HttpGet]
-        [Route("GetProductList")]
-        public async Task<IActionResult> GetProductListAsync(int categoryId, int page = 1, int pageSize = 2)
-        {
-            try
-            {
-                var products = await _productService.GetProductList(categoryId, page, pageSize);
-                _response.IsSuccess = true;
-                _response.Success(products);
-                return Ok(_response);
-            }
-            catch (Exception ex)
-            {
-                var statuscode = _response.StatusCode = HttpStatusCode.NotFound;
-                var message = _response.ErrorMessages = new List<string> { ex.Message };
-
-                _response.Failed(statuscode, message);
-                _response.IsSuccess = false;
-                return BadRequest(_response);
-            }
-        }
-
 
         [HttpGet]
         [Route("GetSaleProducts")]
@@ -48,7 +24,6 @@ namespace Store.API.Controllers
             try
             {
                 var products = await _productService.GetSaleProducts(flashSaleId);
-                _response.IsSuccess = true;
                 _response.Success(products);
                 return Ok(_response);
             }
@@ -62,7 +37,6 @@ namespace Store.API.Controllers
                 return BadRequest(_response);
             }
         }
-
         [HttpGet]
         [Route("GetProductById")]
         public async Task<IActionResult> GetProductById(Guid productId)
@@ -70,7 +44,6 @@ namespace Store.API.Controllers
             try
             {
                 var product = await _productService.GetProductById(productId);
-                _response.IsSuccess = true;
                 _response.Success(product);
                 return Ok(_response);
             }
@@ -78,13 +51,11 @@ namespace Store.API.Controllers
             {
                 var statuscode = _response.StatusCode = HttpStatusCode.NotFound;
                 var message = _response.ErrorMessages = new List<string> { ex.Message };
-
                 _response.Failed(statuscode, message);
                 _response.IsSuccess = false;
                 return BadRequest(_response);
             }
         }
-
         [HttpPost]
         [Route("InsertOrUpdateProduct")]
         public IActionResult AddProduct(ProductDTO product)
@@ -92,20 +63,17 @@ namespace Store.API.Controllers
             try
             {
                 _productService.AddOrUpdateProduct(product);
-                _response.IsSuccess = true;
                 return Ok(_response);
             }
             catch (Exception ex)
             {
                 var statuscode = _response.StatusCode = HttpStatusCode.BadRequest;
                 var message = _response.ErrorMessages = new List<string> { ex.Message };
-
-                _response.Failed(statuscode, message, null);
+                _response.Failed(statuscode, message);
                 _response.IsSuccess = false;
                 return BadRequest(_response);
             }
         }
-
         [HttpPut]
         [Route("DeleteProduct")]
         public IActionResult DeleteProduct(Guid productId)
@@ -126,17 +94,28 @@ namespace Store.API.Controllers
                 return BadRequest(_response);
             }
         }
-
         [HttpGet]
         [Route("GetProductListByCateId")]
-        public async Task<IActionResult> GetProductListByCate(int cateId)
+        public async Task<IActionResult> GetProductListByCate(int cateId, int page, int pageSize)
         {
-            var products =  await _productService.GetProductListByCateId(cateId);
-            if(products == null)
+            var products = await _productService.GetProductListByCateId(cateId, page, pageSize);
+            if (products == null)
             {
                 _response.StatusCode = HttpStatusCode.NotFound;
             }
+            _response.Result = products;
+            return Ok(_response);
+        }
 
+        [HttpGet]
+        [Route("GetProductSearch")]
+        public async Task<IActionResult> GetProductSearch(string? search, int page, int pageSize)
+        {
+            var products = await _productService.GetProductSearchAsync(search, page, pageSize);
+            if (products == null)
+            {
+                _response.StatusCode = HttpStatusCode.NotFound;
+            }
             _response.Result = products;
             return Ok(_response);
         }

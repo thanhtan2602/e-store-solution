@@ -3,20 +3,6 @@
 	ViewData["Title"] = "HomeSlider";
 }
 <style>
-   /*  .owl-dot {
-    position: relative;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #3E3E3F;
-    color: #288ad6;
-    transform: scale(1.25, 1.25);
-    border: 2px solid transparent;
-    margin: 0 5px;
-    cursor: pointer;
-} */
-
-    
 </style>
 <div id="carouselExampleIndicators" class="carousel slide">
 	<div class="carousel-indicators">
@@ -81,8 +67,7 @@
     <div class="carousel-inner">
         @if (Model != null)
         {
-            int index = 0; // Initialize index outside of the loop
-
+            int index = 0;
             @foreach (var banner in Model)
             {
                 if (index == 0)
@@ -100,7 +85,7 @@
                         </a>
                     </div>
                 }
-                index++; // Increment index after each iteration
+                index++;
             }
         }
     </div>

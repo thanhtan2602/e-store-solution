@@ -9,6 +9,6 @@ namespace Store.WebService.Services.Interfaces
 {
     public interface IFlashSaleWebService
     {
-        Task<IEnumerable<vmFlashSale>> GetFlashSale();
+        Task<IEnumerable<vmFlashSale>> GetFlashSale(int page, int pageSize);
     }
 }

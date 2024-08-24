@@ -12,7 +12,7 @@ namespace Store.Infrastructure.Repositories.Interfaces
     public interface ICategoryRepository
     {
         void AddOrUpdateCategory(CategoryDTO category);
-        Task<IEnumerable<Category>> GetAllCategories();
+        Task<IEnumerable<Category>> GetCategoriesAsync(int page, int pageSize);
         Task<CategoryVM> GetById(int categoryId);
         void DeleteCategory(int categoryId);
     }

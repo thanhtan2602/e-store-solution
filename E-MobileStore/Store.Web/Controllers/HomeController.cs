@@ -14,41 +14,44 @@ namespace Store.Web.Controllers
         private readonly IBannerWebService _bannerWebService;
         private readonly INewsWebService _newsWebService;
         private readonly IFlashSaleWebService _flashSaleWebService;
+        private readonly IStoreWebService _storeWebService;
 
-        public HomeController(ILogger<HomeController> logger, ICategoryWebService categoryWebService , IBannerWebService bannerWebService, INewsWebService newsWebService,IFlashSaleWebService flashSaleWebService)
+        public HomeController(ILogger<HomeController> logger, IStoreWebService storeWebService, ICategoryWebService categoryWebService, IBannerWebService bannerWebService, INewsWebService newsWebService, IFlashSaleWebService flashSaleWebService)
         {
             _logger = logger;
-            _categoryWebService =categoryWebService;
-            _bannerWebService=bannerWebService;
+            _categoryWebService = categoryWebService;
+            _bannerWebService = bannerWebService;
             _newsWebService = newsWebService;
-            _flashSaleWebService=flashSaleWebService;
+            _flashSaleWebService = flashSaleWebService;
+            _storeWebService = storeWebService;
         }
-
         public async Task<IActionResult> Index()
         {
-            var catelist = await _categoryWebService.GetAllCategory();
-            var bannerHome = await _bannerWebService.GetAllBanner();
-            var tekZone = await _newsWebService.GetAllNews();
-            var flashSale = await _flashSaleWebService.GetFlashSale();
+            var catelist = await _categoryWebService.GetAllCategory(1, 6);
+            var bannerHome = await _bannerWebService.GetAllBanner(1, 7);
+            var tekZone = await _newsWebService.GetAllNews(1, 6);
+            var flashSale = await _flashSaleWebService.GetFlashSale(1, 2);
+            var storeList = await _storeWebService.GetStoreList(1, 10);
             var result = new HomeVM
             {
                 ChosseCate = catelist,
                 ProductByCate = catelist,
-                HomeSlider =bannerHome,
-                TekZone= tekZone,
-                FlashSale=flashSale,
+                HomeSlider = bannerHome,
+                TekZone = tekZone,
+                FlashSale = flashSale,
+                Stores = storeList
             };
             return PartialView("/Views/Home/Index.cshtml", result);
         }
-        public async Task<PartialViewResult> ProductByCate()
+        public IActionResult ProductByCate()
         {
-            return PartialView("/Views/Home/ProductByCate.cshtml");
+            return View();
         }
-        public async Task<PartialViewResult> ChosseCate()
+        public IActionResult ChosseCate()
         {
-            return  PartialView("/Views/Home/ChosseCate.cshtml");
+            return View();
         }
-        public  IActionResult TekZone()
+        public IActionResult TekZone()
         {
             return View();
         }
@@ -58,9 +61,8 @@ namespace Store.Web.Controllers
         }
         public IActionResult HomeSlider()
         {
-            return PartialView("/Views/Home/HomeSlider.cshtml");
+            return View();
         }
-
         public IActionResult ListBranch()
         {
             return View();
@@ -69,14 +71,5 @@ namespace Store.Web.Controllers
         {
             return View();
         }
-       
-       
-       
-
-        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        //public IActionResult Error()
-        //{
-        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        //}
     }
 }

@@ -16,7 +16,6 @@ namespace Store.API.Controllers
             _flashSale = flashSale;
             _response = new BaseApiResponse();
         }
-
         [HttpPost]
         [Route("InsertOrUpdateFlashSale")]
         public IActionResult InsertOrUpdateFlashSale(FlashSaleDTO flashSale)
@@ -27,14 +26,12 @@ namespace Store.API.Controllers
                 if (flashSale.Id > 0)
                 {
                     _response.Message = "Update success";
-                    _response.IsSuccess = true;
                     _response.Result = flashSale;
                     return Ok(_response);
                 }
                 else
                 {
                     _response.Message = "Insert success";
-                    _response.IsSuccess = true;
                     _response.Result = flashSale;
                     return Ok(_response);
                 }
@@ -56,8 +53,6 @@ namespace Store.API.Controllers
                 return NotFound(_response);
             }
         }
-
-
         [HttpPost]
         [Route("InsertListFlashSaleProduct")]
         public IActionResult AddListFlashSaleProduct(List<FlashSaleProductDTO> flashSaleProductDTO, int flashSaleId)
@@ -66,7 +61,6 @@ namespace Store.API.Controllers
             {
                 _flashSale.AddListFlashSaleProduct(flashSaleProductDTO, flashSaleId);
                 _response.Message = "Insert success";
-                _response.IsSuccess = true;
                 _response.Result = flashSaleProductDTO;
                 return Ok(_response);
             }
@@ -80,7 +74,6 @@ namespace Store.API.Controllers
                 return NotFound(_response);
             }
         }
-
         [HttpPut]
         [Route("UpdateFlashSaleProduct")]
         public IActionResult UpdateFlashSaleProduct(FlashSaleProductDTO flashSaleProductDTO)
@@ -89,7 +82,6 @@ namespace Store.API.Controllers
             {
                 _flashSale.UpdateFlashSaleProduct(flashSaleProductDTO);
                 _response.Message = "Update success";
-                _response.IsSuccess = true;
                 _response.Result = flashSaleProductDTO;
                 return Ok(_response);
             }
@@ -103,17 +95,14 @@ namespace Store.API.Controllers
                 return NotFound(_response);
             }
         }
-
         [HttpGet]
         [Route("GetListFlashSale")]
-        public async Task<IActionResult> GetFlashSaleAsync()
+        public async Task<IActionResult> GetFlashSaleAsync(int page, int pageSize)
         {
             try
             {
-                var listFlashSale = await _flashSale.GetAllFlashSale();
-
+                var listFlashSale = await _flashSale.GetAllFlashSale(page, pageSize);
                 _response.Message = "get success";
-                _response.IsSuccess = true;
                 _response.Result = listFlashSale;
                 return Ok(_response);
             }
@@ -135,7 +124,6 @@ namespace Store.API.Controllers
             {
                 _flashSale.DeletedFlashSale(flashSaleId);
                 _response.Message = "Deleted success";
-                _response.IsSuccess = true;
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -156,7 +144,6 @@ namespace Store.API.Controllers
             {
                 _flashSale.DeletedFlashSaleProduct(flashSaleProductDTO);
                 _response.Message = "Deleted success";
-                _response.IsSuccess = true;
                 return Ok(_response);
             }
             catch (Exception ex)

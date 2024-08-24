@@ -19,6 +19,8 @@ builder.Services.AddScoped<INewsApi, NewsApi>();
 builder.Services.AddScoped<INewsWebService, NewsWebService>();
 builder.Services.AddScoped<IFlashSaleApi, FlashSaleApi>();
 builder.Services.AddScoped<IFlashSaleWebService, FlashSaleWebService>();
+builder.Services.AddScoped<IStoreApi, StoreApi>();
+builder.Services.AddScoped<IStoreWebService, StoreWebService>();
 
 var app = builder.Build();
 

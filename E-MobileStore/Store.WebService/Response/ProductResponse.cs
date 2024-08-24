@@ -1,5 +1,4 @@
 ﻿using Store.Domain.Entities;
-using Store.WebService.DataTransferObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +11,4 @@ namespace Store.WebService.Response
     {
         public List<Product> result { get; set; }
     }
- 
 }

@@ -15,18 +15,17 @@ namespace Store.WebService.Services
     {
         private readonly IFlashSaleApi _flashSaleApi;
         private readonly HttpClient _client;
-
         public FlashSaleWebService(IFlashSaleApi flashSaleApi)
         {
             _flashSaleApi = flashSaleApi;
             _client = new HttpClient();
         }
-        public async Task<IEnumerable<vmFlashSale>> GetFlashSale()
+        public async Task<IEnumerable<vmFlashSale>> GetFlashSale(int page, int pageSize)
         {
             try
             {
                 var flashSales = new List<vmFlashSale>();
-                var uri = _flashSaleApi.GetFlashSale();
+                var uri = _flashSaleApi.GetFlashSale(page, pageSize);
                 var response = await _client.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
@@ -38,18 +37,18 @@ namespace Store.WebService.Services
                         {
                             flashSales.Add(new vmFlashSale
                             {
-                                Id=flashSale.Id,
-                                DateOpen=flashSale.DateOpen,
-                                DateClose=flashSale.DateClose,
-                                Description=flashSale.Description,
-                                CreatedBy=flashSale.CreatedBy,
-                                Title=flashSale.Title,
-                                CreatedDate=flashSale.CreatedDate,
-                                UpdatedBy=flashSale.UpdatedBy,
-                                UpdatedDate=flashSale.UpdatedDate,
-                                IsActive=flashSale.IsActive,
-                                IsDeleted=flashSale.IsDeleted,
-                                FlashSaleProducts=flashSale.FlashSaleProducts,
+                                Id = flashSale.Id,
+                                DateOpen = flashSale.DateOpen,
+                                DateClose = flashSale.DateClose,
+                                Description = flashSale.Description,
+                                CreatedBy = flashSale.CreatedBy,
+                                Title = flashSale.Title,
+                                CreatedDate = flashSale.CreatedDate,
+                                UpdatedBy = flashSale.UpdatedBy,
+                                UpdatedDate = flashSale.UpdatedDate,
+                                IsActive = flashSale.IsActive,
+                                IsDeleted = flashSale.IsDeleted,
+                                FlashSaleProducts = flashSale.FlashSaleProducts,
                             });
                         }
                     }

@@ -39,95 +39,18 @@ namespace Store.Infrastructure.Repositories
                 _context.SaveChanges();
             }
         }
-        public Task<ProductsVM> GetProductById(Guid productId)
+        public async Task<Product> GetProductById(Guid productId)
         {
-            var product = _context.Products
+            var product = await _context.Products
                 .Include(x => x.Category)
                 .Include(x => x.ProductImages)
                 .Include(x => x.ProductAttributes)
                 .ThenInclude(x => x.AttributeValue)
                 .Include(x => x.Rates)
                 .Include(x => x.Comments)
-                .FirstOrDefault(x => x.Id == productId);
-            if (product == null)
-            {
-                throw new Exception("Product not found");
-            }
-            else
-            {
-                var result = new ProductsVM
-                {
-                    Name = product.Name,
-                    ShortDesc = product.ShortDesc,
-                    Price = product.Price,
-                    //PriceSale=x.FlashSaleProducts
-                    CategoryId = product.CategoryId,
-                    CategoryName = product.Category.Name,
-                    IsActive = product.IsActive,
-                    IsDeleted = product.IsDeleted,
-                    Rates = product.Rates,
-                    Comments = product.Comments,
-                    ProductImages = product.ProductImages.Where(p => p.IsActive && !p.IsDeleted).Select(img => new ProductImagesVM
-                    {
-                        Id = img.Id,
-                        Position = img.Position,
-                        ImageName = img.ImageName,
-                        ImageURL = img.ImageURL,
-                    }).ToList(),
-                    ProductAttributes = product.ProductAttributes.Select(atb => new ProductAttributesVM
-                    {
-                        Id = atb.Id,
-                        AttributeContent = atb.AttributeContent,
-                        AttributeName = atb.AttributeValue.AttributeName,
-                        AttributeValueId = atb.AttributeId,
-                    }).ToList(),
-                };
-                return Task.FromResult<ProductsVM>(result);
-            }
-
-        }
-        public Task<IEnumerable<ProductsVM>> GetProductList(int categoryId, int page = 1, int pageSize = 2)
-        {
-            var product = _context.Products
-                .Where(x => x.IsActive)
-                .Include(p => p.Category)
-                .Include(p => p.ProductImages)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .AsNoTracking();
-            var productlist = product
-                .Where(x => x.Category.IsDeleted == false && x.Category.IsActive == true)
-                .Select(x => new ProductsVM
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    ShortDesc = x.ShortDesc,
-                    Description = x.Description,
-                    CategoryId = x.CategoryId,
-                    CategoryName = x.Category.Name,
-                    IsActive = x.IsActive,
-                    IsDeleted = x.IsDeleted,
-                    ProductImages = x.ProductImages
-                    .Where(p => p.IsActive && !p.IsDeleted)
-                    .OrderBy(p => p.Position)
-                    .Select(img => new ProductImagesVM
-                    {
-                        Id = img.Id,
-                        Position = img.Position,
-                        ImageName = img.ImageName,
-                        ImageURL = img.ImageURL,
-                    }).ToList(),
-                    Price = x.Price,
-                    Quantity = x.Quantity,
-                }).Where(p => p.CategoryId == categoryId && p.IsDeleted == false).ToList();
-            if (productlist == null)
-            {
-                throw new Exception("There are no products");
-            }
-            else
-            {
-                return Task.FromResult<IEnumerable<ProductsVM>>(productlist);
-            }
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == productId);
+            return product ?? new Product();
         }
         public void AddOrUpdateProduct(ProductDTO product)
         {
@@ -179,8 +102,8 @@ namespace Store.Infrastructure.Repositories
                     existingProduct.CreatedDate = existingProduct.CreatedDate;
                     existingProduct.UpdatedBy = product.UpdatedBy;
                     existingProduct.UpdatedDate = DateTime.Now;
-                    existingProduct.IsActive = product.isActive;
-                    existingProduct.IsDeleted = product.isDeleted;
+                    existingProduct.IsActive = product.IsActive;
+                    existingProduct.IsDeleted = product.IsDeleted;
                     _context.Products.Update(existingProduct);
                 }
             }
@@ -240,14 +163,38 @@ namespace Store.Infrastructure.Repositories
             }
         }
 
-        public async Task<IEnumerable<Product>> GetProductListByCateId(int cateId)
+        public async Task<IEnumerable<Product>> GetProductListByCateId(int cateId, int page, int pageSize)
         {
             var products = await _context.Products
-                .Include(x=>x.Category)
-                .Include(x=>x.ProductImages)
+                .Include(x => x.Category)
+                .Include(x => x.ProductImages)
                 .Include(x => x.ProductAttributes)
-                .Where(x => x.CategoryId == cateId).ToListAsync();
-            return products != null ? products : new List<Product>();
+                .Where(x => x.CategoryId == cateId && !x.IsDeleted && x.IsActive)
+                .OrderByDescending(x => x.CreatedDate)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .AsNoTracking()
+                .ToListAsync();
+            return products ?? new List<Product>();
+        }
+
+        public async Task<IEnumerable<Product>> GetProductSearchAsync(string? search, int page, int pageSize)
+        {
+            var item = _context.Products
+                .Include(x => x.Category)
+                .Include(x => x.ProductImages)
+                .Where(x => x.IsActive && !x.IsDeleted)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .AsNoTracking();
+            if (!string.IsNullOrEmpty(search))
+            {
+                item = item
+                    .Where(x => x.Name.Contains(search) || x.ShortDesc.Contains(search) || x.Category.Name.Contains(search))
+                    .OrderByDescending(x => x.Name);
+                return await item.ToListAsync();
+            }
+            return await item.ToListAsync();
         }
     }
 }

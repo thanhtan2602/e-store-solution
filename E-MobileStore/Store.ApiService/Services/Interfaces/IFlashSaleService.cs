@@ -13,7 +13,7 @@ namespace Store.ApiService.Services.Interfaces
     {
         void AddOrUpdateFlashSale(FlashSaleDTO flashSaleDTO);
         void AddListFlashSaleProduct(List<FlashSaleProductDTO> flashSaleProductDTO, int flashSaleId);
-        Task<IEnumerable<FlashSale>> GetAllFlashSale();
+        Task<IEnumerable<FlashSale>> GetAllFlashSale(int page, int pageSize);
         void UpdateFlashSaleProduct(FlashSaleProductDTO flashSaleProductDTO);
         void DeletedFlashSale(int flashSaleId);
         void DeletedFlashSaleProduct(FlashSaleProductDTO flashSaleProductDTO);

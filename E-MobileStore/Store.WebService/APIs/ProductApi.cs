@@ -11,19 +11,22 @@ namespace Store.WebService.APIs
     public class ProductApi : IProductApi
     {
         private string baseUrl = "http://localhost:5163";  //"http://localhost:5163/api/Products/GetProductById?productId=1";
-
         public ProductApi()
         {
         }
-
         public string GetProductById(int productId)
         {
             return $"{baseUrl}/api/products/getproductbyid?productid={productId}";
         }
-
-        public string GetProductListByCateId(int cateId)
+        public string GetProductListByCateId(int cateId, int page, int pageSize)
         {
-            return $"{baseUrl}/api/products/getproductlistbycateid?cateid={cateId}";
+            return $"{baseUrl}/api/products/getproductlistbycateid?cateid={cateId}&page={page}&pageSize={pageSize}";
+        }
+
+        public string GetProductSearch(string? search, int page, int pageSize)
+        {
+            return $"{baseUrl}/api/products/GetProductSearch?search={search}&page={page}&pageSize={pageSize}";
+
         }
     }
 }

@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace Store.WebService.APIs
 {
-    
+
     public class FlashSaleApi : IFlashSaleApi
     {
         private string baseUrl = "http://localhost:5163";
-
-        public string GetFlashSale()
+        public string GetFlashSale(int page, int pageSize)
         {
-            return $"{baseUrl}/api/FlashSale/GetListFlashSale";
+            return $"{baseUrl}/api/FlashSale/GetListFlashSale?page={page}&pageSize={pageSize}";
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Store.WebService.APIs.Interfaces
     public interface IProductApi
     {
         string GetProductById(int productId);
-        string GetProductListByCateId(int cateId);
+        string GetProductListByCateId(int cateId, int page, int pageSize);
+        string GetProductSearch(string? search, int page, int pageSize);
     }
 }

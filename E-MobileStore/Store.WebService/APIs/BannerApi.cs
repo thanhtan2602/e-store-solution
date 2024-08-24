@@ -12,9 +12,9 @@ namespace Store.WebService.APIs
     {
         public BannerApi() { }
         private string baseUrl = "http://localhost:5163";
-        public string GetAllBanner()
+        public string GetAllBanner(int page, int pageSize)
         {
-            return $"{baseUrl}/api/banners/getallbanner";
+            return $"{baseUrl}/api/banners/getallbanner?page={page}&pageSize={pageSize}";
         }
     }
 }

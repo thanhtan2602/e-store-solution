@@ -9,7 +9,6 @@ namespace Store.WebService.Services.Interfaces
 {
     public interface ICategoryWebService
     {
-        Task<List<vmCategory>> GetAllCategory();
-
+        Task<List<vmCategory>> GetAllCategory(int page, int pageSize);
     }
 }

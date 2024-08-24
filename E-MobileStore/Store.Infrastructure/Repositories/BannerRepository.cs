@@ -14,12 +14,10 @@ namespace Store.Infrastructure.Repositories
     public class BannerRepository : IBannerRepository
     {
         private readonly ApplicationDbContext _context;
-
         public BannerRepository(ApplicationDbContext context)
         {
             _context = context;
         }
-
         public void DeletedBanner(int bannerId)
         {
             var banner = _context.Banners.FirstOrDefault(x => x.Id == bannerId);
@@ -35,17 +33,18 @@ namespace Store.Infrastructure.Repositories
                 _context.SaveChanges();
             }
         }
-
-        public async Task<IEnumerable<Banner>> GetAllBannerAsync()
+        public async Task<IEnumerable<Banner>> GetAllBannerAsync(int page, int pageSize)
         {
             var banners = await _context.Banners
-                    .Include(x=>x.Category)
+                    .Include(x => x.Category)
                     .Where(x => x.IsActive == true && x.IsDeleted == false)
+                    .OrderByDescending(x => x.CreatedDate.Year)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .AsNoTracking()
                     .ToListAsync();
             return banners ?? new List<Banner>();
         }
-
-
         public void InsertOrUpdateBanner(BannerDTO bannerDTO)
         {
             if (bannerDTO.Id > 0)

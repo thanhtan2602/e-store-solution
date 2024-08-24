@@ -16,17 +16,21 @@ namespace Store.Infrastructure.Repositories
     public class CategoryRepository : ICategoryRepository
     {
         private readonly ApplicationDbContext _context;
-
         public CategoryRepository(ApplicationDbContext context)
         {
             _context = context;
         }
-        public async Task<IEnumerable<Category>> GetAllCategories()
+        public async Task<IEnumerable<Category>> GetCategoriesAsync(int page, int pageSize)
         {
-            var result = await _context.Categories.Include(x=>x.Products).ThenInclude(x=>x.ProductImages)
-                .Where(x => x.IsActive && !x.IsDeleted).ToListAsync();
-            return result != null ? result : new List<Category>();
-
+            var result = await _context.Categories
+                .Include(x => x.Products)
+                .ThenInclude(x => x.ProductImages)
+                .Where(x => x.IsActive && !x.IsDeleted)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .AsNoTracking()
+                .ToListAsync();
+            return result ?? new List<Category>();
         }
         public Task<CategoryVM> GetById(int categoryId)
         {
@@ -34,7 +38,6 @@ namespace Store.Infrastructure.Repositories
             if (cate == null)
             {
                 throw new Exception("This Category was not found");
-
             }
             else
             {
@@ -68,8 +71,8 @@ namespace Store.Infrastructure.Repositories
                     cate.Name = category.Name;
                     cate.Description = category.Description;
                     cate.ImageURL = category.ImageURL;
-                    cate.IsActive = category.isActive;
-                    cate.IsDeleted = category.isDeleted;
+                    cate.IsActive = category.IsActive;
+                    cate.IsDeleted = category.IsDeleted;
                     cate.UpdatedBy = category.UpdatedBy;
                     cate.UpdatedDate = DateTime.Now;
                     _context.Categories.Update(cate);
@@ -91,7 +94,7 @@ namespace Store.Infrastructure.Repositories
                         ImageURL = category.ImageURL,
                         CreatedBy = category.CreatedBy,
                         CreatedDate = DateTime.Now,
-                        IsActive = category.isActive,
+                        IsActive = category.IsActive,
                         IsDeleted = false,
                         UpdatedBy = string.Empty,
                     };
@@ -101,7 +104,7 @@ namespace Store.Infrastructure.Repositories
             _context.SaveChanges();
         }
         public void DeleteCategory(int categoryId)
-           {
+        {
             var cate = _context.Categories.FirstOrDefault(c => c.Id == categoryId);
             if (cate == null)
             {
