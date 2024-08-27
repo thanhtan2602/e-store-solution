@@ -109,7 +109,7 @@ namespace Store.API.Controllers
 
         [HttpGet]
         [Route("GetProductSearch")]
-        public async Task<IActionResult> GetProductSearch(string? search, int page, int pageSize)
+        public async Task<IActionResult> GetProductSearch(string search, int page, int pageSize)
         {
             var products = await _productService.GetProductSearchAsync(search, page, pageSize);
             if (products == null)

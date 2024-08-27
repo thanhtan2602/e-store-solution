@@ -35,7 +35,7 @@ namespace Store.ApiService.Services
             return await _productRepository.GetProductListByCateId(cateId, page, pageSize);
         }
 
-        public async Task<IEnumerable<Product>> GetProductSearchAsync(string? search, int page, int pageSize)
+        public async Task<IEnumerable<Product>> GetProductSearchAsync(string search, int page, int pageSize)
         {
             return await _productRepository.GetProductSearchAsync(search, page, pageSize);
         }

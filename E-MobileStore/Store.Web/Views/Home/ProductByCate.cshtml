@@ -16,12 +16,10 @@
                 <div class="slide-cate owl-theme owl-loaded  filtering" data-block="@category.Name">
                     @foreach (var product in category.Products)
                     {
-                        if(!product.IsDeleted && product.IsActive)
-                        {
                             <div class="owl-item active" style="width: 292.5px; margin-right: 10px;">
                                 <div class="item" data-pos="1" data-block="Mac">
 
-                                    <a href="/mac/@product.Id" class="main-contain" style="min-height:433px" data-s="Nomal" data-site="16" data-pro="3" data-cache="@product.IsActive" data-name="@product.Name" data-id="322612" data-price="@product.Name" data-brand="@category.Name" data-cate="@category.Name" data-box="BoxHome">
+                                    <a href="/detailproduct/@product.Id" class="main-contain" style="min-height:433px" data-s="Nomal" data-site="16" data-pro="3" data-cache="@product.IsActive" data-name="@product.Name" data-id="322612" data-price="@product.Name" data-brand="@category.Name" data-cate="@category.Name" data-box="BoxHome">
                                         <label class="no-label"></label>
                                         <div class="img-slide">
                                             <img data-src="@product.ProductImages?.FirstOrDefault(x => x.Position.Trim() == "1")?.ImageURL"
@@ -38,10 +36,20 @@
                                     </a>
                                 </div>
                             </div>
-                        }
                     }
                 </div>
             </div>
         }
     }
+}
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.filtering').slick({
+                slidesToShow: 4,
+                slidesToScroll: 2,
+                arrows: true,
+            });
+        });
+    </script>
 }

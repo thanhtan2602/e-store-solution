@@ -79,7 +79,6 @@ namespace Store.Infrastructure.Repositories
             {
                 var newStore = new StoreList()
                 {
-                    Id = storeDTO.Id,
                     Adress = storeDTO.Adress,
                     District = storeDTO.District,
                     City = storeDTO.City,
