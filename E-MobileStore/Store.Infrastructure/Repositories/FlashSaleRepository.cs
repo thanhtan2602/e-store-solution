@@ -10,7 +10,6 @@ namespace Store.Infrastructure.Repositories
     public class FlashSaleRepository : IFlashSaleRepository
     {
         private readonly ApplicationDbContext _context;
-
         public FlashSaleRepository(ApplicationDbContext context)
         {
             _context = context;
@@ -87,15 +86,17 @@ namespace Store.Infrastructure.Repositories
                 }
             }
         }
-        public async Task<IEnumerable<FlashSale>> GetAllFlashSale()
+        public async Task<IEnumerable<FlashSale>> GetAllFlashSale(int page, int pageSize)
         {
             var flashsales = await _context.FlashSales
-                .Include(x=>x.FlashSaleProducts)
-                .ThenInclude(x=>x.Product)
-                .ThenInclude(x=>x.ProductImages)
+                .Include(x => x.FlashSaleProducts)
+                .ThenInclude(x => x.Product)
+                .ThenInclude(x => x.ProductImages)
+                .Where(x => x.IsActive && !x.IsDeleted && x.DateOpen <= DateTime.Now && x.DateClose >= DateTime.Now)
+                .OrderByDescending(x => x.CreatedDate)
+                .AsNoTracking()
                 .ToListAsync();
-            
-            return  flashsales != null ? flashsales : new List<FlashSale>();
+            return flashsales ?? new List<FlashSale>();
         }
         public void DeletedFlashSale(int flashSaleId)
         {
@@ -130,7 +131,6 @@ namespace Store.Infrastructure.Repositories
                 throw new Exception("FlashSale was not found");
             }
         }
-
         public void DeletedFlashSaleProduct(FlashSaleProductDTO flashSaleProductDTO)
         {
             var _flashSaleProduct = _context.FlashSaleProducts.FirstOrDefault(x => x.FlashSaleId == flashSaleProductDTO.FlashSaleId && x.ProductId == flashSaleProductDTO.ProductId);

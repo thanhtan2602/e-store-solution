@@ -8,6 +8,6 @@ namespace Store.WebService.APIs.Interfaces
 {
     public interface IFlashSaleApi
     {
-        string GetFlashSale();
+        string GetFlashSale(int page, int pageSize);
     }
 }

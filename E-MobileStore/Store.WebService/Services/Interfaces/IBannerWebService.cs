@@ -9,6 +9,6 @@ namespace Store.WebService.Services.Interfaces
 {
     public interface IBannerWebService
     {
-        Task<List<vmBanner>> GetAllBanner();
+        Task<List<vmBanner>> GetAllBanner(int page, int pageSize);
     }
 }

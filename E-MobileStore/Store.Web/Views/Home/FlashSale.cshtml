@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "FlashSale";
 }
-
 <div class="flashsale-block" id="flashsale">
     <div class="stage-two" style="display: none;">
         <div class="load"></div>
@@ -28,26 +27,21 @@
             <ul class="nav " data-slick='{"slidesToShow": 1, "slidesToScroll": 3}'>
                 @foreach (var flashSale in Model)
                 {
-                    if(flashSale.DateOpen<= DateTime.Now && flashSale.DateClose>= DateTime.Now)
-                    {
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link @(flashSale.Id == Model.First().Id ? "active" : "")" id="tab@(flashSale.Id)-tab" data-bs-toggle="tab" href="#tab@(flashSale.Id)" role="tab" aria-controls="tab@(flashSale.Id)" aria-selected="@(flashSale.Id == Model.First().Id ? "true" : "false")">
-                                <span>@flashSale.DateOpen.ToLocalTime().ToString("dd/MM/yyyy") - @flashSale.DateClose.ToLocalTime().ToString("dd/MM/yyyy")</span>
-                                <span class="timeline">@flashSale.DateOpen.ToLocalTime().ToString("HH:mm") - @flashSale.DateClose.ToLocalTime().ToString("HH:mm")</span>
-                            </a>
-                        </li>
-                    }
-                   
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link @(flashSale.Id == Model.First().Id ? "active" : "")" id="tab@(flashSale.Id)-tab" data-bs-toggle="tab" href="#tab@(flashSale.Id)" role="tab" aria-controls="tab@(flashSale.Id)" aria-selected="@(flashSale.Id == Model.First().Id ? "true" : "false")">
+                            <span>@flashSale.DateOpen.ToLocalTime().ToString("dd/MM/yyyy") - @flashSale.DateClose.ToLocalTime().ToString("dd/MM/yyyy")</span>
+                            <span class="timeline">@flashSale.DateOpen.ToLocalTime().ToString("HH:mm") - @flashSale.DateClose.ToLocalTime().ToString("HH:mm")</span>
+                        </a>
+                    </li>
                 }
             </ul>
         </div>
     </div>
-
     <div class="tab-content" id="myTabContent">
         @foreach (var flashSale in Model)
         {
             <div class="tab-pane fade @(flashSale.Id == Model.First().Id ? "show active" : "")" id="tab@(flashSale.Id)" role="tabpanel" aria-labelledby="tab@(flashSale.Id)-tab">
-                @if (flashSale.FlashSaleProducts != null && flashSale.FlashSaleProducts.Any() && flashSale.DateOpen <= DateTime.Now && flashSale.DateClose >= DateTime.Now)
+                @if (flashSale.FlashSaleProducts != null && flashSale.FlashSaleProducts.Any())
                 {
                     <div class="box-scroll">
                         <div class="listproduct slider-flashsale owl-carousel owl-loaded owl-drag filtering" data-size="36">

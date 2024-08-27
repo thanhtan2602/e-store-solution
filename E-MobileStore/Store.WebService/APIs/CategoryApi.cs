@@ -9,12 +9,11 @@ namespace Store.WebService.APIs
 {
     public class CategoryApi : ICategoryApi
     {
-        private string baseUrl = "http://localhost:5163";
         public CategoryApi() { }
-        public string GetAllCategory()
+        private string baseUrl = "http://localhost:5163";
+        public string GetAllCategory(int page, int pageSize)
         {
-            return $"{baseUrl}/api/categories/getallcategory";
-
+            return $"{baseUrl}/api/categories/getallcategory?page={page}&pageSize={pageSize}";
         }
     }
 }

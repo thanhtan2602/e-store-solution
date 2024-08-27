@@ -8,6 +8,6 @@ namespace Store.WebService.APIs.Interfaces
 {
     public interface ICategoryApi
     {
-        string GetAllCategory();
+        string GetAllCategory(int page, int pageSize);
     }
 }

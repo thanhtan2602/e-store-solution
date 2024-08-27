@@ -14,15 +14,13 @@ namespace Store.ApiService.Services
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
-
         public CategoryService(ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }
-        public async Task<IEnumerable<Category>> GetAllCategories()
+        public async Task<IEnumerable<Category>> GetCategoriesAsync(int page, int pageSize)
         {
-            return await _categoryRepository.GetAllCategories();
-
+            return await _categoryRepository.GetCategoriesAsync(page, pageSize);
         }
         public async Task<CategoryVM> GetById(int categoryId)
         {

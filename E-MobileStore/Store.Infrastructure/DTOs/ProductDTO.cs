@@ -17,13 +17,11 @@ namespace Store.Infrastructure.DTOs
         public string ShortDesc { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public int CategoryId { get; set; }
-        public bool isDeleted { get; set; } = false;
-        public bool isActive { get; set; } = true;
+        public bool IsDeleted { get; set; } = false;
+        public bool IsActive { get; set; } = true;
         public string CreatedBy { get; set; } = string.Empty;
         public string UpdatedBy { get; set; } = string.Empty;
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdateDate { get; set; }
-        //public ICollection<ProductImage> ProductImages { get; set; }
-        //public List<ProductAttributeDTO>? ProductAttributes { get; set; }
     }
 }

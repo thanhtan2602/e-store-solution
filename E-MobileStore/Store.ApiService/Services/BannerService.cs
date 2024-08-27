@@ -13,21 +13,18 @@ namespace Store.ApiService.Services
     public class BannerService : IBannerService
     {
         private readonly IBannerRepository _bannerRepository;
-
-        public BannerService(IBannerRepository bannerRepository) 
+        public BannerService(IBannerRepository bannerRepository)
         {
-            _bannerRepository=bannerRepository;
+            _bannerRepository = bannerRepository;
         }
         public void DeletedBanner(int bannerId)
         {
             _bannerRepository.DeletedBanner(bannerId);
         }
-
-        public async Task<IEnumerable<Banner>> GetAllBannerAsync()
+        public async Task<IEnumerable<Banner>> GetAllBannerAsync(int page, int pageSize)
         {
-            return await _bannerRepository.GetAllBannerAsync();
+            return await _bannerRepository.GetAllBannerAsync(page, pageSize);
         }
-
         public void InsertOrUpdateBanner(BannerDTO bannerDTO)
         {
             _bannerRepository.InsertOrUpdateBanner(bannerDTO);

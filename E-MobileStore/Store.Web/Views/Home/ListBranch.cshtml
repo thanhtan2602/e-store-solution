@@ -1,716 +1,87 @@
-﻿<div class="list-sieuthi">
+﻿@model IEnumerable<Store.WebService.ViewModels.vmStore>
+
+<div class="list-sieuthi">
     <div class="center-page">
         <div class="store-province">
-            <b>Mở bán tại 96 cửa hàng</b>
+            @if (Model != null && Model.Any())
+            {
+                <b>Mở bán tại @Model.Count() cửa hàng</b>
+            }
+            else
+            {
+                <b>Không có cửa hàng nào mở bán</b>
+            }
             <div>
-                <span>Chọn tỉnh thành</span>
-                <ul>
-                    <li data-province="3">Hồ Chí Minh</li>
-                    <li data-province="5">Hà Nội</li>
-                    <li data-province="9">Đà Nẵng</li>
-                    <li data-province="82">An Giang</li>
-                    <li data-province="102">Bà Rịa - Vũng Tàu</li>
-                    <li data-province="106">Bắc Ninh</li>
-                    <li data-province="107">Bến Tre</li>
-                    <li data-province="108">Bình Định</li>
-                    <li data-province="109">Bình Dương</li>
-                    <li data-province="110">Bình Phước</li>
-                    <li data-province="111">Bình Thuận</li>
-                    <li data-province="81">Cà Mau</li>
-                    <li data-province="7">Cần Thơ</li>
-                    <li data-province="6">Đắk Lắk</li>
-                    <li data-province="114">Điện Biên</li>
-                    <li data-province="8">Đồng Nai</li>
-                    <li data-province="116">Gia Lai</li>
-                    <li data-province="120">Hà Tĩnh</li>
-                    <li data-province="101">Hải Phòng</li>
-                    <li data-province="122">Hậu Giang</li>
-                    <li data-province="124">Hưng Yên</li>
-                    <li data-province="125">Khánh Hòa</li>
-                    <li data-province="126">Kiên Giang</li>
-                    <li data-province="129">Lâm Đồng</li>
-                    <li data-province="131">Lào Cai</li>
-                    <li data-province="132">Long An</li>
-                    <li data-province="133">Nam Định</li>
-                    <li data-province="134">Nghệ An</li>
-                    <li data-province="136">Ninh Thuận</li>
-                    <li data-province="140">Quảng Nam</li>
-                    <li data-province="142">Quảng Ninh</li>
-                    <li data-province="143">Quảng Trị</li>
-                    <li data-province="146">Tây Ninh</li>
-                    <li data-province="148">Thái Nguyên</li>
-                    <li data-province="149">Thanh Hóa</li>
-                    <li data-province="151">Tiền Giang</li>
-                    <li data-province="154">Vĩnh Long</li>
-                    <li data-province="155">Vĩnh Phúc</li>
+                <span class="sText toggle-btn">Chọn tỉnh thành</span>
+                <ul class="city-list" style="display: none;">
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var city in Model.Select(m => m.City).Distinct())
+                        {
+                            <li class="option" data-city="@city">@city</li>
+                        }
+                    }
                 </ul>
             </div>
         </div>
-        <div class="store-list">
-            <p class="p114 ">
-                <a href="/sieu-thi-so-583-to-dan-pho-10-phuong-tan-thanh-thanh-pho-dien-bien-phu-tinh-dien-bien-id-12581">
-                    <span>TopZone Tân Thanh <span>Xem chỉ đường</span></span>
-                    <span>Số nhà 583, Tổ dân phố 10, Phường Tân Thanh, Thành phố Điện Biên Phủ, Tỉnh Điện Biên, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p131 ">
-                <a href="/sieu-thi-nga-6-pho-ly-cong-uan-phuong-kim-tan-thanh-pho-lao-cai-tinh-lao-cai-id-13889">
-                    <span>TopZone Lý Công Uẩn <span>Xem chỉ đường</span></span>
-                    <span>Ngã 6 phố Lý Công Uẩn, Phường Kim Tân, Thành phố Lào Cai, Tỉnh Lào Cai, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p126 ">
-                <a href="/sieu-thi-142a-142b-nguyen-trung-truc-tt-duong-dong-h-phu-quoc-t-kien-giang-id-12963">
-                    <span>TopZone Nguyễn Trung Trực <span>Xem chỉ đường</span></span>
-                    <span>Số 142A-142B đường Nguyễn Trung Trực, Thị Trấn Dương Đông, Huyện Phú Quốc, Tỉnh Kiên Giang, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p155 ">
-                <a href="/sieu-thi-duong-nguyen-tat-thanh-phuong-khai-quang-thanh-pho-vinh-yen-tinh-vinh-phuc-id-12932">
-                    <span>TopZone Khai Quang <span>Xem chỉ đường</span></span>
-                    <span>Đường Nguyễn Tất Thành, Phường Khai Quang, Thành phố Vĩnh Yên, Tỉnh Vĩnh Phúc, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p5 ">
-                <a href="/sieu-thi-so-34-to-2-khu-xuan-ha-tt-xuan-mai-h-chuong-my-tp-ha-noi-id-13885">
-                    <span>TopZone Xuân Mai <span>Xem chỉ đường</span></span>
-                    <span>Số 34, tổ 2, Khu Xuân Hà, Thị Trấn Xuân Mai, Huyện Chương Mỹ, Thành phố Hà Nội, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p155 ">
-                <a href="/sieu-thi-so-286-duong-hai-ba-trung-phuong-hung-vuong-thanh-pho-phuc-yen-tinh-vinh-phuc-id-12930">
-                    <span>TopZone 286 Hai Bà Trưng <span>Xem chỉ đường</span></span>
-                    <span>Số nhà 286, Đường Hai Bà Trưng, Phường Hùng Vương, Thành phố Phúc Yên ,Tỉnh Vĩnh Phúc, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p5 hide">
-                <a href="/sieu-thi-so-193-195-duong-cau-dien-p-phuc-dien-q-bac-tu-liem-ha-noi-id-10607">
-                    <span>TopZone Cầu Diễn <span>Xem chỉ đường</span></span>
-                    <span>Số 193-195 đường Cầu Diễn, Phường Phúc Diễn, Quận Bắc Từ Liêm, Thành phố Hà Nội, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p148 hide">
-                <a href="/sieu-thi-so-477-duong-luong-ngoc-quyen-p-phan-dinh-phung-tp-thai-nguyen-thai-nguyen-id-10324">
-                    <span>TopZone Lương Ngọc Quyến <span>Xem chỉ đường</span></span>
-                    <span>Số 477, đường Lương Ngọc Quyến , Phường Phan Đình Phùng, Thành phố Thái Nguyên, Tỉnh Thái Nguyên, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p5 hide">
-                <a href="/sieu-thi-238-nguyen-trai-p-trung-van-q-nam-tu-liem-ha-noi-id-9817">
-                    <span>TopZone Nguyễn Trãi <span>Xem chỉ đường</span></span>
-                    <span>Số 238, đường Nguyễn Trãi, Phường Trung Văn, Quận Nam Từ Liêm, Thành phố Hà Nội, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p5 hide">
-                <a href="/sieu-thi-so-498-duong-xa-dan-p-nam-dong-q-dong-da-ha-noi-id-10072">
-                    <span>TopZone Xã Đàn <span>Xem chỉ đường</span></span>
-                    <span>Số 498, đường Xã Đàn, Phường Nam Đồng, Quận Đống Đa, Thành phố Hà Nội, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p5 hide">
-                <a href="/sieu-thi-387-389-391-duong-ngoc-hoi-tt-van-dien-h-thanh-tri-tp-ha-noi-id-11761">
-                    <span>TopZone 389 Ngọc Hồi <span>Xem chỉ đường</span></span>
-                    <span>Số 387 - 389 - 391, đường Ngọc Hồi, Thị Trấn Văn Điền, Huyện Thanh Trì, Thành phố Hà Nội, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p149 hide">
-                <a href="/sieu-thi-duong-dai-lo-le-loi-phuong-phu-son-thanh-pho-thanh-hoa-tinh-thanh-hoa-id-13881">
-                    <span>TopZone Đại Lộ Lê Lợi <span>Xem chỉ đường</span></span>
-                    <span>Đường Đại lộ Lê Lợi, Phường Phú Sơn, Thành phố Thanh Hóa, Tỉnh Thanh Hóa, Việt Nam</span>
-                </a>
-            </p>
-            <p class="p5 hide">
-                <a href="/sieu-thi-53-55-dang-phuc-thong-doi-dien-cay-xang-doc-la-thon-la-coi-xa-yen-vien-huyen-gia-lam-thanh-pho-ha-noi-id-13884">
-                    <span>TopZone Yên Viên <span>Xem chỉ đường</span></span>
-                    <span>Thôn Lã Côi, Xã Yên Viên, Huyện Gia Lâm, Thành phố Hà Nội, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p134 hide">
-                <a href="/sieu-thi-so-7-duong-quang-trung-p-quang-trung-vinh-nghe-an-id-10560">
-                    <span>TopZone Quang Trung <span>Xem chỉ đường</span></span>
-                    <span>Số 7, đường Quang Trung, Phường Quang Trung, Thành phố Vinh, Tỉnh Nghệ An, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p82 hide">
-                <a href="/sieu-thi-so-17a-nguyen-van-thoai-phuong-chau-phu-b-thanh-pho-chau-doc-tinh-an-giang-id-13951">
-                    <span>TopZone Nguyễn Văn Thoại <span>Xem chỉ đường</span></span>
-                    <span>Số 17A Nguyễn Văn Thoại, Phường Châu Phú B, Thành phố Châu Đốc, Tỉnh An Giang, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p81 hide">
-                <a href="/sieu-thi-52-nguyen-trai-p9-tpca-mau-tca-mau-id-11755">
-                    <span>TopZone 52 Nguyễn Trãi <span>Xem chỉ đường</span></span>
-                    <span>Số 52, Nguyễn Trãi, Phường 9, Thành phố Cà Mau, Tỉnh Cà Mau, Việt Nam</span>
-                </a>
-            </p>
-            <p class="p81 hide">
-                <a href="/sieu-thi-2a-tran-hung-dao-khom-6-p5-tp-ca-mau-tinh-ca-mau-id-11756">
-                    <span>TopZone 2A Trần Hưng Đạo <span>Xem chỉ đường</span></span>
-                    <span>Số 2A. đường Trần Hưng Đạo, khóm 6, Phường 5, Thành phố Cà Mau, Tỉnh Cà Mau, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p106 hide">
-                <a href="/sieu-thi-so-320-duong-tran-hung-dao-pdai-phuc-tpbac-ninh-tbac-ninh-id-11762">
-                    <span>TopZone 320 Trần Hưng Đạo <span>Xem chỉ đường</span></span>
-                    <span>Số 320 đường Trần Hưng Đạo, Phường Đại Phúc, Thành phố Bắc Ninh, Tỉnh Bắc Ninh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p124 hide">
-                <a href="/sieu-thi-98-98b-100-duong-dien-bien-p-le-loi-tp-hung-yen-tinh-hung-yen-id-12563">
-                    <span>TopZone 98 Điện Biên <span>Xem chỉ đường</span></span>
-                    <span>Số 98-98B-100 Đường Điện Biên, Phường Lê Lợi, Thành phố Hưng Yên, Tỉnh Hưng Yên, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p120 hide">
-                <a href="/sieu-thi-khoi-1-phuong-ha-huy-tap-thanh-pho-ha-tinh-tinh-ha-tinh-id-12934">
-                    <span>TopZone Hà Huy Tập <span>Xem chỉ đường</span></span>
-                    <span>nhà ông Trương Xuân Hải, Khối 1, Phường Hà Huy Tập, Thành phố Hà Tĩnh, Tỉnh Hà Tĩnh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p133 hide">
-                <a href="/sieu-thi-so-59-duong-dien-bien-to-15-phuong-cua-bac-tp-nam-dinh-tinh-nam-dinh-id-10917">
-                    <span>TopZone Điện Biên <span>Xem chỉ đường</span></span>
-                    <span>Số 59 Đường Điện Biên, tổ 15, Phường Cửa Bắc, Thành phố Nam Định, Tỉnh Nam Định, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p82 hide">
-                <a href="/sieu-thi-170a-tran-hung-dao-p-my-xuyen-tp-long-xuyen-an-giang-id-10700">
-                    <span>TopZone Trần Hưng Đạo <span>Xem chỉ đường</span></span>
-                    <span>Số 170A Trần Hưng Đạo, Phường Mỹ Xuyên, Thành phố Long Xuyên, Tỉnh An Giang, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p122 hide">
-                <a href="/sieu-thi-so-17-duong-3-2-phuong-v-thanh-pho-vi-thanh-tinh-hau-giang-id-13965">
-                    <span>TopZone Đường 3/2 <span>Xem chỉ đường</span></span>
-                    <span>Số 17, đường 3/2, Phường V, Thành phố Vị Thanh, Tỉnh Hậu Giang, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p7 hide">
-                <a href="/sieu-thi-217-duong-3-2-phuong-hung-loi-quan-ninh-kieu-thanh-pho-can-tho-id-12961">
-                    <span>TopZone Đường 3/2 <span>Xem chỉ đường</span></span>
-                    <span>217, Đường 3/2, Phường Hưng Lợi, Quận Ninh Kiều, Thành phố Cần Thơ, Việt Nam</span>
-                </a>
-            </p>
-            <p class="p101 hide">
-                <a href="/sieu-thi-so-1-3-5-duong-tran-nhan-tong-phuong-quan-tru-quan-kien-an-thanh-pho-hai-phong-id-11521">
-                    <span>TopZone Trần Nhân Tông <span>Xem chỉ đường</span></span>
-                    <span>Số 1-3-5 đường Trần Nhân Tông, Phường Quán Trữ, Quận Kiến An, Thành phố Hải Phòng, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p7 hide">
-                <a href="/sieu-thi-so-08-hoa-binh-p-an-cu-q-ninh-kieu-tp-can-tho-id-10323">
-                    <span>TopZone Hoà Bình <span>Xem chỉ đường</span></span>
-                    <span>Số 08 Hoà Bình, Phường An Cư, Quận Ninh Kiều, Thành Phố Cần Thơ, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p154 hide">
-                <a href="/sieu-thi-to-21-khom-5-phuong-cai-von-thi-xa-binh-minh-tinh-vinh-long-id-13886">
-                    <span>TopZone Cái Vồn <span>Xem chỉ đường</span></span>
-                    <span>Tổ 21, khóm 5, Phường Cái Vồn, Thị xã Bình Minh, Tỉnh Vĩnh Long, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p101 hide">
-                <a href="/sieu-thi-so-282-duong-da-nang-p-van-my-q-ngo-quyen-hai-phong-id-10559">
-                    <span>TopZone Đà Nẵng <span>Xem chỉ đường</span></span>
-                    <span>Số 282 Đà Nẵng, Phường Vạn Mỹ, Quận Ngô Quyền, Thành phố Hải Phòng, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p154 hide">
-                <a href="/sieu-thi-210-le-thai-to-phuong-2-tpvinh-long-vinh-long-id-10330">
-                    <span>TopZone Lê Thái Tổ <span>Xem chỉ đường</span></span>
-                    <span>Số 210 đường Lê Thái Tổ, Phường 2, Thành phố Vĩnh Long, Tỉnh Vĩnh Long, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p151 hide">
-                <a href="/sieu-thi-so-212-to-13-khu-pho-3-thi-tran-cai-be-huyen-cai-be-tinh-tien-giang-id-13875">
-                    <span>TopZone Cái Bè <span>Xem chỉ đường</span></span>
-                    <span>Số 212, Tổ 13, Khu phố 3, Thị trấn Cái Bè, Huyện Cái Bè, Tỉnh Tiền Giang, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p146 hide">
-                <a href="/sieu-thi-583-cach-mang-thang-8-khu-pho-2-p-3-tp-tay-ninh-tay-ninh-id-10334">
-                    <span>TopZone Cách Mạng Tháng Tám <span>Xem chỉ đường</span></span>
-                    <span>Số 583, đường Cách Mạng Tháng Tám, khu phố 2, Phường 3, Thành phố Tây Ninh, Tỉnh Tây Ninh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p146 hide">
-                <a href="/sieu-thi-so-14-pham-hung-phuong-long-hoa-hoa-thanh-tay-ninh-id-13962">
-                    <span>TopZone Hòa Thành <span>Xem chỉ đường</span></span>
-                    <span>Số 1/4, khu phố 3, Thị Trấn Hòa Thành, Thị xã Hoà Thành, Tỉnh Tây Ninh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p142 hide">
-                <a href="/sieu-thi-so-537-ha-long-p-bai-chay-tp-ha-long-quang-ninh-id-10514">
-                    <span>TopZone Hạ Long <span>Xem chỉ đường</span></span>
-                    <span>Số 537 đường Hạ Long, Phường Bãi Cháy, Thành phố Hạ Long, Tỉnh Quảng Ninh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p146 hide">
-                <a href="/sieu-thi-so-421-quoc-lo-22b-kpthanh-ha-ttgo-dau-hgo-dau-ttay-ninh-id-12936">
-                    <span>TopZone Quốc Lộ 22B <span>Xem chỉ đường</span></span>
-                    <span>Số 421, Quốc lộ 22B, khu phố Thanh Hà, Thị Trấn Gò Dầu, Huyện Gò Dầu, Tỉnh Tây Ninh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p146 hide">
-                <a href="/sieu-thi-so-10-quoc-lo-22-khu-pho-gia-huynh-thi-tran-trang-bang-thi-xa-trang-bang-tinh-tay-ninh-id-13883">
-                    <span>TopZone Trảng Bàng <span>Xem chỉ đường</span></span>
-                    <span>Số 10, Quốc lộ 22, Khu phố Gia Huỳnh, Thị Trấn Trảng Bàng, Thị xã Trảng Bàng, Tỉnh Tây Ninh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p151 hide">
-                <a href="/sieu-thi-49-2-ap-bac-phuong-5-tpmy-tho-tien-giang-id-10331">
-                    <span>TopZone Ấp Bắc <span>Xem chỉ đường</span></span>
-                    <span>Số 49/2 đường Ấp Bắc, Phường 5, Thành phố Mỹ Tho, Tỉnh Tiền Giang, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p132 hide">
-                <a href="/sieu-thi-so-159-161-duong-825-o-6-khu-b-thi-tran-hau-nghia-huyen-duc-hoa-tinh-long-an-id-13890">
-                    <span>TopZone Hậu Nghĩa <span>Xem chỉ đường</span></span>
-                    <span>Số 159-161, Đường 825, Ô 6, Khu B, Thị Trấn Hậu Nghĩa, Huyện Đức Hoà, Tỉnh Long An, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p142 hide">
-                <a href="/sieu-thi-so-209-duong-tran-phu-p-cam-tay-tp-cam-pha-quang-ninh-id-10515">
-                    <span>TopZone Trần Phú <span>Xem chỉ đường</span></span>
-                    <span>Số 209, đường Trần Phú, Phường Cẩm Tây, Thành phố Cẩm Phả, Tỉnh Quảng Ninh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p107 hide">
-                <a href="/sieu-thi-591b-592b2-duong-dong-khoi-p-phu-khuong-tp-ben-tre-ben-tre-id-10332">
-                    <span>TopZone Đồng Khởi <span>Xem chỉ đường</span></span>
-                    <span>Số 591B-592B2, Đại Lộ Đồng Khởi, Phường Phú Khương, Thành phố Bến Tre, Tinh Bến Tre, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-874-874a-quoc-lo-22-kp-8-tt-cu-chi-h-cu-chi-tp-ho-chi-minh-id-13895">
-                    <span>TopZone Quốc Lộ 22 <span>Xem chỉ đường</span></span>
-                    <span>874-874A Quốc lộ 22, khu phố 8, Thị Trấn Củ Chi, Huyện Củ Chi, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p132 hide">
-                <a href="/sieu-thi-duong-tinh-lo-10-xa-duc-hoa-ha-huyen-duc-hoa-long-an-id-11758">
-                    <span>TopZone Tỉnh Lộ 10 (Đức Hòa Hạ) <span>Xem chỉ đường</span></span>
-                    <span>Đường Tỉnh lộ 10, Xã Đức Hoà Hạ, Huyện Đức Hoà, Tỉnh Long An, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-49-tinh-lo-8-khu-pho-1-thi-tran-cu-chi-huyen-cu-chi-thanh-pho-ho-chi-minh-id-12560">
-                    <span>TopZone Tỉnh Lộ 8 <span>Xem chỉ đường</span></span>
-                    <span>49 Tỉnh lộ 8, khu phố 1, Thị Trấn Củ Chi, Huyện Củ Chi, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p132 hide">
-                <a href="/sieu-thi-so-179-duong-do-tuong-phong-thi-tran-tam-vu-huyen-chau-thanh-tinh-long-an-id-13877">
-                    <span>TopZone Đỗ Tường Phong <span>Xem chỉ đường</span></span>
-                    <span>Số 179, Đường Đỗ Tường Phong, Thị Trấn Tầm Vu, Huyện Châu Thành, Tỉnh Long An, Việt Nam</span>
-                </a>
-            </p>
-            <p class="p132 hide">
-                <a href="/sieu-thi-so-15-nguyen-huu-tho-khu-pho-3-thi-tran-ben-luc-huyen-ben-luc-tinh-long-an-id-13878">
-                    <span>TopZone Nguyễn Hữu Thọ <span>Xem chỉ đường</span></span>
-                    <span>Số 15, Nguyễn Hữu Thọ, Khu Phố 3, Thị Trấn Bến Lức, Huyện Bến Lức, Tỉnh Long An, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-so-271-273-quoc-lo-22-ap-dinh-xa-tan-phu-trung-huyen-cu-chi-thanh-pho-ho-chi-minh-id-12850">
-                    <span>TopZone Quốc Lộ 22 <span>Xem chỉ đường</span></span>
-                    <span>Số 271-273 Quốc Lộ 22, ấp Đình, Xã Tân Phú Trung, Huyện Củ Chi, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-d7-23-ap-4-nguyen-thi-tu-xa-vinh-loc-b-huyen-binh-chanh-tpho-chi-minh-id-11534">
-                    <span>TopZone Nguyễn Thị Tú <span>Xem chỉ đường</span></span>
-                    <span>D7/23, ấp 4, đường Nguyễn Thị Tú, Xã Vĩnh Lộc B, Huyện Bình Chánh, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p110 hide">
-                <a href="/sieu-thi-so-38-quoc-lo-13-to-6-khu-pho-2-phuong-hung-long-thi-xa-chon-thanh-tinh-binh-phuoc-id-13879">
-                    <span>TopZone 38 Quốc Lộ 13 <span>Xem chỉ đường</span></span>
-                    <span>Số 38 quốc lộ 13, tổ 6, khu phố 2, Phường Hưng Long, Thị xã Chơn Thành, Tỉnh Bình Phước, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-229-nguyen-thi-tu-pbinh-hung-hoa-b-qbinh-tan-tp-ho-chi-minh-id-10602">
-                    <span>TopZone Nguyễn Thị Tú <span>Xem chỉ đường</span></span>
-                    <span>229 Nguyễn Thị Tú, Phường Bình Hưng Hòa B, Quận Bình Tân, Thành phố Hồ Chí Minh, Việt Nam</span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-287a-khu-pho-1-le-van-quoi-p-binh-tri-dong-q-binh-tan-id-12937">
-                    <span>TopZone Lê Văn Quới <span>Xem chỉ đường</span></span>
-                    <span>287A Khu phố 1 Lê Văn Quới, Phường Bình Trị Đông, Quận Bình Tân, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-451-le-trong-tan-phuong-son-ky-quan-tan-phu-tp-ho-chi-minh-id-12849">
-                    <span>TopZone Lê Trọng Tấn <span>Xem chỉ đường</span></span>
-                    <span>449 - 451 Lê Trọng Tấn, Phường Sơn Kỳ, Quận Tân Phú, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-340-to-ky-phuong-tan-chanh-hiep-quan-12-thanh-pho-ho-chi-minh-viet-nam-id-11531">
-                    <span>TopZone Tô Ký <span>Xem chỉ đường</span></span>
-                    <span>340 Tô Ký, Phường Tân Chánh Hiệp, Quận 12, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-473-475-477-kinh-duong-vuong-khu-pho-6-phuong-an-lac-quan-binh-tan-thanh-pho-ho-chi-minh-id-13959">
-                    <span>TopZone Kinh Dương Vương <span>Xem chỉ đường</span></span>
-                    <span>473-475-477 Kinh Dương Vương, Khu phố 6, Phường An Lạc, Quận Bình Tân, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p132 hide">
-                <a href="/sieu-thi-quoc-lo-50-thi-tran-can-duoc-huyen-can-duoc-tinh-long-an-id-13888">
-                    <span>TopZone Quốc Lộ 50 (Cần Đước) <span>Xem chỉ đường</span></span>
-                    <span>Thửa số 266, Tờ bản đồ số 5, Quốc Lộ 50, Thị trấn Cần Đước, Huyền Cần Đước, Tỉnh Long An, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-so-41-43-truong-chinh-phuong-tan-thoi-nhat-quan-12-thanh-pho-ho-chi-minh-viet-nam-id-13957">
-                    <span>TopZone Trường Chinh <span>Xem chỉ đường</span></span>
-                    <span>Số 41-43 Trường Chinh, Phường Tân Thới Nhất, Quận 12, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-171-nguyen-son-phuong-phu-thanh-quan-tan-phu-thanh-pho-ho-chi-minh-id-12608">
-                    <span>TopZone Nguyễn Sơn <span>Xem chỉ đường</span></span>
-                    <span>171 Nguyễn Sơn, Phường Phú Thạnh, Quận Tân Phú, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p107 hide">
-                <a href="/sieu-thi-so-21a1-tran-hung-dao-khu-pho-2-thi-tran-ba-tri-huyen-ba-tri-tinh-ben-tre-id-12935">
-                    <span>TopZone 21A1 Trần Hưng Đạo (Ba Tri) <span>Xem chỉ đường</span></span>
-                    <span>Số 21A1, Trần Hưng Đạo, khu phố 2, Thị Trấn Ba Tri, Huyện Ba Tri, Tỉnh Bến Tre, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-105-tan-ky-tan-quy-phuong-tan-son-nhi-quan-tan-phu-thanh-pho-ho-chi-minh-id-12847">
-                    <span>TopZone Tân Kỳ Tân Quý <span>Xem chỉ đường</span></span>
-                    <span>105 Tân Kỳ Tân Qúy, Phường Tân Sơn Nhì, Quận Tân Phú, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-so-223-225-phan-huy-ich-phuong-14-quan-go-vap-thanh-pho-ho-chi-minh-id-13893">
-                    <span>TopZone Phan Huy Ích <span>Xem chỉ đường</span></span>
-                    <span>Số 223-225 Phan Huy Ích, Phường 14, Quận Gò Vấp, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-670-au-co-p-10-q-tan-binh-thanh-pho-ho-chi-minh-id-9816">
-                    <span>TopZone Âu Cơ <span>Xem chỉ đường</span></span>
-                    <span>670 Âu Cơ, Phường 10, Quận Tân Bình, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-so-1044-1046-quang-trung-phuong-8-quan-go-vap-thanh-pho-ho-chi-minh-id-13897">
-                    <span>TopZone Quang Trung <span>Xem chỉ đường</span></span>
-                    <span>Số 1044 - 1046 Quang Trung, Phường 8, Quận Gò Vấp, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-32-3-le-van-khuong-p-thoi-an-q12-thanh-pho-ho-chi-minh-id-10557">
-                    <span>TopZone Lê Văn Khương <span>Xem chỉ đường</span></span>
-                    <span>32/3 Lê Văn Khương, Phường Thới An, Quận 12, Thành phố Hồ Chí Minh, Việt Nam</span>
-                </a>
-            </p>
-            <p class="p143 hide">
-                <a href="/sieu-thi-so-1-hung-vuong-phuong-1-tp-dong-ha-quang-tri-id-12940">
-                    <span>TopZone Hùng Vương <span>Xem chỉ đường</span></span>
-                    <span>Số 01 Hùng Vương, Phường 1, Thành phố Đông Hà, Tỉnh Quảng Trị, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-458-nguyen-tri-phuong-phuong-09-quan-10-thanh-pho-ho-chi-minh-id-12840">
-                    <span>TopZone Nguyễn Tri Phương <span>Xem chỉ đường</span></span>
-                    <span>458 Nguyễn Tri Phương, Phường 09, Quận 10, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p109 hide">
-                <a href="/sieu-thi-so-77-dai-lo-binh-duong-pphu-tho-tpthu-dau-mot-tinh-binh-duong-id-10930">
-                    <span>TopZone Đại lộ Bình Dương <span>Xem chỉ đường</span></span>
-                    <span>Số 77 Đại lộ Bình Dương, Phường Phú Thọ, Thành phố Thủ Dầu Một, Tỉnh Bình Dương, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-328-328a-duong-chanh-hung-phuong-5-quan-8-thanh-pho-ho-chi-minh-viet-nam-id-10833">
-                    <span>TopZone Chánh Hưng <span>Xem chỉ đường</span></span>
-                    <span>328-328A đường Chánh Hưng, Phường 5, Quận 8, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-so-620-622-624-626-628-nguyen-oanh-p-6-q-go-vap-tp-ho-chi-minh-id-10824">
-                    <span>TopZone Nguyễn Oanh <span>Xem chỉ đường</span></span>
-                    <span>Số 620-622-624-626-628 Nguyễn Oanh, Phường 6, Quận Gò Vấp, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-532-534-tran-hung-dao-phuong-02-quan-5-thanh-pho-ho-chi-minh-id-12565">
-                    <span>TopZone Trần Hưng Đạo <span>Xem chỉ đường</span></span>
-                    <span>532 – 534 Trần Hưng Đạo, Phường 02, Quận 5, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p109 hide">
-                <a href="/sieu-thi-171-dt745-khu-pho-long-thoi-phuong-lai-thieu-tp-thuan-an-tinh-binh-duong-id-12933">
-                    <span>TopZone Lái Thiêu <span>Xem chỉ đường</span></span>
-                    <span>Số 171, đường ĐT 745, khu phố Long Thới, Phường Lái Thiêu, Thị xã Thuận An, Tỉnh Bình Dương, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-191-dien-bien-phu-p-6-q-3-thanh-pho-ho-chi-minh-id-9815">
-                    <span>TopZone Điện Biên Phủ <span>Xem chỉ đường</span></span>
-                    <span>191 Điện Biên Phủ , Phường 06, Quận 3, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p151 hide">
-                <a href="/sieu-thi-313-duong-nguyen-hue-kp-iii-phuong-2-tx-go-cong-tinh-tien-giang-id-11759">
-                    <span>TopZone 313 Nguyễn Huệ <span>Xem chỉ đường</span></span>
-                    <span>Số 313 Nguyễn Huệ, Phường 2, Thị xã Gò Công, Tỉnh Tiền Giang, Việt Nam</span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-163-165-khanh-hoi-phuong-03-quan-4-tp-ho-chi-minh-id-10142">
-                    <span>TopZone Khánh Hội <span>Xem chỉ đường</span></span>
-                    <span>163-165 Khánh Hội, Phường 13, Quận 4, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-125-nguyen-xi-phuong-26-quan-binh-thanh-thanh-pho-ho-chi-minh-id-12959">
-                    <span>TopZone Nguyễn Xí <span>Xem chỉ đường</span></span>
-                    <span>125 Nguyễn Xí, Phường 26, Quận Bình Thạnh, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-133-xo-viet-nghe-tinh-phuong-17-quan-binh-thanh-thanh-pho-ho-chi-minh-id-12958">
-                    <span>TopZone 133 Xô Viết Nghệ Tĩnh <span>Xem chỉ đường</span></span>
-                    <span>133 Xô Viết Nghệ Tĩnh, Phường 17, Quận Bình Thạnh, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-428-nguyen-thi-thap-phuong-tan-quy-quan-7-tp-ho-chi-minh-id-10599">
-                    <span>TopZone Nguyễn Thị Thập <span>Xem chỉ đường</span></span>
-                    <span>428 Nguyễn Thị Thập, Phường Tân Quy, Quận 7, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p109 hide">
-                <a href="/sieu-thi-so-63a-1-kp-1a-p-an-phu-tx-thuan-an-binh-duong-id-10838">
-                    <span>TopZone An Phú <span>Xem chỉ đường</span></span>
-                    <span>Số 63A/1, Khu phố 1A, Phường An Phú, Thị xã Thuận An, Tỉnh Bình Dương, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-30-32-quoc-lo-1k-phuong-linh-xuan-thanh-pho-thu-duc-thanh-pho-ho-chi-minh-id-13963">
-                    <span>TopZone Quốc lộ 1K <span>Xem chỉ đường</span></span>
-                    <span>30-32 Quốc lộ 1K, Phường Linh Xuân, Thành phố Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p109 hide">
-                <a href="/sieu-thi-237-nguyen-an-ninh-kp-binh-minh-2-p-di-an-tp-di-an-t-binh-duong-id-11763">
-                    <span>TopZone 237 Nguyễn An Ninh <span>Xem chỉ đường</span></span>
-                    <span>Số 237 Nguyễn An Ninh, khu phố Bình Minh 2, Phường Dĩ An, Thị Xã Di An, Tỉnh Bình Dương, Việt Nam</span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-374-376-nguyen-duy-trinh-phuong-binh-trung-dong-thanh-pho-thu-duc-thanh-pho-ho-chi-minh-id-12610">
-                    <span>TopZone Nguyễn Duy Trinh <span>Xem chỉ đường</span></span>
-                    <span>374 - 376 Nguyễn Duy Trinh, Phường Bình Trưng Đông, Thành phố Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p109 hide">
-                <a href="/sieu-thi-so-123-lo-m-khu-dan-cu-thuong-mai-uyen-hung-phuong-uyen-hung-thanh-pho-tan-uyen-tinh-binh-duong-id-13952">
-                    <span>TopZone 123 Lô M Uyên Hưng <span>Xem chỉ đường</span></span>
-                    <span>Số 123 Lô M, Khu dân cư Thương mại Uyên Hưng, Phường Uyên Hưng, Thị xã Tân Uyên, Tỉnh Bình Dương, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p3 hide">
-                <a href="/sieu-thi-633-633a-635-le-van-viet-ap-cau-xay-phuong-tan-phu-thanh-pho-thu-duc-thanh-pho-ho-chi-minh-id-12960">
-                    <span>TopZone 633 Lê Văn Việt <span>Xem chỉ đường</span></span>
-                    <span>633-633A-635 Lê Văn Việt, Ấp Cầu Xây, Phường Tân Phú, Thành phố Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p8 hide">
-                <a href="/sieu-thi-so-1-1-pham-van-thuan-tp-bien-hoa-dong-nai-id-10333">
-                    <span>TopZone Phạm Văn Thuận <span>Xem chỉ đường</span></span>
-                    <span>Số 1/1, Phạm Văn Thuận, KP 9, Phường Tam Hiệp, Thành phố Biên Hoà, Tỉnh Đồng Nai, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p102 hide">
-                <a href="/sieu-thi-290-truong-cong-dinh-p8-tp-vung-tau-ba-ria-vung-tau-id-10335">
-                    <span>TopZone Trương Công Định <span>Xem chỉ đường</span></span>
-                    <span>Số 290 Trương Công Định, Phường 8, Thành phố Vũng Tàu, Tỉnh Bà Rịa - Vũng Tàu, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p102 hide">
-                <a href="/sieu-thi-267a-cach-mang-thang-8-p-phuoc-hiep-tp-ba-ria-t-ba-ria-vung-tau-id-10337">
-                    <span>TopZone Cách Mạng Tháng 8 <span>Xem chỉ đường</span></span>
-                    <span>267A Cách mạng tháng tám, Phường Phước Hiệp, Thành phố Bà Rịa, Tỉnh Bà Rịa - Vũng Tàu, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p8 hide">
-                <a href="/sieu-thi-so-207-duong-hung-vuong-p-xuan-hoa-tp-long-khanh-dong-nai-id-10336">
-                    <span>TopZone Hùng Vương <span>Xem chỉ đường</span></span>
-                    <span>Số 207 đường Hùng Vương, Phường Xuân Hòa, Thành phố Long Khánh, Tỉnh Đồng Nai, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p116 hide">
-                <a href="/sieu-thi-05-nguyen-tat-thanh-phuong-hoa-lu-tp-pleiku-tinh-gia-lai-id-11524">
-                    <span>TopZone Nguyễn Tất Thành <span>Xem chỉ đường</span></span>
-                    <span>05 Nguyễn Tất Thành , Phường Hoa Lư, Thành phố Pleiku, Tỉnh Gia Lai, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p9 hide">
-                <a href="/sieu-thi-351-nguyen-huu-tho-p-hoa-cuong-bac-q-hai-chau-tp-da-nang-id-10341">
-                    <span>TopZone Nguyễn Hữu Thọ <span>Xem chỉ đường</span></span>
-                    <span>351 Nguyễn Hữu Thọ, Phường Hoà Cường Bắc, Quận Hải Châu, Thành phố Đà Nẵng, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p6 hide">
-                <a href="/sieu-thi-390-392-394-396-duong-le-duan-p-eatam-tp-buon-ma-thuot-t-dak-lak-id-11760">
-                    <span>TopZone Lê Duẩn <span>Xem chỉ đường</span></span>
-                    <span>Số 390-392-394-396 đường Lê Duẩn, Phường Ea Tam, TP.Buôn Ma Thuột, Tỉnh ĐăkLăk, Việt Nam</span>
-                </a>
-            </p>
-            <p class="p111 hide">
-                <a href="/sieu-thi-80-tran-hung-dao-p-phu-trinh-tp-phan-thiet-binh-thuan-id-10562">
-                    <span>TopZone Trần Hưng Đạo <span>Xem chỉ đường</span></span>
-                    <span>Số 80 Trần Hưng Đạo, Phường Phú Trinh, Thành phố Phan Thiết, Tỉnh Bình Thuận,  Việt Nam</span>
-                </a>
-            </p>
-            <p class="p140 hide">
-                <a href="/sieu-thi-212-214-phan-chu-trinh-p-an-my-tp-tam-ky-t-quang-nam-id-11757">
-                    <span>TopZone 212 Phan Chu Trinh <span>Xem chỉ đường</span></span>
-                    <span>212-214 Phan Chu Trinh, Phường An Mỹ, Thành phố Tam Kỳ, Tỉnh Quảng Nam, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p129 hide">
-                <a href="/sieu-thi-4-23-5-23-tran-phu-phuong-4-thanh-pho-da-lat-tinh-lam-dong-id-13961">
-                    <span>TopZone Trần PhúT <span>Xem chỉ đường</span></span>
-                    <span>4/23-5/23 Trần Phú, Phường 4, Thành phố Đà Lạt, Tỉnh Lâm Đồng, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p136 hide">
-                <a href="/sieu-thi-so-312-312a-thong-nhat-phuong-phu-ha-tp-phan-rang-thap-cham-tinh-ninh-thuan-id-10563">
-                    <span>TopZone Thống Nhất <span>Xem chỉ đường</span></span>
-                    <span>Số 312 - 312A Thống Nhất, Phường Phủ Hà, TP. Phan Rang-Tháp Chàm, Tỉnh Ninh Thuận, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p125 hide">
-                <a href="/sieu-thi-93-ly-tu-trong-khom-dong-mon-thi-tran-dien-khanh-huyen-dien-khanh-tinh-khanh-hoa-id-12931">
-                    <span>TopZone 93 Lý Tự Trọng <span>Xem chỉ đường</span></span>
-                    <span>93 đường Lý Tự Trọng, Khóm Đông Môn, Thị Trấn Diên Khánh, Huyện Diên Khánh, Tỉnh Khánh Hòa, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p108 hide">
-                <a href="/sieu-thi-564-566-tran-hung-dao-p-thi-nai-tpquy-nhon-binh-dinh-id-11525">
-                    <span>TopZone 564 Trần Hưng Đạo <span>Xem chỉ đường</span></span>
-                    <span>Số 564-566 đường Trần Hưng Đạo, Phường Thị Nại, Thành phố Quy Nhơn, Tỉnh Bình Định, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p125 hide">
-                <a href="/sieu-thi-so-58-58b-duong-23-10-phuong-phuong-son-thanh-pho-nha-trang-tinh-khanh-hoa-id-13891">
-                    <span>TopZone 58 Đường 23/10 <span>Xem chỉ đường</span></span>
-                    <span>Số 58-58B đường 23/10, Phường Phương Sơn, Thành phố Nha Trang, Tỉnh Khánh Hòa, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p125 hide">
-                <a href="/sieu-thi-03-quang-trung-p-van-thanh-tp-nha-trang-khanh-hoa-id-10606">
-                    <span>TopZone Quang Trung <span>Xem chỉ đường</span></span>
-                    <span>03 Quang Trung, Phường Vạn Thạnh, Thành phố Nha Trang, Tỉnh Khánh Hòa, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
-            <p class="p125 hide">
-                <a href="/sieu-thi-khom-5-thi-tran-van-gia-huyen-van-ninh-tinh-khanh-hoa-id-13892">
-                    <span>TopZone Vạn Giã <span>Xem chỉ đường</span></span>
-                    <span>Khóm 5, Thị Trấn Vạn Giã, Huyện Vạn Ninh, Tỉnh Khánh Hòa, Việt Nam</span>
-                    <span id="promoApple"><img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/mwgcart/topzone/images/common/Icon_ApplePay.png"><b> Hỗ trợ thanh toán qua Apple Pay</b> </span>
-                </a>
-            </p>
+        <div class="store-list" id="store-list">
+            @if (Model != null && Model.Any())
+            {
+                foreach (var store in Model)
+                {
+                    <p class="store" data-city="@store.City">
+                        <a href="/@store.Id">
+                            <span>TopZone @store.Adress <span>Xem chỉ đường</span></span>
+                            <span>@store.Adress, @store.District, @store.City</span>
+                            <span id="promoApple">
+                                <img src="@store.ImageUrl" alt="@store.City">
+                                <b>@store.Policy</b>
+                            </span>
+                        </a>
+                    </p>
+                }
+            }
         </div>
-
-        <a href="javascript:;" class="viewmore">Xem thêm 90 cửa hàng</a>
+        <a href="javascript:;" class="viewmore">Xem tất cả @Model.Count() cửa hàng</a>
     </div>
 </div>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var toggleBtn = document.querySelector(".toggle-btn");
+        var cityList = document.querySelector(".city-list");
+        var sText = document.querySelector(".sText");
+        var storeList = document.getElementById("store-list");
+
+        toggleBtn.addEventListener("click", function () {
+            toggleBtn.classList.toggle("active");
+            cityList.style.display = (cityList.style.display === "none" || cityList.style.display === "") ? "block" : "none";
+        });
+
+        // Thêm sự kiện cho từng tùy chọn thành phố
+        var options = cityList.querySelectorAll(".option");
+        options.forEach(option => {
+            option.addEventListener("click", () => {
+                var selectedCity = option.getAttribute("data-city"); // Lấy tên thành phố từ data-city
+                sText.innerText = selectedCity; // Cập nhật văn bản hiển thị
+                cityList.style.display = "none"; // Ẩn danh sách thành phố sau khi chọn
+
+                // Lọc cửa hàng dựa trên thành phố đã chọn
+                filterStoresByCity(selectedCity);
+            });
+        });
+
+        function filterStoresByCity(city) {
+            var stores = storeList.querySelectorAll(".store");
+            stores.forEach(store => {
+                if (store.getAttribute("data-city") === city || city === "Tất cả") {
+                    store.style.display = "block";
+                } else {
+                    store.style.display = "none";
+                }
+            });
+        }
+    });
+</script>

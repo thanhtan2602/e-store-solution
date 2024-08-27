@@ -8,6 +8,6 @@ namespace Store.Infrastructure.DTOs
 {
     public class AttributeDTO
     {
-        public string AttributeName { get; set; }
+        public string AttributeName { get; set; } = string.Empty;
     }
 }

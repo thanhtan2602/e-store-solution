@@ -9,5 +9,6 @@ namespace Store.Web.ViewsModel
         public IEnumerable<vmBanner>  HomeSlider { get; set; }
         public IEnumerable<vmNews> TekZone { get; set; }
         public IEnumerable<vmFlashSale> FlashSale { get; set; }
+        public IEnumerable<vmStore> Stores { get; set; }
     }
 }

@@ -16,19 +16,17 @@ namespace Store.WebService.Services
     {
         private readonly HttpClient _httpClient;
         private readonly ICategoryApi _categoryApi;
-
         public CategoryWebService(ICategoryApi categoryApi)
         {
             _httpClient = new HttpClient();
             _categoryApi = categoryApi;
         }
-
-        public async Task<List<vmCategory>> GetAllCategory()
+        public async Task<List<vmCategory>> GetAllCategory(int page, int pageSize)
         {
             try
             {
                 var categories = new List<vmCategory>();
-                var uri = _categoryApi.GetAllCategory();
+                var uri = _categoryApi.GetAllCategory(page, pageSize);
                 var response = await _httpClient.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
@@ -45,6 +43,9 @@ namespace Store.WebService.Services
                                 ImageURL = category.ImageURL,
                                 IsActive = category.IsActive,
                                 CreatedBy = category.CreatedBy,
+                                Position = category.Position,
+                                Description = category.Description,
+                                IsDeleted = category.IsDeleted,
                                 CreatedDate = category.CreatedDate.ToLocalTime().ToString("HH:mm dd/MM/yyyy"),
                                 UpdatedBy = category.UpdatedBy,
                                 UpdatedDate = category.UpdatedDate.ToLocalTime().ToString("HH:mm dd/MM/yyyy"),

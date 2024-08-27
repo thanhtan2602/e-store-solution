@@ -26,18 +26,18 @@ namespace Store.ApiService.Services
         {
             _productRepository.DeleteProduct(productId);
         }
-        public Task<ProductsVM> GetProductById(Guid productId)
+        public Task<Product> GetProductById(Guid productId)
         {
             return _productRepository.GetProductById(productId);
         }
-        public Task<IEnumerable<ProductsVM>> GetProductList(int categoryId, int page, int pageSize)
+        public async Task<IEnumerable<Product>> GetProductListByCateId(int cateId, int page, int pageSize)
         {
-            return _productRepository.GetProductList(categoryId, page, pageSize);
+            return await _productRepository.GetProductListByCateId(cateId, page, pageSize);
         }
 
-        public async Task<IEnumerable<Product>> GetProductListByCateId(int cateId)
+        public async Task<IEnumerable<Product>> GetProductSearchAsync(string search, int page, int pageSize)
         {
-            return await _productRepository.GetProductListByCateId(cateId);
+            return await _productRepository.GetProductSearchAsync(search, page, pageSize);
         }
 
         public Task<IEnumerable<ProductsVM>> GetSaleProducts(int flashSaleId)

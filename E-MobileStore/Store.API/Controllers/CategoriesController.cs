@@ -13,36 +13,31 @@ namespace Store.API.Controllers
     public class CategoriesController : ControllerBase
     {
         private BaseApiResponse _response;
-
         private readonly ICategoryService _category;
-
         public CategoriesController(ICategoryService category)
         {
             _category = category;
             _response = new BaseApiResponse();
         }
-
         [HttpGet]
         [Route("GetAllCategory")]
-        public async Task<IActionResult> GetAllCategoriesAsync()
+        public async Task<IActionResult> GetAllCategoriesAsync(int page, int pageSize)
         {
             try
             {
-                var listCate = await _category.GetAllCategories();
-                _response.IsSuccess = true;
+                var listCate = await _category.GetCategoriesAsync(page, pageSize);
                 _response.Result = listCate;
                 return Ok(_response);
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
-                var statuscode =  _response.StatusCode=HttpStatusCode.BadRequest;
-                var errorMessenger = _response.ErrorMessages = new List<string> { ex.Message};
+                var statuscode = _response.StatusCode = HttpStatusCode.BadRequest;
+                var errorMessenger = _response.ErrorMessages = new List<string> { ex.Message };
                 _response.IsSuccess = false;
                 _response.Failed(statuscode, errorMessenger);
                 return BadRequest(_response);
             }
         }
-
         [HttpGet]
         [Route("GetCategoryById")]
         public async Task<IActionResult> GetCategoryByIdAsync(int categoryId)
@@ -50,7 +45,6 @@ namespace Store.API.Controllers
             try
             {
                 var cate = await _category.GetById(categoryId);
-                _response.IsSuccess = true;
                 _response.Result = cate;
                 return Ok(_response);
             }
@@ -63,16 +57,13 @@ namespace Store.API.Controllers
                 return BadRequest(_response);
             }
         }
-
         [HttpPost]
         [Route("InsertOrUpdateCategory")]
         public IActionResult InsertOrUpdateCategory(CategoryDTO category)
         {
-           
             try
             {
                 _category.AddOrUpdateCategory(category);
-                _response.IsSuccess = true;
                 _response.Result = category;
                 return Ok(_response);
             }
@@ -93,7 +84,6 @@ namespace Store.API.Controllers
             {
                 _category.DeleteCategory(categoryId);
                 _response.StatusCode = HttpStatusCode.OK;
-                _response.IsSuccess = true;
                 _response.Message = "This category has been deleted";
                 return Ok(_response);
             }

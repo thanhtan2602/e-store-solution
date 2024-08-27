@@ -3,7 +3,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-
 @Html.Partial("_Header", Model.ChosseCate)
 @Html.Partial("HomeSlider", Model.HomeSlider)
 @Html.Partial("FlashSale", Model.FlashSale);
@@ -11,20 +10,13 @@
 @Html.Partial("ChosseCate", Model.ChosseCate)
 @Html.Partial("ProductByCate", Model.ProductByCate)
 @*iPhone*@
-
-
 @*TekZone*@
 @Html.Partial("TekZone", Model.TekZone)
-
 @*Listsieuthi*@
-@Html.Partial("ListBranch")
-
+@Html.Partial("ListBranch",Model.Stores)
 @*poli*@
 @Html.Partial("Privacy")
-
 @Html.Partial("_Footer")
-
-
 @section Scripts {
     <script type="text/javascript">
         $(document).ready(function () {
@@ -32,13 +24,9 @@
                 slidesToShow: 4,
                 slidesToScroll: 2,
                 arrows: true,
-
             });
-
-
-
         });
-
-
+    
     </script>
+
 }
