@@ -178,23 +178,18 @@ namespace Store.Infrastructure.Repositories
             return products ?? new List<Product>();
         }
 
-        public async Task<IEnumerable<Product>> GetProductSearchAsync(string? search, int page, int pageSize)
+        public async Task<IEnumerable<Product>> GetProductSearchAsync(string search, int page, int pageSize)
         {
-            var item = _context.Products
+            var item =await _context.Products
                 .Include(x => x.Category)
                 .Include(x => x.ProductImages)
-                .Where(x => x.IsActive && !x.IsDeleted)
+                .Where(x => x.IsActive && !x.IsDeleted && x.Name.Contains(search) || x.ShortDesc.Contains(search) || x.Category.Name.Contains(search))
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
-                .AsNoTracking();
-            if (!string.IsNullOrEmpty(search))
-            {
-                item = item
-                    .Where(x => x.Name.Contains(search) || x.ShortDesc.Contains(search) || x.Category.Name.Contains(search))
-                    .OrderByDescending(x => x.Name);
-                return await item.ToListAsync();
-            }
-            return await item.ToListAsync();
+                .OrderByDescending(x => x.Name)
+                .AsNoTracking()
+                .ToListAsync();
+            return item ?? new List<Product>();
         }
     }
 }
