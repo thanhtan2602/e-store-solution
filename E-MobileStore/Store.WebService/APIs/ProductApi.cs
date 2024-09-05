@@ -14,7 +14,7 @@ namespace Store.WebService.APIs
         public ProductApi()
         {
         }
-        public string GetProductById(int productId)
+        public string GetProductById(Guid productId)
         {
             return $"{baseUrl}/api/products/getproductbyid?productid={productId}";
         }
@@ -23,7 +23,7 @@ namespace Store.WebService.APIs
             return $"{baseUrl}/api/products/getproductlistbycateid?cateid={cateId}&page={page}&pageSize={pageSize}";
         }
 
-        public string GetProductSearch(string? search, int page, int pageSize)
+        public string GetProductSearch(string search, int page, int pageSize)
         {
             return $"{baseUrl}/api/products/GetProductSearch?search={search}&page={page}&pageSize={pageSize}";
 

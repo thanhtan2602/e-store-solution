@@ -23,7 +23,7 @@ namespace Store.Infrastructure.Repositories
         public async Task<IEnumerable<Category>> GetCategoriesAsync(int page, int pageSize)
         {
             var result = await _context.Categories
-                .Include(x => x.Products)
+                .Include(x => x.Products.Where(p => p.IsActive && !p.IsDeleted))
                 .ThenInclude(x => x.ProductImages)
                 .Where(x => x.IsActive && !x.IsDeleted)
                 .Skip((page - 1) * pageSize)

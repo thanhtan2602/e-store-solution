@@ -25,7 +25,7 @@ namespace Store.WebService.ViewModels
         public string CreatedDate { get; set; }
         public string UpdatedDate { get; set; }
         public ICollection<ProductImage> ProductImages { get; set; }
-        //public ICollection<ProductAttribute> ProductAttributes { get; set; }
+        public ICollection<ProductAttribute> ProductAttributes { get; set; }
         public ICollection<Rate> Rates { get; set; }
         public ICollection<Comment> Comments { get; set; }
     }

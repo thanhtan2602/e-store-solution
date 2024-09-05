@@ -1,8 +1,13 @@
 ﻿@model IEnumerable<Store.WebService.ViewModels.vmFlashSale>
-
+@using static Store.Web.Utility.ProductsUtilities;
 @{
     ViewData["Title"] = "FlashSale";
 }
+<style>
+    .nav-link:focus, .nav-link:hover {
+        color: white;
+    }
+</style>
 <div class="flashsale-block" id="flashsale">
     <div class="stage-two" style="display: none;">
         <div class="load"></div>
@@ -16,11 +21,7 @@
             </h3>
             <div class="endtime" data-countdown="6/22/2024 11:59:00 PM" data-begin="6/22/2024 8:00:00 AM">
                 <span class="title-end">Kết thúc trong</span>
-                <span class="countdown-timer">
-                    <label id="hour">04</label>
-                    <label id="minute">54</label>
-                    <label id="second">42</label>
-                </span>
+                <div class="countdown-timer"></div>
             </div>
         </div>
         <div class="listing-timeline">
@@ -28,9 +29,9 @@
                 @foreach (var flashSale in Model)
                 {
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link @(flashSale.Id == Model.First().Id ? "active" : "")" id="tab@(flashSale.Id)-tab" data-bs-toggle="tab" href="#tab@(flashSale.Id)" role="tab" aria-controls="tab@(flashSale.Id)" aria-selected="@(flashSale.Id == Model.First().Id ? "true" : "false")">
-                            <span>@flashSale.DateOpen.ToLocalTime().ToString("dd/MM/yyyy") - @flashSale.DateClose.ToLocalTime().ToString("dd/MM/yyyy")</span>
-                            <span class="timeline">@flashSale.DateOpen.ToLocalTime().ToString("HH:mm") - @flashSale.DateClose.ToLocalTime().ToString("HH:mm")</span>
+                        <a class="timelineCount nav-link @(flashSale.Id == Model.First().Id ? "active" : "")" id="tab@(flashSale.Id)-tab" data-countdown="@flashSale.DateClose.ToLocalTime()" data-begin="@DateTime.Now.ToLocalTime()" data-bs-toggle="tab" href="#tab@(flashSale.Id)" role="tab" aria-controls="tab@(flashSale.Id)" aria-selected="@(flashSale.Id == Model.First().Id ? "true" : "false")">
+                            <span>@FormatToDMY(@flashSale.DateOpen) - @FormatToDMY(@flashSale.DateClose)</span>
+                            <span class="timeline">@FormatToToD(@flashSale.DateOpen) - @FormatToToD(@flashSale.DateClose)</span>
                         </a>
                     </li>
                 }
@@ -54,8 +55,8 @@
                                                 <img data-src="@flashSaleProduct.Product.ProductImages?.FirstOrDefault(x => x.Position.Trim() == "1")?.ImageURL" class="ls-is-cached lazyloaded" alt="@flashSaleProduct.Product.ProductImages?.FirstOrDefault(x => x.Position.Trim() == "1")?.ImageName" height="207" src="@flashSaleProduct.Product.ProductImages?.FirstOrDefault(x => x.Position.Trim() == "1")?.ImageURL">
                                             </div>
                                             <h3>@flashSaleProduct.Product.Name</h3>
-                                            <p class="price-old black">(@flashSaleProduct.Product.Price)₫</p>
-                                            <strong class="price">(@flashSaleProduct.PriceSale)đ</strong>
+                                            <p class="price-old black">@FormatPrice(@flashSaleProduct.Product.Price)₫</p>
+                                            <strong class="price">@FormatPrice(@flashSaleProduct.PriceSale)đ</strong>
                                             <span class="rq_count">
                                                 @if (flashSaleProduct.IsActive)
                                                 {
@@ -77,7 +78,6 @@
         }
     </div>
 </div>
-
 @section Scripts {
     <script type="text/javascript">
         $(document).ready(function () {

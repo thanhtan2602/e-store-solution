@@ -21,43 +21,6 @@ namespace Store.WebService.Services
             _storeApi = storeApi;
             _client = new HttpClient();
         }
-        public async Task<vmStore> GetStoreById(int storeId)
-        {
-            try
-            {
-                var uri = _storeApi.GetStoreById(storeId);
-                var response = await _client.GetAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    var responseApi = JsonConvert.DeserializeObject<StoreResponse>(content);
-                    if (responseApi != null && responseApi.result.Count > 0)
-                    {
-                        return new vmStore()
-                        {
-                            Id = responseApi.result[0].Id,
-                            Adress = responseApi.result[0].Adress,
-                            City = responseApi.result[0].City,
-                            CreatedBy = responseApi.result[0].CreatedBy,
-                            UpdatedBy = responseApi.result[0].UpdatedBy,
-                            CreatedDate = responseApi.result[0].CreatedDate.ToLocalTime().ToString("HH:mm dd/MM/yyyy"),
-                            UpdatedDate = responseApi.result[0].UpdatedDate.ToLocalTime().ToString("HH:mm dd/MM/yyyy"),
-                            Description = responseApi.result[0].Description,
-                            District = responseApi.result[0].District,
-                            ImageUrl = responseApi.result[0].ImageUrl,
-                            IsActive = responseApi.result[0].IsActive,
-                            IsDeleted = responseApi.result[0].IsDeleted,
-                            Policy = responseApi.result[0].Policy
-                        };
-                    }
-                }
-                return new vmStore();
-            }
-            catch (Exception ex)
-            {
-                return new vmStore();
-            }
-        }
 
         public async Task<List<vmStore>> GetStoreList(int page, int pageSize)
         {

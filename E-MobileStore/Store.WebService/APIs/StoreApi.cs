@@ -11,11 +11,6 @@ namespace Store.WebService.APIs
     {
         private string baseUrl = "http://localhost:5163";
 
-        public string GetStoreById(int storeId)
-        {
-            return $"{baseUrl}/api/Stores/GetStoreById?storeId={storeId}";
-        }
-
         public string GetStoreList(int page, int pageSize)
         {
             return $"{baseUrl}/api/Stores/GetStoreList?page={page}&pageSize={pageSize}";

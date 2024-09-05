@@ -1,0 +1,36 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<Store.WebService.ViewModels.vmProduct>
+@if (Model != null && Model.Any())
+{
+	<div class="sg-search active" style="display: block;">
+		<small class="quicklink">Có phải bạn muốn tìm</small>
+		<div class="text-search" id="searchResults">
+
+			@foreach (var item in Model)
+			{
+				<a href="/@item.ProductId"><span>@item.ProductName</span></a>
+				<small>Sản phẩm gợi ý</small>
+				<ul class="list-sg-search">
+					<li>
+						<a href="/@item.ProductId" class="main-contain">
+							<div class="img-search">
+								<img src="@item.ProductImages?.FirstOrDefault(x => x.Position.Trim() == "1")?.ImageName" alt="@item.ProductName">
+							</div>
+							<div class="text-img">
+								<span>@item.ProductName</span>
+								<p>
+									<b>@(item.PriceSale)₫</b>
+									<strike>@(item.Price)₫</strike>
+								</p>
+							</div>
+						</a>
+					</li>
+				</ul>
+			}
+		</div>
+	</div>
+}

@@ -1,4 +1,5 @@
-﻿.dot-stretching {
+﻿
+.dot-stretching {
     position: relative;
     width: 10px;
     height: 10px;
@@ -4252,8 +4253,7 @@ section {
 
 .intro-detail {
     background: #3e3e3f;
-    min-height: 805px;
-    display: flex
+    min-height: 685px;
 }
 
     .intro-detail .center-page {
@@ -8411,4 +8411,141 @@ h1 {
 
 .product__coupon form > a.colorccm {
     color: #288ad6
+}
+.color-sp span {
+    display: block;
+    overflow: hidden;
+    font-size: 15px;
+    line-height: 20px;
+    color: #fff;
+    padding: 0 0 10px;
+}
+
+.slick-prev, .slick-next {
+    background-color: #333; /* Màu nền */
+    color: #fff; /* Màu chữ */
+    border: none; /* Bỏ viền mặc định */
+    padding: 10px; /* Khoảng đệm */
+    border-radius: 50%; /* Bo góc */
+    width: 40px; /* Chiều rộng của nút */
+    height: 40px; /* Chiều cao của nút */
+    display: flex; /* Flexbox để căn giữa */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    position: absolute; /* Vị trí tuyệt đối để định vị tùy chỉnh */
+    top: 50%; /* Căn giữa theo chiều dọc */
+    transform: translateY(-50%); /* Điều chỉnh để căn giữa */
+    z-index: 1; /* Đảm bảo các nút ở trên cùng */
+    cursor: pointer; /* Con trỏ chuột */
+    transition: background-color 0.3s; /* Chuyển đổi cho hiệu ứng hover */
+}
+
+.slick-prev {
+    width: 50px; /* Đặt kích thước hợp lý */
+    height: 50px;
+    left: 2%;
+    transform: translateY(-50%); /* Đặt vị trí hợp lý */
+}
+
+.slick-next {
+    width: 50px; /* Đặt kích thước hợp lý */
+    height: 50px;
+    right: 2%;
+    transform: translateY(-50%); /* Đặt vị trí hợp lý */
+}
+    /* Hiệu ứng hover */
+    .slick-prev:hover, .slick-next:hover {
+        background-color: #555; /* Thay đổi màu nền khi hover */
+    }
+
+    /* Tạo kiểu cho biểu tượng tùy chỉnh (nếu sử dụng biểu tượng) */
+    .slick-prev:before, .slick-next:before {
+        font-size: 20px; /* Điều chỉnh kích thước biểu tượng */
+        line-height: 1; /* Điều chỉnh chiều cao dòng */
+        opacity: 1; /* Đảm bảo độ trong suốt đầy đủ */
+        color: #fff; /* Màu biểu tượng */
+    }
+
+/* Nếu bạn sử dụng biểu tượng tùy chỉnh của riêng mình */
+.slick-prev:before {
+    content: '←';
+}
+
+.slick-next:before {
+    content: '→';
+}
+
+.wrap_border {
+    margin-top: 30px;
+    border: 1px solid #e5e5e5;
+}
+
+.wrap_rating, .wrap_cmt {
+    box-sizing: border-box;
+    max-width: 780px;
+    border-radius: 12px;
+    margin: 0 auto;
+    margin-bottom: 40px;
+    padding: 30px;
+    font: 14px / 18px Arial, sans-serif, Helvetica;
+    color: #333;
+    outline: none;
+}
+
+.wrap_rating, .wrap_cmt {
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+.rating-topzonecr-title {
+    font-size: 26px;
+    font-weight: bold;
+    line-height: 32px;
+    text-align: center;
+}
+
+.wrap_rating *, .wrap_cmt * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.iconcmt-unstarlist {
+    background-position: -80px -75px;
+    height: 38px;
+    width: 40px;
+}
+
+[class^="iconcmt-"], [class*="iconcmt-"] {
+    background-image: url(//cdn.tgdd.vn/mwgcart/avacomment/images/icon_comment_2x.png?v=2);
+    background-repeat: no-repeat;
+    display: inline-block;
+    line-height: 30px;
+    vertical-align: middle;
+    background-size: 200px 150px;
+}
+
+.wrap_cmt ul li, .wrap_rating ul li {
+    list-style: none;
+}
+
+.rating-topzonecr-star {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+    .rating-topzonecr-star li {
+        cursor: pointer;
+        margin: 0 10px;
+        text-align: center;
+    }
+
+.miniImg {
+    margin: 0.5px;
+    height: 7.69231%;
+    pointer-events: all;
+}
+html, body {
+    overflow-x: hidden;
 }
