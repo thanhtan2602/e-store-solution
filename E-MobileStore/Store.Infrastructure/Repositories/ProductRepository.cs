@@ -180,10 +180,17 @@ namespace Store.Infrastructure.Repositories
 
         public async Task<IEnumerable<Product>> GetProductSearchAsync(string search, int page, int pageSize)
         {
+<<<<<<< HEAD
             var item = await _context.Products
                 .Include(x => x.Category)
                 .Include(x => x.ProductImages)
                 .Where(x => x.IsActive && !x.IsDeleted && (x.Name.ToLower().Contains(search.ToLower()) || x.ShortDesc.ToLower().Contains(search.ToLower()) || x.Category.Name.ToLower().Contains(search.ToLower())))
+=======
+            var item =await _context.Products
+                .Include(x => x.Category)
+                .Include(x => x.ProductImages)
+                .Where(x => x.IsActive && !x.IsDeleted && x.Name.Contains(search) || x.ShortDesc.Contains(search) || x.Category.Name.Contains(search))
+>>>>>>> c4df40890dcc4d6288b2415ce8f6040e2ff6fee3
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .OrderByDescending(x => x.Name)
