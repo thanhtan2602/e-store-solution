@@ -21,7 +21,7 @@ namespace Store.WebService.Services
             _httpClient = new HttpClient();
             _productApi = productApi;
         }
-        public async Task<vmProduct> GetProductDetail(int productId)
+        public async Task<vmProduct> GetProductDetail(Guid productId)
         {
             try
             {
@@ -30,15 +30,29 @@ namespace Store.WebService.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    var product = JsonConvert.DeserializeObject<Product>(content);
-                    if (product != null)
+                    var productresponse = JsonConvert.DeserializeObject<ProductDetailResponse>(content);
+                    if (productresponse != null && productresponse.result != null)
                     {
-                        return new vmProduct
+                        var product = productresponse.result;
+                        return new vmProduct()
                         {
                             ProductId = product.Id,
                             ProductName = product.Name,
                             Price = product.Price,
-                            CategoryName = product.Category.Name
+                            ShortDesc = product.ShortDesc,
+                            Description = product.Description,
+                            CategoryId = product.CategoryId,
+                            CategoryName = product.Category.Name,
+                            Quantity = product.Quantity,
+                            ProductImages = product.ProductImages,
+                            PriceSale = product.PriceSale,
+                            ProductAttributes = product.ProductAttributes,
+                            IsDeleted = product.IsDeleted,
+                            IsActive = product.IsActive,
+                            CreatedBy = product.CreatedBy,
+                            CreatedDate = product.CreatedDate.ToLocalTime().ToString("HH:mm dd/MM/yyyy"),
+                            UpdatedBy = product.UpdatedBy,
+                            UpdatedDate = product.UpdatedDate.ToLocalTime().ToString("HH:mm dd/MM/yyyy"),
                         };
                     }
                 }
@@ -94,7 +108,6 @@ namespace Store.WebService.Services
                 return new List<vmProduct>();
             }
         }
-
         public async Task<List<vmProduct>> GetProductSearch(string search, int page, int pageSize)
         {
             try

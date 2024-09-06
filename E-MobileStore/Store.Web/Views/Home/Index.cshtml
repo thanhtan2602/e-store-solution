@@ -1,9 +1,9 @@
 ﻿@model Store.Web.ViewsModel.HomeVM
 @{
+    ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-@Html.Partial("_Header", Model.ChosseCate)
 @Html.Partial("HomeSlider", Model.HomeSlider)
 @Html.Partial("FlashSale", Model.FlashSale);
 @*ChooseCate*@
@@ -13,10 +13,9 @@
 @*TekZone*@
 @Html.Partial("TekZone", Model.TekZone)
 @*Listsieuthi*@
-@Html.Partial("ListBranch",Model.Stores)
+@Html.Partial("ListBranch", Model.Stores)
 @*poli*@
 @Html.Partial("Privacy")
-@Html.Partial("_Footer")
 @section Scripts {
     <script type="text/javascript">
         $(document).ready(function () {
@@ -26,7 +25,123 @@
                 arrows: true,
             });
         });
-    
-    </script>
+        //flashSale
+        document.addEventListener('DOMContentLoaded', function () {
+            // Chọn tất cả các tab có class 'timelineCount'
+            var tabs = document.querySelectorAll('.timelineCount');
+            var endtime = document.querySelector('.countdown-timer');
 
+            // Biến toàn cục để lưu ID của bộ đếm hiện tại
+            var currentTimer = null;
+
+            // Hàm để xóa bộ đếm cũ
+            function clearCurrentTimer() {
+                if (currentTimer) {
+                    clearInterval(currentTimer);
+                    currentTimer = null;
+                }
+            }
+
+            // Hàm bắt đầu bộ đếm ngược cho tab đang active
+            function startCountdown(activeTab) {
+                if (!activeTab) return;
+
+                // Xóa bộ đếm cũ nếu có
+                clearCurrentTimer();
+
+                // Lấy dữ liệu từ tab đang active
+                var dateCountDown = new Date(activeTab.getAttribute('data-countdown'));
+                var dateBegin = new Date(activeTab.getAttribute('data-begin'));
+
+                // Tính khoảng thời gian giữa dateCountDown và dateBegin
+                var timeDifference = dateCountDown - dateBegin; // chênh lệch thời gian tính bằng mili giây
+                var totalSeconds = Math.floor(timeDifference / 1000); // chuyển đổi sang giây
+
+                // Hàm cập nhật và hiển thị thời gian đếm ngược
+                function updateCountdown() {
+                    if (totalSeconds <= 0) {
+                        clearCurrentTimer(); // Dừng khi hết thời gian
+                        endtime.innerHTML = "Hết giờ!";
+                        return;
+                    }
+
+                    var days = Math.floor(totalSeconds / (24 * 60 * 60));
+                    var remainingSeconds = totalSeconds % (24 * 60 * 60);
+                    var hours = Math.floor(remainingSeconds / (60 * 60));
+                    remainingSeconds %= (60 * 60);
+                    var minutes = Math.floor(remainingSeconds / 60);
+                    var seconds = remainingSeconds % 60;
+                    hours = hours.toString().padStart(2, '0');
+                    minutes = minutes.toString().padStart(2, '0');
+                    seconds = seconds.toString().padStart(2, '0');
+                    endtime.innerHTML = `${days} ngày, ${hours} : ${minutes} : ${seconds}`;
+                    totalSeconds--;
+                }
+                // Gọi hàm đếm ngược mỗi giây
+                currentTimer = setInterval(updateCountdown, 1000);
+                // Gọi hàm ngay lập tức để cập nhật lần đầu tiên
+                updateCountdown();
+            }
+            // Gắn sự kiện click cho mỗi tab
+            tabs.forEach(function (tab) {
+                tab.addEventListener('click', function () {
+                    // Xóa class 'active' khỏi tất cả các tab
+                    tabs.forEach(function (t) {
+                        t.classList.remove('active');
+                    });
+
+                    // Thêm class 'active' cho tab hiện tại
+                    this.classList.add('active');
+
+                    // Bắt đầu đếm ngược cho tab được chọn
+                    startCountdown(this);
+                });
+            });
+            // Bắt đầu đếm ngược cho tab đang active khi trang load
+            var activeTabOnLoad = document.querySelector('.timelineCount.active');
+            startCountdown(activeTabOnLoad); // Bắt đầu đếm ngược từ tab active
+        });
+
+        //ListBranch
+        document.addEventListener("DOMContentLoaded", function () {
+            var toggleBtn = document.querySelector(".toggle-btn");
+            var countstore = document.querySelector(".count-store");
+            var viewmore = document.querySelector(".viewmore");
+            var cityList = document.querySelector(".city-list");
+            var sText = document.querySelector(".sText");
+            var storeList = document.getElementById("store-list");
+
+            toggleBtn.addEventListener("click", function () {
+                toggleBtn.classList.toggle("active");
+                cityList.style.display = (cityList.style.display === "none" || cityList.style.display === "") ? "block" : "none";
+            });
+
+            // Thêm sự kiện cho từng tùy chọn thành phố
+            var options = cityList.querySelectorAll(".option");
+            options.forEach(option => {
+                option.addEventListener("click", () => {
+                    var selectedCity = option.getAttribute("data-city"); // Lấy tên thành phố từ data-city
+                    sText.innerText = selectedCity; // Cập nhật văn bản hiển thị
+                    cityList.style.display = "none"; // Ẩn danh sách thành phố sau khi chọn
+                    // Lọc cửa hàng dựa trên thành phố đã chọn
+                    filterStoresByCity(selectedCity);
+                });
+            });
+
+            function filterStoresByCity(city) {
+                var stores = storeList.querySelectorAll(".store");
+                var count = 0;
+                stores.forEach(store => {
+                    if (store.getAttribute("data-city") === city || city === "Tất cả") {
+                        store.style.display = "block";
+                        count++;
+                    } else {
+                        store.style.display = "none";
+                    }
+                });
+                countstore.innerHTML = `Mở bán tại ${count} cửa hàng`;
+                viewmore.innerHTML = `Xem tất cả ${count} cửa hàng`;
+            }
+        });
+    </script>
 }

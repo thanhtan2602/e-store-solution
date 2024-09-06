@@ -9,6 +9,5 @@ namespace Store.WebService.APIs.Interfaces
     public interface IStoreApi
     {
         string GetStoreList(int page, int pageSize);
-        string GetStoreById(int storeId);
     }
 }

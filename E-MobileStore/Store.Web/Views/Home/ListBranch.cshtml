@@ -3,14 +3,7 @@
 <div class="list-sieuthi">
     <div class="center-page">
         <div class="store-province">
-            @if (Model != null && Model.Any())
-            {
-                <b>Mở bán tại @Model.Count() cửa hàng</b>
-            }
-            else
-            {
-                <b>Không có cửa hàng nào mở bán</b>
-            }
+            <b class="count-store">Mở bán tại @Model.Count() cửa hàng</b>
             <div>
                 <span class="sText toggle-btn">Chọn tỉnh thành</span>
                 <ul class="city-list" style="display: none;">
@@ -46,42 +39,3 @@
     </div>
 </div>
 
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var toggleBtn = document.querySelector(".toggle-btn");
-        var cityList = document.querySelector(".city-list");
-        var sText = document.querySelector(".sText");
-        var storeList = document.getElementById("store-list");
-
-        toggleBtn.addEventListener("click", function () {
-            toggleBtn.classList.toggle("active");
-            cityList.style.display = (cityList.style.display === "none" || cityList.style.display === "") ? "block" : "none";
-        });
-
-        // Thêm sự kiện cho từng tùy chọn thành phố
-        var options = cityList.querySelectorAll(".option");
-        options.forEach(option => {
-            option.addEventListener("click", () => {
-                var selectedCity = option.getAttribute("data-city"); // Lấy tên thành phố từ data-city
-                sText.innerText = selectedCity; // Cập nhật văn bản hiển thị
-                cityList.style.display = "none"; // Ẩn danh sách thành phố sau khi chọn
-
-                // Lọc cửa hàng dựa trên thành phố đã chọn
-                filterStoresByCity(selectedCity);
-            });
-        });
-
-        function filterStoresByCity(city) {
-            var stores = storeList.querySelectorAll(".store");
-            stores.forEach(store => {
-                if (store.getAttribute("data-city") === city || city === "Tất cả") {
-                    store.style.display = "block";
-                } else {
-                    store.style.display = "none";
-                }
-            });
-        }
-    });
-</script>

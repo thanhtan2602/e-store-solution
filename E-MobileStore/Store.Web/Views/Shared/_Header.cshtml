@@ -1,57 +1,56 @@
-﻿@* Views/Shared/_Header.cshtml *@
-@model IEnumerable<Store.WebService.ViewModels.vmCategory>;
-
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@* Views/Shared/_Header.cshtml *@
 <header class="">
-    <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8">
-            <div class="logo-topzone mt-2">
-                <a href="/">
-                    <i class="topzone-logo  "></i>
-                </a>
-                <a href="/tekzone/khac-biet-aar-va-apr-tieu-chuan-cua-hang-uy-quyen-apple-1411356">
-                    <i class="topzone-autho  "></i>
-                </a>
-            </div>
-            <ul class="menu" style="display: flex;flex-wrap: wrap;">
-                @foreach (var menucate in Model)
-                {
-                    <li class="menu-ip " style="flex:auto">
-                        <a href="/@menucate.Name">
-                            <span>@menucate.Name</span>
-                        </a>
-                    </li>
-                }
-            </ul>
-            <div class="search-cart mt-2">
-                <div class="search-sp">
-                    <i class="topzone-search"></i>
-                </div>
-                <a href="/cart" class="cart">
-                    <i class="topzone-cart"></i>
-                </a>
-                <div class="view-cart">
-                    <i class="topzone-cohang"></i>
-                    <span>Đã thêm sản phẩm vào giỏ hàng</span>
-                    <a href="/cart">Xem giỏ hàng</a>
-                </div>
-            </div>
-            <form class="form-search mt-2" onsubmit="return false;">
-                <div class="click-search">
-                    <i class="topzone-search"></i>
-                    <input type="text" placeholder="Tìm kiếm sản phẩm">
-                    <i class="topzone-delSearch"></i>
-                </div>
-                <button type="submit" class="submit-search" style="display:none">
-                </button>
-                <div class="sg-search">
-                </div>
-            </form>
-        </div>
-        <div class="col-2"></div>
-    </div>
-   
-
-       
-        
+	<div class="row">
+		<div class="col-2"></div>
+		<div class="col-8">
+			<div class="logo-topzone mt-2">
+				<a href="/">
+					<i class="topzone-logo  "></i>
+				</a>
+				<a href="/tekzone/khac-biet-aar-va-apr-tieu-chuan-cua-hang-uy-quyen-apple-1411356">
+					<i class="topzone-autho  "></i>
+				</a>
+			</div>
+			@* menu *@
+			@await Component.InvokeAsync("Menu")
+			<div class="search-cart mt-2">
+				<div class="search-sp">
+					<i class="topzone-search"></i>
+				</div>
+				<a href="/cart" class="cart">
+					<i class="topzone-cart"></i>
+				</a>
+				<div class="view-cart">
+					<i class="topzone-cohang"></i>
+					<span>Đã thêm sản phẩm vào giỏ hàng</span>
+					<a href="/cart">Xem giỏ hàng</a>
+				</div>
+			</div>
+			@* search *@
+			<form class="form-search mt-2" onsubmit="return false;">
+			<div class="click-search">
+			<i class="topzone-search"></i>
+			<input type="text" id="searchKeyword" placeholder="Tìm kiếm sản phẩm">
+			<i class="topzone-delSearch"></i>
+			</div>
+				<button type="submit" class="submit-search" style="display:block">
+				</button>
+				<div class="sg-search " style="display: none;">
+				</div>
+			</form>
+		</div>
+		<div class="col-2"></div>
+	</div>
 </header>
+@section Scripts{
+	<script>
+		const querySelector = document.querySelector.bind(document);
+		const querySelectorAll = document.querySelector.bind(document);
+		const ser
+	</script>
+}

@@ -89,7 +89,7 @@ namespace Store.Infrastructure.Repositories
         public async Task<IEnumerable<FlashSale>> GetAllFlashSale(int page, int pageSize)
         {
             var flashsales = await _context.FlashSales
-                .Include(x => x.FlashSaleProducts)
+                .Include(x => x.FlashSaleProducts.Where(p => p.IsActive && !p.IsDeleted))
                 .ThenInclude(x => x.Product)
                 .ThenInclude(x => x.ProductImages)
                 .Where(x => x.IsActive && !x.IsDeleted && x.DateOpen <= DateTime.Now && x.DateClose >= DateTime.Now)

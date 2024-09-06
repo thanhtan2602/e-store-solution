@@ -9,7 +9,6 @@ namespace Store.WebService.Services.Interfaces
 {
     public interface IStoreWebService
     {
-        Task<vmStore> GetStoreById(int storeId);
         Task<List<vmStore>> GetStoreList(int page, int pageSize);
     }
 }

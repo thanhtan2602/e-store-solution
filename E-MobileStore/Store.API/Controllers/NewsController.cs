@@ -25,7 +25,7 @@ namespace Store.API.Controllers
         {
             try
             {
-                var listNews = await _newsService.GetNewsAsync(page,pageSize);
+                var listNews = await _newsService.GetNewsAsync(page, pageSize);
                 _response.Result = listNews;
                 return Ok(_response);
             }
