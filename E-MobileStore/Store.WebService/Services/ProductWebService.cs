@@ -63,12 +63,35 @@ namespace Store.WebService.Services
                 return new vmProduct();
             }
         }
-        public async Task<List<vmProduct>> GetProductListByCateId(int cateId, int page, int pageSize)
+
+        public async Task<int> TotalProduct(int categoryId)
+        {
+            try
+            {
+                var uri = _productApi.TotalProductAsync(categoryId);
+                var response = await _httpClient.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var productresponse = JsonConvert.DeserializeObject<TotalProductResponse>(content);
+                    return productresponse.result;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        public async Task<List<vmProduct>> GetProductListByCateId(int cateId, int page, int pageSize, string? sortBy)
         {
             try
             {
                 var products = new List<vmProduct>();
-                var uri = _productApi.GetProductListByCateId(cateId, page, pageSize);
+                var uri = _productApi.GetProductListByCateId(cateId, page, pageSize, sortBy);
                 var response = await _httpClient.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
@@ -90,7 +113,6 @@ namespace Store.WebService.Services
                                 Quantity = product.Quantity,
                                 ProductImages = product.ProductImages,
                                 PriceSale = product.PriceSale,
-                                //ProductAttributes = product.ProductAttributes,
                                 IsDeleted = product.IsDeleted,
                                 IsActive = product.IsActive,
                                 CreatedBy = product.CreatedBy,
@@ -135,7 +157,6 @@ namespace Store.WebService.Services
                                 Quantity = product.Quantity,
                                 ProductImages = product.ProductImages,
                                 PriceSale = product.PriceSale,
-                                //ProductAttributes = product.ProductAttributes,
                                 IsDeleted = product.IsDeleted,
                                 IsActive = product.IsActive,
                                 CreatedBy = product.CreatedBy,

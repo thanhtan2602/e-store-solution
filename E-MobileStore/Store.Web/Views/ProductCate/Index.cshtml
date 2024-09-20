@@ -1,8 +1,10 @@
-﻿
+﻿@model Store.Web.ViewsModel.ProductsByCateVM
 @{
-    ViewData["Title"] = "Product Cate Page";
-    Layout = "_Layout";
+	ViewData["Title"] = "Product Cate Page";
+	Layout = "_Layout";
+	var totalProduct = ViewBag.TotalProduct;
 }
+<link href="~/css/layout/category.css" rel="stylesheet" />
 <style>
     .item {
         display: none;
@@ -13,427 +15,157 @@
         }
     /* Hiển thị sản phẩm khi có lớp 'show' */
 </style>
-@Html.Partial("_Header")
+
 <section>
     <a href="javascript:;" class="catename">
         <i class="logo-category">
-            <img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Category/10200/Tai-nghe--loa-update-120x40.png" width="152" height="32" alt="Loa, tai nghe">
+            <img src="https://cdn.tgdd.vn/Category/10199/WMac-120x50-1.png" width="152" height="32" alt="">
         </i>
     </a>
-    @Html.Partial("BannerCate")
-    @*filter product*@
 
-    <div class="filter-cate">
-        <div class="ft-cate">
 
-            <a href="/am-thanh" data-id="0" class="active">
-                Tất cả
-            </a>
-            <a href="/tai-nghe" data-order="1" data-id="54" class="">
-                Tai nghe
-            </a>
-            <a href="/loa" data-order="2" data-id="2162" class="">
-                Loa
-            </a>
-        </div>
-
-        <!-- Bộ filter -->
-
-        <div class="ft-sort">
-            <a href="javascript:;">Xếp theo: Nổi bật</a>
-            <ul>
+    <div class="slide-cate owl-carousel owl-theme owl-loaded owl-drag">
+       @await Html.PartialAsync("BannerCate",Model.Banners)
+    </div>
+	<div class="filter-cate">
+		<div class="ft-sort">
+			<a class="sText toggle-btn" style=" cursor: pointer;">Xếp theo: Mới nhất</a>
+            <ul class="list-sort" style="display: none; z-index:10">
                 <li>
-                    <a href="javascript:;" class="check" data-id="14">
-                        <i class="topzone-stick"></i>
-                        <span>Nổi bật</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:;" class="" data-id="12">
+                    <a href="#" class="check" data-sort="date_desc" data-id="@Model.Products.FirstOrDefault()?.CategoryId">
                         <i class="topzone-stick"></i>
                         <span>Mới ra mắt</span>
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:;" data-id="7">
+                    <a href="#" data-sort="date_asc" data-id="@Model.Products.FirstOrDefault()?.CategoryId">
                         <i class="topzone-stick"></i>
-                        <span>Bán chạy</span>
+                        <span>Mở bán Cũ - Mới</span>
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:;" data-id="2">
+                    <a href="#" data-sort="name_asc" data-id="@Model.Products.FirstOrDefault()?.CategoryId">
                         <i class="topzone-stick"></i>
-                        <span>Giá thấp đến cao</span>
+                        <span>Tên A - Z</span>
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:;" data-id="3">
+                    <a href="#" data-sort="name_desc" data-id="@Model.Products.FirstOrDefault()?.CategoryId">
                         <i class="topzone-stick"></i>
-                        <span>Giá cao đến thấp</span>
+                        <span>Tên Z - A</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-sort="price_asc" data-id="@Model.Products.FirstOrDefault()?.CategoryId">
+                        <i class="topzone-stick"></i>
+                        <span>Giá tăng dần</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-sort="price_desc" data-id="@Model.Products.FirstOrDefault()?.CategoryId">
+                        <i class="topzone-stick"></i>
+                        <span>Giá giảm dần</span>
                     </a>
                 </li>
             </ul>
-        </div>
-    </div>
-    @*Container product*@
-    <div class="container-productbox" style="width:100%">
-        <div id="preloader">
-            <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-        </div>
-        <ul class="listing-cate crm-cate " style="padding-left:0">
-            <li class=" item  __cate_2162" data-index="1" data-id="242826" data-issetup="0" data-maingroup="16" data-subgroup="4779" data-type="1" data-vehicle="1" data-productcode="0164779000003" data-pos="1">
 
-                <a href="/loa/bluetooth-jbl-go-3-xanh-den" data-s="Nomal" data-site="16" data-pro="3" data-cache="True" data-sv="tz-web15" data-name="Loa Bluetooth JBL Go 3" data-id="242826" data-price="790000.0" data-brand="JBL" data-cate="Loa" data-box="BoxCate" class="main-contain">
-                    <div class="item-img item-img_2162">
-                        <img class="thumb ls-is-cached lazyloaded" width="235" height="235" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-xanh-tn-650x650.png" alt="Loa Bluetooth JBL Go 3" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-xanh-tn-650x650.png">
-                    </div>
+		</div>
+	</div>
+	
+	<div class="container-productbox" id="productListContainer">
+		@await Html.PartialAsync("ListProduct", Model.Products)
+		
+	</div>
+	<div class="view-more">
+			<a href="#" id="loadMoreLink">
+				Xem thêm <span class="remain">@(totalProduct-Model.Products.Count())</span> sản phẩm
+			</a>
+	</div>
+    <script type="text/javascript">
+        window.dataLayer = window.dataLayer || [];
+        dataLayer.push({
+            'pageType': 'Category',
+            'pageCategoryLv1': 'Mac'
+        })
+    </script>
 
-
-
-                    <h3>
-                        Loa Bluetooth JBL Go 3
-                    </h3>
-
-                    <div class="box-p">
-                        <strong class="price">790.000₫</strong>
-                        <p class="price-old black">1.090.000₫</p>
-                        <span class="percent">-27%</span>
-                    </div>
-                </a>
-
-            </li>
-            <li class=" item  __cate_54" data-index="2" data-id="236016" data-issetup="0" data-maingroup="16" data-subgroup="6400" data-type="1" data-vehicle="1" data-productcode="0164659000001" data-pos="2">
-
-                <a href="/tai-nghe/tai-nghe-bluetooth-airpods-2-apple-mv7n2-trang" data-s="Nomal" data-site="16" data-pro="3" data-cache="True" data-sv="tz-web15" data-name="AirPods 2 sạc Lightning" data-id="236016" data-price="2790000.0" data-brand="Apple" data-cate="Tai nghe" data-box="BoxCate" class="main-contain">
-                    <div class="item-img item-img_54">
-                        <img class="thumb ls-is-cached lazyloaded" width="235" height="235" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/54/236016/s16/tai-nghe-bluetooth-airpods-2-apple-mv7n2-trang-thumb-110-650x650.png" alt="AirPods 2 sạc Lightning" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/54/236016/s16/tai-nghe-bluetooth-airpods-2-apple-mv7n2-trang-thumb-110-650x650.png">
-                    </div>
-
-
-
-                    <h3>
-                        AirPods 2 sạc Lightning
-                    </h3>
-
-                    <div class="box-p">
-                        <strong class="price">2.790.000₫</strong>
-                        <p class="price-old black">3.490.000₫</p>
-                        <span class="percent">-20%</span>
-                    </div>
-                </a>
-
-            </li>
-            <li class=" item  __cate_54" data-index="3" data-id="289781" data-issetup="0" data-maingroup="16" data-subgroup="6400" data-type="1" data-vehicle="1" data-productcode="0164659000057" data-pos="3">
-
-                <a href="/tai-nghe/airpods-pro-2" data-s="Nomal" data-site="16" data-pro="3" data-cache="True" data-sv="tz-web15" data-name="AirPods Pro (2nd Gen) Lightning" data-id="289781" data-price="5490000.0" data-brand="Apple" data-cate="Tai nghe" data-box="BoxCate" class="main-contain">
-                    <div class="item-img item-img_54">
-                        <img class="thumb ls-is-cached lazyloaded" width="235" height="235" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/54/289781/s16/airpods-pro-2-thumb-650x650.png" alt="AirPods Pro (2nd Gen) Lightning" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/54/289781/s16/airpods-pro-2-thumb-650x650.png">
-                    </div>
-
-
-
-                    <h3>
-                        AirPods Pro (2nd Gen) Lightning
-                    </h3>
-
-                    <div class="box-p">
-                        <strong class="price">5.490.000₫</strong>
-                        <p class="price-old black">6.190.000₫</p>
-                        <span class="percent">-11%</span>
-                    </div>
-                </a>
-
-            </li>
-            <li class=" item  __cate_54" data-index="4" data-id="290053" data-issetup="0" data-maingroup="16" data-subgroup="6400" data-type="1" data-vehicle="1" data-productcode="0164659000058" data-pos="4">
-
-                <a href="/tai-nghe/airpods-3" data-s="Nomal" data-site="16" data-pro="3" data-cache="True" data-sv="tz-web15" data-name="AirPods 3 sạc Lightning" data-id="290053" data-price="4090000.0" data-brand="Apple" data-cate="Tai nghe" data-box="BoxCate" class="main-contain">
-                    <div class="item-img item-img_54">
-                        <img class="thumb ls-is-cached lazyloaded" width="235" height="235" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/54/290053/s16/airpods-3-hop-sac-khong-day-thumb-650x650.png" alt="AirPods 3 sạc Lightning" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/54/290053/s16/airpods-3-hop-sac-khong-day-thumb-650x650.png">
-                    </div>
-
-
-
-                    <h3>
-                        AirPods 3 sạc Lightning
-                    </h3>
-
-                    <div class="box-p">
-                        <strong class="price">4.090.000₫</strong>
-                        <p class="price-old black">4.490.000₫</p>
-                        <span class="percent">-8%</span>
-                    </div>
-                </a>
-
-            </li>
-            <li class=" item  __cate_54" data-index="5" data-id="315014" data-issetup="0" data-maingroup="16" data-subgroup="6400" data-type="1" data-vehicle="1" data-productcode="0162831000315" data-pos="5">
-
-                <a href="/tai-nghe/tai-nghe-bluetooth-airpods-pro-gen-2-magsafe-charge-usb-c-apple-mtjv3" data-s="Nomal" data-site="16" data-pro="3" data-cache="True" data-sv="tz-web15" data-name="AirPods Pro (2nd Gen) USB-C" data-id="315014" data-price="5690000.0" data-brand="Apple" data-cate="Tai nghe" data-box="BoxCate" class="main-contain">
-                    <div class="item-img item-img_54">
-                        <img class="thumb ls-is-cached lazyloaded" width="235" height="235" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/54/315014/s16/tai-nghe-bluetooth-airpods-pro-2nd-gen-usb-c-charge-apple-thumb-12-1-650x650.png" alt="AirPods Pro (2nd Gen) USB-C" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/54/315014/s16/tai-nghe-bluetooth-airpods-pro-2nd-gen-usb-c-charge-apple-thumb-12-1-650x650.png">
-                    </div>
-
-
-
-                    <h3>
-                        AirPods Pro (2nd Gen) USB-C
-                    </h3>
-
-                    <div class="box-p">
-                        <strong class="price">5.690.000₫</strong>
-                        <p class="price-old black">6.200.000₫</p>
-                        <span class="percent">-8%</span>
-                    </div>
-                </a>
-
-            </li>
-            <li class=" item  __cate_54" data-index="6" data-id="236331" data-issetup="0" data-maingroup="16" data-subgroup="6400" data-type="1" data-vehicle="1" data-productcode="0164659000005" data-pos="6">
-
-                <a href="/tai-nghe/bluetooth-airpods-max-apple" data-s="Nomal" data-site="16" data-pro="3" data-cache="True" data-sv="tz-web15" data-name="AirPods Max" data-id="236331" data-price="12990000.0" data-brand="Apple" data-cate="Tai nghe" data-box="BoxCate" class="main-contain">
-                    <div class="item-img item-img_54">
-                        <img class="thumb ls-is-cached lazyloaded" width="235" height="235" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/54/236331/s16/bluetooth-airpods-max-apple-bac-tn-650x650.png" alt="AirPods Max" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/54/236331/s16/bluetooth-airpods-max-apple-bac-tn-650x650.png">
-                    </div>
-
-
-
-                    <h3>
-                        AirPods Max
-                    </h3>
-
-                    <div class="box-p">
-                        <strong class="price">12.990.000₫</strong>
-                        <p class="price-old black">13.990.000₫</p>
-                        <span class="percent">-7%</span>
-                    </div>
-                </a>
-
-            </li>
-            <li class=" item  __cate_54" data-index="7" data-id="326708" data-issetup="0" data-maingroup="16" data-subgroup="4540" data-type="1" data-vehicle="1" data-productcode="0164540000092" data-pos="7">
-
-                <a href="/tai-nghe/tai-nghe-bluetooth-chup-tai-marshall-major-v" data-s="Nomal" data-site="16" data-pro="3" data-cache="True" data-sv="tz-web15" data-name="Tai nghe Bluetooth chụp tai Marshall Major V" data-id="326708" data-price="4290000.0" data-brand="Marshall" data-cate="Tai nghe" data-box="BoxCate" class="main-contain">
-                    <div class="item-img item-img_54">
-                        <img class="thumb ls-is-cached lazyloaded" width="235" height="235" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/54/326708/s16/tai-nghe-bluetooth-chup-tai-marshall-major-v-thumb-650x650.png" alt="Tai nghe Bluetooth chụp tai Marshall Major V" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/54/326708/s16/tai-nghe-bluetooth-chup-tai-marshall-major-v-thumb-650x650.png">
-                    </div>
-
-
-
-                    <h3>
-                        Tai nghe Bluetooth chụp tai Marshall Major V
-                    </h3>
-
-                    <strong class="price">4.290.000₫</strong>
-                </a>
-
-            </li>
-            <li class=" item  __cate_2162" data-index="8" data-id="326193" data-issetup="0" data-maingroup="16" data-subgroup="4779" data-type="1" data-vehicle="1" data-productcode="0164779000133" data-pos="8">
-
-                <a href="/loa/loa-bluetooth-jbl-go-4" data-s="Nomal" data-site="16" data-pro="3" data-cache="True" data-sv="tz-web15" data-name="Loa Bluetooth JBL Go 4" data-id="326193" data-price="1090000.0" data-brand="JBL" data-cate="Loa" data-box="BoxCate" class="main-contain">
-                    <label>Mới</label>
-                    <div class="item-img item-img_2162">
-                        <img class="thumb ls-is-cached lazyloaded" width="235" height="235" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/2162/326193/s16/loa-bluetooth-jbl-go-4-thumb-650x650.png" alt="Loa Bluetooth JBL Go 4" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/2162/326193/s16/loa-bluetooth-jbl-go-4-thumb-650x650.png">
-                    </div>
-
-
-
-                    <h3>
-                        Loa Bluetooth JBL Go 4
-                    </h3>
-
-                    <strong class="price">1.090.000₫</strong>
-                </a>
-
-            </li>
-            <li class=" item  __cate_2162" data-index="9" data-id="326062" data-issetup="0" data-maingroup="16" data-subgroup="4779" data-type="1" data-vehicle="1" data-productcode="0164779000139" data-pos="9">
-
-                <a href="/loa/loa-bluetooth-jbl-xtreme-4" data-s="Nomal" data-site="16" data-pro="3" data-cache="True" data-sv="tz-web15" data-name="Loa Bluetooth JBL Xtreme 4" data-id="326062" data-price="7990000.0" data-brand="JBL" data-cate="Loa" data-box="BoxCate" class="main-contain">
-                    <label>Mới</label>
-                    <div class="item-img item-img_2162">
-                        <img class="thumb ls-is-cached lazyloaded" width="235" height="235" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/2162/326062/s16/loa-bluetooth-jbl-xtreme-4-thumb-1-650x650.png" alt="Loa Bluetooth JBL Xtreme 4" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/2162/326062/s16/loa-bluetooth-jbl-xtreme-4-thumb-1-650x650.png">
-                    </div>
-
-
-
-                    <h3>
-                        Loa Bluetooth JBL Xtreme 4
-                    </h3>
-
-                    <strong class="price">7.990.000₫</strong>
-                </a>
-
-            </li>
-            <li class=" item  __cate_2162" data-index="10" data-id="326061" data-issetup="0" data-maingroup="16" data-subgroup="4779" data-type="1" data-vehicle="1" data-productcode="0164779000141" data-pos="10">
-
-                <a href="/loa/loa-bluetooth-jbl-partybox-120-pbclub120as" data-s="Nomal" data-site="16" data-pro="3" data-cache="True" data-sv="tz-web15" data-name="Loa Bluetooth JBL Partybox 120 PBCLUB120AS" data-id="326061" data-price="10900000.0" data-brand="JBL" data-cate="Loa" data-box="BoxCate" class="main-contain">
-                    <label>Mới</label>
-                    <div class="item-img item-img_2162">
-                        <img class="thumb ls-is-cached lazyloaded" width="235" height="235" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/2162/326061/s16/loa-bluetooth-jbl-partybox-120-pbclub120as-thumb-650x650.png" alt="Loa Bluetooth JBL Partybox 120 PBCLUB120AS" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/2162/326061/s16/loa-bluetooth-jbl-partybox-120-pbclub120as-thumb-650x650.png">
-                    </div>
-
-
-
-                    <h3>
-                        Loa Bluetooth JBL Partybox 120 PBCLUB120AS
-                    </h3>
-
-                    <strong class="price">10.900.000₫</strong>
-                </a>
-
-            </li>
-            <li class=" item  __cate_2162" data-index="11" data-id="326060" data-issetup="0" data-maingroup="16" data-subgroup="4779" data-type="1" data-vehicle="1" data-productcode="0164779000140" data-pos="11">
-
-                <a href="/loa/loa-bluetooth-jbl-partybox-320-pbstage320as" data-s="Nomal" data-site="16" data-pro="3" data-cache="True" data-sv="tz-web15" data-name="Loa Bluetooth JBL Partybox 320 PBSTAGE320AS" data-id="326060" data-price="15900000.0" data-brand="JBL" data-cate="Loa" data-box="BoxCate" class="main-contain">
-                    <label>Mới</label>
-                    <div class="item-img item-img_2162">
-                        <img class="thumb ls-is-cached lazyloaded" width="235" height="235" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/2162/326060/s16/loa-bluetooth-jbl-partybox-320-pbstage320as-thumb-650x650.png" alt="Loa Bluetooth JBL Partybox 320 PBSTAGE320AS" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/2162/326060/s16/loa-bluetooth-jbl-partybox-320-pbstage320as-thumb-650x650.png">
-                    </div>
-
-
-
-                    <h3>
-                        Loa Bluetooth JBL Partybox 320 PBSTAGE320AS
-                    </h3>
-
-                    <strong class="price">15.900.000₫</strong>
-                </a>
-
-            </li>
-            <li class=" item ajaxed __cate_54" data-index="12" data-id="325754" data-issetup="0" data-maingroup="16" data-subgroup="6400" data-type="0" data-vehicle="1" data-productcode="0166400000004" data-pos="12">
-
-                <a href="/tai-nghe/tai-nghe-beats-solo-buds" data-s="Nomal" data-site="16" data-pro="3" data-cache="True" data-sv="tz-web15" data-name="Tai nghe TWS Beats Solo Buds" data-id="325754" data-price="1990000.0" data-brand="Beats" data-cate="Tai nghe" data-box="BoxCate" class="main-contain">
-                    <label>Mới</label>
-                    <div class="item-img item-img_54">
-                        <img class="thumb ls-is-cached lazyloaded" width="235" height="235" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/54/325754/s16/tai-nghe-beats-solo-buds-thumb-650x650.png" alt="Tai nghe Bluetooth True Wireless Beats Solo Buds" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/54/325754/s16/tai-nghe-beats-solo-buds-thumb-650x650.png">
-                    </div>
-
-
-
-                    <h3>
-                        Tai nghe Bluetooth True Wireless Beats Solo Buds
-                    </h3>
-
-                    <strong class="price">1.990.000₫</strong>
-                    <p class="item-txt-online ">Hàng sắp về</p>
-                </a>
-
-            </li>
-            <li class=" item  __cate_54" data-index="13" data-id="325342" data-issetup="0" data-maingroup="16" data-subgroup="4540" data-type="1" data-vehicle="1" data-productcode="0164540000088" data-pos="13">
-
-                <a href="/tai-nghe/tai-nghe-bluetooth-chup-tai-marshall-monitor-ii-a-n-c" data-s="TwoPriceDetail" data-site="16" data-pro="3" data-cache="True" data-sv="tz-web15" data-name="Tai nghe Bluetooth chụp tai Marshall Monitor II A.N.C." data-id="325342" data-price="7190000.0" data-brand="Marshall" data-cate="Tai nghe" data-box="BoxCate" class="main-contain">
-                    <label>Mới</label>
-                    <div class="item-img item-img_54">
-                        <img class="thumb ls-is-cached lazyloaded" width="235" height="235" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/54/325342/s16/tai-nghe-bluetooth-chup-tai-marshall-monitor-ii-a-n-c-650x650.png" alt="Tai nghe Bluetooth chụp tai Marshall Monitor II A.N.C." src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/54/325342/s16/tai-nghe-bluetooth-chup-tai-marshall-monitor-ii-a-n-c-650x650.png">
-                    </div>
-
-
-
-                    <h3>
-                        Tai nghe Bluetooth chụp tai Marshall Monitor II A.N.C.
-                    </h3>
-
-                    <div class="box-p">
-                        <strong class="price">7.190.000₫</strong>
-                        <p class="price-old black">7.990.000₫</p>
-                        <span class="percent">-10%</span>
-                    </div>
-                    <p class="item-txt-online orange">Online giá rẻ quá</p>
-                </a>
-
-            </li>
-            <li class=" item  __cate_54" data-index="14" data-id="325341" data-issetup="0" data-maingroup="16" data-subgroup="4540" data-type="1" data-vehicle="1" data-productcode="0164540000086" data-pos="14">
-
-                <a href="/tai-nghe/tai-nghe-bluetooth-chup-tai-marshall-major-iv" data-s="TwoPriceDetailCMS" data-site="16" data-pro="3" data-cache="True" data-sv="tz-web15" data-name="Tai nghe Bluetooth chụp tai Marshall Major IV" data-id="325341" data-price="3640000.0" data-brand="Marshall" data-cate="Tai nghe" data-box="BoxCate" class="main-contain">
-                    <label>Mới</label>
-                    <div class="item-img item-img_54">
-                        <img class="thumb ls-is-cached lazyloaded" width="235" height="235" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/54/325341/s16/tai-nghe-bluetooth-chup-tai-marshall-major-iv-den-1-650x650.png" alt="Tai nghe Bluetooth chụp tai Marshall Major IV" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/54/325341/s16/tai-nghe-bluetooth-chup-tai-marshall-major-iv-den-1-650x650.png">
-                    </div>
-
-
-
-                    <h3>
-                        Tai nghe Bluetooth chụp tai Marshall Major IV
-                    </h3>
-
-                    <div class="box-p">
-                        <strong class="price">3.640.000₫</strong>
-                        <p class="price-old black">4.290.000₫</p>
-                        <span class="percent">-15%</span>
-                    </div>
-                    <p class="item-txt-online orange">Online giá rẻ quá</p>
-                </a>
-
-            </li>
-            <li class=" item  __cate_54" data-index="15" data-id="325340" data-issetup="0" data-maingroup="16" data-subgroup="4540" data-type="1" data-vehicle="1" data-productcode="0164540000085" data-pos="15">
-
-                <a href="/tai-nghe/tai-nghe-bluetooth-true-wireless-marshall-motif-ii-a-n-c" data-s="TwoPriceDetail" data-site="16" data-pro="3" data-cache="True" data-sv="tz-web15" data-name="Tai nghe Bluetooth True Wireless Marshall Motif II A.N.C." data-id="325340" data-price="4940000.0" data-brand="Marshall" data-cate="Tai nghe" data-box="BoxCate" class="main-contain">
-                    <label>Mới</label>
-                    <div class="item-img item-img_54">
-                        <img class="thumb ls-is-cached lazyloaded" width="235" height="235" data-src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/54/325340/s16/tai-nghe-bluetooth-tws-marshall-motif-ii-a-n-c-1-650x650.png" alt="Tai nghe Bluetooth True Wireless Marshall Motif II A.N.C." src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/54/325340/s16/tai-nghe-bluetooth-tws-marshall-motif-ii-a-n-c-1-650x650.png">
-                    </div>
-
-
-
-                    <h3>
-                        Tai nghe Bluetooth True Wireless Marshall Motif II A.N.C.
-                    </h3>
-
-                    <div class="box-p">
-                        <strong class="price">4.940.000₫</strong>
-                        <p class="price-old black">5.490.000₫</p>
-                        <span class="percent">-10%</span>
-                    </div>
-                    <p class="item-txt-online orange">Online giá rẻ quá</p>
-                </a>
-
-            </li>
-        </ul>
-        <div class="view-more ">
-            <a href="javascript:;" id="show-more-btn">Xem thêm <span class="remain"></span> sản phẩm</a>
-        </div>
-
-        <!-- Khảo sát -->
-        <div class="survey-wrap survey-wrap-cate">
-
-            <div class="crm-survey-render" data-type="QUESTION_FORM" data-applicationid="1" data-programid="439" data-attributeid-2="Loa, tai nghe" data-programcode="DCE1A37CB074FC8" data-siteid="16" data-provinceid="3" data-districtid="0" data-wardid="0">
-                <div id="survey-question-form" class="main-form-programid439 survey-system-question-form-TopZone program_439 svelte-1n2apvk"><div class="crm-wrapper-survey"><div class="main-form" style="border-color: rgb(50, 50, 50);"><div id="crm-question-form-null-439"><div class="flex-container svelte-cktoy5"><div class="crm-ask-and-answer_survey_system flex-reverse-direction"><div class="wrap_question_survey_system"><div class="crm-ask" style="text-align: left;"><span class="question-name" style="font-style: normal; font-weight: 600; font-size: 13px; line-height: 18px; color: rgb(81, 87, 100); flex: 0 0 auto; order: 0;">Bạn  có hài lòng với trải nghiệm tìm kiếm thông tin, sản phẩm trên website không?</span></div></div> <div id="wrap_lst_answer_questionid1274" class="wrap_lst_answer_Horizontal svelte-cktoy5"><div id="div-button-crm-survey" class="svelte-unsrhu"><div class="wrap_anwser_survey_system_survey_system svelte-13ainzo" style="width: 100%;float: left; --backgroundColorMain:#323232"><div key="4997" class="answer-input dflex svelte-13ainzo" style="height: 100%;"><button class="crmsurvey-btnanswer-icon svelte-13ainzo" style="border-color: rgb(50, 50, 50);"><div style="flex: 1 0 0%;"><img src="https://cdn.tgdd.vn/crmweb/survey/img/icon-happy.png" alt="radio_4997" class="hoverScale transition-hover surver-img-hasIcon svelte-13ainzo"></div> <div style="flex: 1 0 0%;"><span class="surver-text-hasIcon svelte-13ainzo" style="line-height: 20px;">Hài lòng</span></div></button></div></div><div class="wrap_anwser_survey_system_survey_system svelte-13ainzo" style="width: 100%;float: left; --backgroundColorMain:#323232"><div key="4998" class="answer-input dflex svelte-13ainzo" style="height: 100%;"><button class="crmsurvey-btnanswer-icon svelte-13ainzo" style="border-color: rgb(50, 50, 50);"><div style="flex: 1 0 0%;"><img src="https://cdn.tgdd.vn/crmweb/survey/img/icon-bad.png" alt="radio_4998" class="hoverScale transition-hover surver-img-hasIcon svelte-13ainzo"></div> <div style="flex: 1 0 0%;"><span class="surver-text-hasIcon svelte-13ainzo" style="line-height: 20px;">Không hài lòng</span></div></button></div></div></div> <div id="div-text-crm-survey" class="svelte-unsrhu"></div> <div></div> </div></div></div>  <div id="crmspantextinputerror"></div> </div> <div id="main-form-tks-programid-null-439"></div></div></div></div>
-            </div>
-            <link href="//cdn.tgdd.vn/crmweb/survey/js/survey.min.v202406281140.css" rel="stylesheet" type="text/css">
-            <script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-TN8PXHG"></script><script defer="defer" async="async" src="//cdn.tgdd.vn/crmweb/survey/js/survey.min.v202406281140.js"></script>
-
-
-
-        </div>
-    </div>
 </section>
-@Html.Partial("_Footer")
 
 @section Scripts {
     <script type="text/javascript">
-        $(document).ready(function () {
-            var itemsToShow = 9; // Số lượng sản phẩm hiển thị ban đầu
-            var itemsTotal = $('.item').length; // Tổng số lượng sản phẩm
-
-            // Hiển thị số lượng sản phẩm ban đầu
-            $('.item').slice(0, itemsToShow).addClass('show');
-
-            // Ẩn nút "Xem thêm" nếu không có sản phẩm nào để hiển thị thêm
-            if (itemsToShow >= itemsTotal) {
-                $('#show-more-btn').hide();
-            }
-
-            // Khi ấn nút "Xem thêm"
-            $('#show-more-btn').click(function () {
-                var currentlyShown = $('.item.show').length;
-                var nextItemsToShow = currentlyShown + itemsToShow;
-
-                // Hiển thị thêm sản phẩm
-                $('.item').slice(currentlyShown, nextItemsToShow).addClass('show');
-
-                // Ẩn nút "Xem thêm" nếu đã hiển thị hết sản phẩm
-                if (nextItemsToShow >= itemsTotal) {
-                    $(this).hide();
-                }
+        document.addEventListener("DOMContentLoaded", function () {
+            //sort Product
+            const toggleBtn = document.querySelector(".toggle-btn");
+            const listSort = document.querySelector(".list-sort");
+            const selectSort = document.querySelectorAll("ul.list-sort li a")
+            const sText = document.querySelector(".sText")
+            const viewMore = document.querySelector(".view-more");
+            const remain = document.querySelector(".remain");
+            toggleBtn.addEventListener("click", function () {
+                toggleBtn.classList.toggle("active");
+                listSort.style.display = (listSort.style.display === "none" || listSort.style.display === "") ? "block" : "none";
             });
+            let pageSize = 6;
+            let totalProduct = @totalProduct;
+            //sort
+            selectSort.forEach(function (item) {
+                item.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    const sortBy = item.getAttribute('data-sort')
+                    const categoryId = item.getAttribute('data-id')
+                    const selectedTex = item.querySelector("span").innerText;
+                    sText.innerText = "Xếp theo: " + selectedTex;
+                    selectSort.forEach(function (s) {
+                        s.classList.remove("check");
+                    })
+                    this.classList.add("check");
+                    listSort.style.display = "none";
+                    const uri = urlRoot + "/productcate?categoryid=" + categoryId + "&sortBy=" + sortBy + "&pageSize=" + pageSize;
+                    console.log("uri", uri)
+                    loadProducts(uri);
+                    updateViewMoreBuuton();
+                });
+            });
+            // function to get list product
+            function loadProducts(uri) {
+                $.ajax({
+                    type: "GET",
+                    url: uri,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    success: function (data) {
+                        document.getElementById("productListContainer").innerHTML = data;
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                        alert("check console to see proplem");
+                    }
+                });
+            };
+            // function to update view more button
+            function updateViewMoreBuuton() {
+                const remainingProducts = @totalProduct - pageSize;
+                viewMore.style.display = (remainingProducts > 0) ? "" : "none";
+                remain.innerText = remainingProducts;
+                if (remainingProducts <= 0) {
+                    viewMore.style.display ="none";
+                }
+            }
+            //view more
+            viewMore.addEventListener("click", function (e) {
+                e.preventDefault();
+                pageSize += 6;
+                const categoryId = document.querySelector("ul.list-sort li a.check").getAttribute("data-id");
+                const sortBy = document.querySelector("ul.list-sort li a.check").getAttribute("data-sort");
+                console.log("categoryId", categoryId)
+                console.log("sortBy", sortBy)
+                const newUri = urlRoot + "/productcate?categoryid=" + categoryId + "&sortBy=" + sortBy + "&pageSize=" + pageSize;
+                console.log("newUri", newUri)
+                loadProducts(newUri);
+                updateViewMoreBuuton();
+            });
+            updateViewMoreButton();
         });
-
-
     </script>
 }

@@ -20,12 +20,12 @@ namespace Store.WebService.Services
             _bannerApi = bannerApi;
             _client = new HttpClient();
         }
-        public async Task<List<vmBanner>> GetAllBanner(int page, int pageSize)
+        public async Task<List<vmBanner>> GetBannerByCate(int page, int pageSize, int categoryId)
         {
             try
             {
                 var banners = new List<vmBanner>();
-                var uri = _bannerApi.GetAllBanner(page, pageSize);
+                var uri = _bannerApi.GetBannerByCate(page, pageSize, categoryId);
                 var response = await _client.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {

@@ -33,7 +33,7 @@ namespace Store.Infrastructure.Repositories
                 _context.SaveChanges();
             }
         }
-        public async Task<IEnumerable<Banner>> GetAllBannerAsync(int page, int pageSize)
+        public async Task<IEnumerable<Banner>> GetBannerByCateAsync(int page, int pageSize, int categoryId)
         {
             var banners = await _context.Banners
                     .Include(x => x.Category)
@@ -43,7 +43,8 @@ namespace Store.Infrastructure.Repositories
                     .Take(pageSize)
                     .AsNoTracking()
                     .ToListAsync();
-            return banners ?? new List<Banner>();
+            var result = banners.Where(x => x.CategoryId == categoryId).ToList();
+            return result ?? new List<Banner>();
         }
         public void InsertOrUpdateBanner(BannerDTO bannerDTO)
         {
@@ -60,7 +61,8 @@ namespace Store.Infrastructure.Repositories
                     banner.ImageURL = bannerDTO.ImageURL;
                     banner.UpdatedDate = DateTime.Now;
                     banner.UpdatedBy = bannerDTO.UpdatedBy;
-                    banner.CategoryId = bannerDTO?.CategoryId;
+                    banner.Position = bannerDTO.Position;
+                    banner.CategoryId = bannerDTO.CategoryId;
                     banner.IsActive = bannerDTO.IsActive;
                     banner.IsDeleted = bannerDTO.IsDeleted;
                     _context.Banners.Update(banner);
@@ -72,8 +74,9 @@ namespace Store.Infrastructure.Repositories
                 {
                     IsDeleted = false,
                     IsActive = bannerDTO.IsActive,
-                    CategoryId = bannerDTO?.CategoryId,
+                    CategoryId = bannerDTO.CategoryId,
                     ImageURL = bannerDTO.ImageURL,
+                    Position = bannerDTO.Position,
                     BannerAlt = bannerDTO.BannerAlt,
                     CreatedBy = bannerDTO.CreatedBy,
                     CreatedDate = DateTime.Now

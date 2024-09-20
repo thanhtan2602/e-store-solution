@@ -19,12 +19,12 @@ namespace Store.API.Controllers
             _response = new BaseApiResponse();
         }
         [HttpGet]
-        [Route("GetAllBanner")]
-        public async Task<IActionResult> GetAllBanner(int page, int pageSize)
+        [Route("GetBannerByCate")]
+        public async Task<IActionResult> GetBannerByCate(int page, int pageSize, int categoryId)
         {
             try
             {
-                var listBanner = await _bannerService.GetAllBannerAsync(page, pageSize);
+                var listBanner = await _bannerService.GetBannerByCateAsync(page, pageSize, categoryId);
                 _response.Result = listBanner;
                 return Ok(_response);
             }

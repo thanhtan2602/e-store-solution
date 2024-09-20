@@ -21,6 +21,7 @@ namespace Store.Infrastructure.DTOs
         public bool IsActive { get; set; } = true;
         public string CreatedBy { get; set; } = string.Empty;
         public string UpdatedBy { get; set; } = string.Empty;
+        public ICollection<ProductImageDTO> ProductImages { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdateDate { get; set; }
     }

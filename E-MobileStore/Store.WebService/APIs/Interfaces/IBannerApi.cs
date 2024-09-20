@@ -8,6 +8,6 @@ namespace Store.WebService.APIs.Interfaces
 {
     public interface IBannerApi
     {
-        string GetAllBanner(int page, int pageSize);
+        string GetBannerByCate(int page, int pageSize, int categoryId);
     }
 }

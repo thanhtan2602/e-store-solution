@@ -4,18 +4,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-@Html.Partial("HomeSlider", Model.HomeSlider)
-@Html.Partial("FlashSale", Model.FlashSale);
+@await Html.PartialAsync("HomeSlider", Model.HomeSlider)
+@await Html.PartialAsync("FlashSale", Model.FlashSale);
 @*ChooseCate*@
-@Html.Partial("ChosseCate", Model.ChosseCate)
-@Html.Partial("ProductByCate", Model.ProductByCate)
+@await Html.PartialAsync("ChosseCate", Model.ChosseCate)
+@await Html.PartialAsync("ProductByCate", Model.ProductByCate)
 @*iPhone*@
 @*TekZone*@
-@Html.Partial("TekZone", Model.TekZone)
+@await Html.PartialAsync("TekZone", Model.TekZone)
 @*Listsieuthi*@
-@Html.Partial("ListBranch", Model.Stores)
+@await Html.PartialAsync("ListBranch", Model.Stores)
 @*poli*@
-@Html.Partial("Privacy")
+@await Html.PartialAsync("Privacy")
 @section Scripts {
     <script type="text/javascript">
         $(document).ready(function () {
@@ -64,7 +64,6 @@
                         endtime.innerHTML = "Hết giờ!";
                         return;
                     }
-
                     var days = Math.floor(totalSeconds / (24 * 60 * 60));
                     var remainingSeconds = totalSeconds % (24 * 60 * 60);
                     var hours = Math.floor(remainingSeconds / (60 * 60));
@@ -85,12 +84,9 @@
             // Gắn sự kiện click cho mỗi tab
             tabs.forEach(function (tab) {
                 tab.addEventListener('click', function () {
-                    // Xóa class 'active' khỏi tất cả các tab
                     tabs.forEach(function (t) {
                         t.classList.remove('active');
                     });
-
-                    // Thêm class 'active' cho tab hiện tại
                     this.classList.add('active');
 
                     // Bắt đầu đếm ngược cho tab được chọn

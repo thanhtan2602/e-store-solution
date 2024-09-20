@@ -21,9 +21,9 @@ namespace Store.ApiService.Services
         {
             _bannerRepository.DeletedBanner(bannerId);
         }
-        public async Task<IEnumerable<Banner>> GetAllBannerAsync(int page, int pageSize)
+        public async Task<IEnumerable<Banner>> GetBannerByCateAsync(int page, int pageSize, int categoryId)
         {
-            return await _bannerRepository.GetAllBannerAsync(page, pageSize);
+            return await _bannerRepository.GetBannerByCateAsync(page, pageSize, categoryId);
         }
         public void InsertOrUpdateBanner(BannerDTO bannerDTO)
         {

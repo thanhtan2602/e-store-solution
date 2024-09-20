@@ -30,9 +30,9 @@ namespace Store.ApiService.Services
         {
             return _productRepository.GetProductById(productId);
         }
-        public async Task<IEnumerable<Product>> GetProductListByCateId(int cateId, int page, int pageSize)
+        public async Task<IEnumerable<Product>> GetProductListByCateId(int cateId, int page, int pageSize, string? sortBy)
         {
-            return await _productRepository.GetProductListByCateId(cateId, page, pageSize);
+            return await _productRepository.GetProductListByCateId(cateId, page, pageSize, sortBy);
         }
 
         public async Task<IEnumerable<Product>> GetProductSearchAsync(string search, int page, int pageSize)
@@ -43,6 +43,11 @@ namespace Store.ApiService.Services
         public Task<IEnumerable<ProductsVM>> GetSaleProducts(int flashSaleId)
         {
             return _productRepository.GetSaleProducts(flashSaleId);
+        }
+
+        public async Task<int> TotalProductAsync(int cateId)
+        {
+            return await _productRepository.TotalProductAsync(cateId);
         }
     }
 }
