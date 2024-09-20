@@ -13,10 +13,10 @@ namespace Store.Web.Controllers
             _productWebService = productWebService;
 
         }
-        public async Task<IActionResult> Index(Guid productId)
+        public async Task<IActionResult> Index(Guid productId, string? sortBy)
         {
             var product = await _productWebService.GetProductDetail(productId);
-            var suggestProduct = await _productWebService.GetProductListByCateId(product.CategoryId, 1, 10);
+            var suggestProduct = await _productWebService.GetProductListByCateId(product.CategoryId, 1, 10, sortBy);
             var result = new DetailProductVM
             {
                 Product = product,

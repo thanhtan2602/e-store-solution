@@ -18,9 +18,9 @@ namespace Store.WebService.APIs
         {
             return $"{baseUrl}/api/products/getproductbyid?productid={productId}";
         }
-        public string GetProductListByCateId(int cateId, int page, int pageSize)
+        public string GetProductListByCateId(int cateId, int page, int pageSize, string? sortBy)
         {
-            return $"{baseUrl}/api/products/getproductlistbycateid?cateid={cateId}&page={page}&pageSize={pageSize}";
+            return $"{baseUrl}/api/products/getproductlistbycateid?cateid={cateId}&page={page}&pageSize={pageSize}&sortBy={sortBy}";
         }
 
         public string GetProductSearch(string search, int page, int pageSize)
@@ -28,5 +28,11 @@ namespace Store.WebService.APIs
             return $"{baseUrl}/api/products/GetProductSearch?search={search}&page={page}&pageSize={pageSize}";
 
         }
-    }
+
+		public string TotalProductAsync(int categoryId)
+		{
+			return $"{baseUrl}/api/products/totalproduct?cateid={categoryId}";
+
+		}
+	}
 }

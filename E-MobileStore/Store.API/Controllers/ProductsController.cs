@@ -96,10 +96,23 @@ namespace Store.API.Controllers
         }
         [HttpGet]
         [Route("GetProductListByCateId")]
-        public async Task<IActionResult> GetProductListByCate(int cateId, int page, int pageSize)
+        public async Task<IActionResult> GetProductListByCate(int cateId, int page, int pageSize, string? sortBy)
         {
-            var products = await _productService.GetProductListByCateId(cateId, page, pageSize);
+            var products = await _productService.GetProductListByCateId(cateId, page, pageSize, sortBy);
             if (products == null)
+            {
+                _response.StatusCode = HttpStatusCode.NotFound;
+            }
+            _response.Result = products;
+            return Ok(_response);
+        }
+
+        [HttpGet]
+        [Route("TotalProduct")]
+        public async Task<IActionResult> TotalProductAsync(int cateId)
+        {
+            var products = await _productService.TotalProductAsync(cateId);
+            if (products == 0)
             {
                 _response.StatusCode = HttpStatusCode.NotFound;
             }

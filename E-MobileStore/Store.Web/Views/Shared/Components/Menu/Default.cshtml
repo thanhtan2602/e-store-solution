@@ -4,7 +4,7 @@
 	@foreach (var menucate in Model)
 	{
 		<li class="menu-ip " style="flex:auto">
-			<a href="/@menucate.Name">
+			<a href="@Url.Action("Index", "ProductCate", new { categoryId = menucate.Id })">
 				<span>@menucate.Name</span>
 			</a>
 		</li>

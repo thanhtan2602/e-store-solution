@@ -28,7 +28,7 @@ namespace Store.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var catelist = await _categoryWebService.GetAllCategory(1, 6);
-            var bannerHome = await _bannerWebService.GetAllBanner(1, 7);
+            var bannerHome = await _bannerWebService.GetBannerByCate(1, 100, 15);
             var tekZone = await _newsWebService.GetAllNews(1, 6);
             var flashSale = await _flashSaleWebService.GetFlashSale(1, 2);
             var storeList = await _storeWebService.GetStoreList(1, 10);

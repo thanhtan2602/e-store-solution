@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Store.Domain.Entities;
 using Store.Infrastructure.Data;
 using Store.Infrastructure.DTOs;
@@ -7,10 +9,12 @@ using Store.Infrastructure.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Store.Infrastructure.Repositories
 {
@@ -52,6 +56,25 @@ namespace Store.Infrastructure.Repositories
                 .FirstOrDefaultAsync(x => x.Id == productId);
             return product ?? new Product();
         }
+        private void AddProductImage(ProductImageDTO imageDTO, Product product)
+        {
+            var newImage = new ProductImage
+            {
+                Id = Guid.NewGuid(),
+                ImageName = imageDTO.ImageName,
+                ImageURL = imageDTO.ImageURL,
+                CreatedBy = product.CreatedBy,
+                UpdatedBy = product.UpdatedBy,
+                IsDeleted = product.IsDeleted,
+                IsActive = product.IsActive,
+                Position = imageDTO.Position,
+                Product = product,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now,
+                ProductId = product.Id,
+            };
+            _context.AddAsync(newImage);
+        }
         public void AddOrUpdateProduct(ProductDTO product)
         {
             if (product.Id == "0")
@@ -72,6 +95,7 @@ namespace Store.Infrastructure.Repositories
                     CategoryId = product.CategoryId,
                     IsDeleted = false,
                     Price = product.Price,
+                    PriceSale = product.PriceSale,
                     Quantity = product.Quantity,
                     CreatedBy = product.CreatedBy,
                     CreatedDate = DateTime.Now,
@@ -79,7 +103,10 @@ namespace Store.Infrastructure.Repositories
                     UpdatedDate = DateTime.Now,
                 };
                 _context.Products.Add(newProduct);
-
+                foreach (var item in product.ProductImages)
+                {
+                    AddProductImage(item, newProduct);
+                }
             }
             else
             {
@@ -95,6 +122,7 @@ namespace Store.Infrastructure.Repositories
                     existingProduct.Name = product.Name;
                     existingProduct.Description = product.Description;
                     existingProduct.Price = product.Price;
+                    existingProduct.PriceSale = product.PriceSale;
                     existingProduct.Quantity = product.Quantity;
                     existingProduct.ShortDesc = product.ShortDesc;
                     existingProduct.CategoryId = product.CategoryId;
@@ -162,22 +190,44 @@ namespace Store.Infrastructure.Repositories
                 return Task.FromResult<IEnumerable<ProductsVM>>(result);
             }
         }
-
-        public async Task<IEnumerable<Product>> GetProductListByCateId(int cateId, int page, int pageSize)
+        public async Task<IEnumerable<Product>> GetProductListByCateId(int cateId, int page, int pageSize, string? sortBy)
         {
-            var products = await _context.Products
+            IQueryable<Product> query = _context.Products
+                .AsNoTracking()
+                .Where(x => x.CategoryId == cateId && x.IsActive && !x.IsDeleted);
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                switch (sortBy.ToLower())
+                {
+                    case "date_desc":
+                        query = query.OrderByDescending(x => x.CreatedDate);
+                        break;
+                    case "date_asc":
+                        query = query.OrderBy(x => x.CreatedDate);
+                        break;
+                    case "name_desc":
+                        query = query.OrderByDescending(x => x.Name);
+                        break;
+                    case "name_asc":
+                        query = query.OrderBy(x => x.Name);
+                        break;
+                    case "price_desc":
+                        query = query.OrderByDescending(x => x.Price);
+                        break;
+                    case "price_asc":
+                        query = query.OrderBy(x => x.Price);
+                        break;
+                }
+            }
+            var products = await query
                 .Include(x => x.Category)
                 .Include(x => x.ProductImages)
                 .Include(x => x.ProductAttributes)
-                .Where(x => x.CategoryId == cateId && !x.IsDeleted && x.IsActive)
-                .OrderByDescending(x => x.CreatedDate)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
-                .AsNoTracking()
                 .ToListAsync();
             return products ?? new List<Product>();
         }
-
         public async Task<IEnumerable<Product>> GetProductSearchAsync(string search, int page, int pageSize)
         {
             var item = await _context.Products
@@ -190,6 +240,12 @@ namespace Store.Infrastructure.Repositories
                 .AsNoTracking()
                 .ToListAsync();
             return item ?? new List<Product>();
+        }
+
+        public async Task<int> TotalProductAsync(int cateId)
+        {
+            int totalProduct = await _context.Products.Where(x => x.CategoryId == cateId && !x.IsDeleted && x.IsActive).CountAsync();
+            return totalProduct;
         }
     }
 }

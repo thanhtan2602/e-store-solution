@@ -4,13 +4,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" href="~/css/layout/detail.css" asp-append-version="true" />
-@Html.Partial("IntroDetail", Model.Product)
+   @await Html.PartialAsync("IntroDetail", Model.Product)
 <section>
     <div class="descrip">
         <strong class="combo-title sg-access" style="margin-top:20px">Xem thêm @Model.Product.CategoryName  khác</strong>
-       @Html.Partial("SuggestProduct",Model.SuggestProduct)
+        @await Html.PartialAsync("SuggestProduct", Model.SuggestProduct)
         <div class="border7"></div>
-        @Html.Partial("Description", Model.Product)
+        @await Html.PartialAsync("Description", Model.Product)
         <div class="wrap_rating wrap_border" data-ismb="false" data-objectid="242826" data-objecttype="2" data-irt="true" data-siteid="16" data-urlimg="https://cdn.tgdd.vn/Products/Images/2162/242826/s16/bluetooth-jbl-go-3-xanh-xanh-tn-650x650.png" data-url="http://www.topzone.vn/loa/bluetooth-jbl-go-3-xanh-den" data-title="Loa Bluetooth JBL Go 3">
             <div class=" bg-coverrate"></div>
             <div class="rating-topzone rc-topzone">

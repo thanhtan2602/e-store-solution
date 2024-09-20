@@ -3,66 +3,73 @@
     ViewData["Title"] = "HomeSlider";
 }
 <style>
+    .carousel-indicators button.owl-dot {
+        position: relative;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: darkgray;
+    }
+
+    .carousel-indicators button.active {
+        border: 2px solid lightskyblue;
+        width: 11px;
+        height: 11px;
+        top:8px;
+    }
+
+    .carousel-control-prev i.fas.fa-arrow-left {
+        width: 60px;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        text-align: center;
+        line-height: 40px;
+        color: #fff;
+        font-size: 20px;
+        padding: 10px;
+        border-width: 80px;
+    }
+
+        .carousel-control-prev i.fas.fa-arrow-left:hover {
+            background-color: dimgrey;
+        }
+
+    .carousel-control-next i.fas.fa-arrow-right {
+        width: 60px;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        text-align: center;
+        line-height: 40px;
+        color: #fff;
+        font-size: 20px;
+        padding: 10px;
+        border-width: 80px;
+    }
+
+        .carousel-control-next i.fas.fa-arrow-right:hover {
+            background-color: dimgrey;
+        }
 </style>
 <div id="carouselExampleIndicators" class="carousel slide">
     <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" style=" position: relative;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #3E3E3F;
-    color: #288ad6;
-    transform: scale(1.25,1.25);" class="owl-dot active" aria-current="true" aria-label="Slide 1"></button>
-        <span></span>
-        <button type="button" data-bs-target="#carouselExampleIndicators" style=" position: relative;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #3E3E3F;
-    color: #288ad6;
-    transform: scale(1.25,1.25);" data-bs-slide-to="1" class="owl-dot" aria-label="Slide 2"></button>
-        <span></span>
-        <button type="button" data-bs-target="#carouselExampleIndicators" style=" position: relative;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #3E3E3F;
-    color: #288ad6;
-    transform: scale(1.25,1.25);" data-bs-slide-to="2" class="owl-dot" aria-label="Slide 3"></button>
-        <span></span>
-        <button type="button" data-bs-target="#carouselExampleIndicators" style=" position: relative;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #3E3E3F;
-    color: #288ad6;
-    transform: scale(1.25,1.25);" data-bs-slide-to="3" class="owl-dot" aria-label="Slide 4"></button>
-        <span></span>
-        <button type="button" data-bs-target="#carouselExampleIndicators" style=" position: relative;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #3E3E3F;
-    color: #288ad6;
-    transform: scale(1.25,1.25);" data-bs-slide-to="4" class="owl-dot" aria-label="Slide 5"></button>
-        <span></span>
-        <button type="button" data-bs-target="#carouselExampleIndicators" style=" position: relative;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #3E3E3F;
-    color: #288ad6;
-    transform: scale(1.25,1.25);" data-bs-slide-to="5" class="owl-dot" aria-label="Slide 6"></button>
-        <span></span>
-        <button type="button" data-bs-target="#carouselExampleIndicators" style=" position: relative;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #3E3E3F;
-    color: #288ad6;
-    transform: scale(1.25,1.25);" data-bs-slide-to="6" class="owl-dot" aria-label="Slide 7"></button>
-        <span></span>
-
+        @if (Model != null)
+        {
+            int index = 0;
+            @foreach (var banner in Model)
+            {
+                if (index == 0)
+                {
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@index" class="owl-dot active" aria-current="true" aria-label="Slide @(index+1)"></button>
+                    <span></span>
+                }
+                else
+                {
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@(index)" class="owl-dot" aria-current="true" aria-label="Slide @(index+1)"></button>
+                    <span></span>
+                }
+                index++;
+            }
+        }
     </div>
     <div class="carousel-inner">
         @if (Model != null)
@@ -73,15 +80,15 @@
                 if (index == 0)
                 {
                     <div class="carousel-item active">
-                        <a aria-label="slide" data-cate="0" data-place="1733" href="https://www.topzone.vn/ipad-pro-m4#c=522&amp;p=287094&amp;o=2&amp;pi=0">
-                            <img width="100%" height="100%" class="d-" src="@banner.ImageURL" alt="@banner.BannerAlt">
+                        <a aria-label="slide">
+                            <img width="100%" height="100%" src="@banner.ImageURL" alt="@banner.BannerAlt">
                         </a>
                     </div>
                 }
                 else
                 {
                     <div class="carousel-item">
-                        <a aria-label="slide" data-cate="0" data-place="1733" href="https://www.topzone.vn/khuyen-mai-ipad" ">
+                        <a aria-label="slide"">
                             <img width="100%" height="100%" loading="lazy" class="owl-lazy lazyloaded" data-src=@banner.ImageURL" alt="@banner.BannerAlt" src="@banner.ImageURL" style="opacity: 1;">
                         </a>
                     </div>
@@ -91,26 +98,12 @@
         }
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <i class="fas fa-arrow-left" style="width:60px; background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 50%;
-            text-align: center;
-            line-height: 40px;
-            color: #fff;
-            font-size: 20px;
-            padding: 10px;
-            border-width: 80px;"></i>
+        <i class="fas fa-arrow-left" ></i>
         <span aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-        <i class="fas fa-arrow-right" style="width:60px; background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 50%;
-            text-align: center;
-            line-height: 40px;
-            color: #fff;
-            font-size: 20px;
-            padding: 10px;
-            border-width: 80px;"></i>
+        <i class="fas fa-arrow-right" ></i>
         <span aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </button>

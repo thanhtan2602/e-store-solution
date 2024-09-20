@@ -12,6 +12,7 @@ namespace Store.Infrastructure.DTOs
         public int Id { get; set; }
         public string ImageURL { get; set; } = string.Empty;
         public string BannerAlt { get; set; } = string.Empty;
+        public string Position { get; set; }
         public int CategoryId { get; set; }
         public bool IsDeleted { get; set; } = false;
         public bool IsActive { get; set; } = true;

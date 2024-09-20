@@ -46,7 +46,7 @@ app.MapControllerRoute(
     );
 app.MapControllerRoute(
     name: "category",
-    pattern: "{controller=ProductCate}/{action=Index}/{id?}",
+    pattern: "{controller=ProductCate}/{action=Index}/{categoryId?}",
     defaults: new { controller = "ProductCate" }
 );
 app.MapControllerRoute(
