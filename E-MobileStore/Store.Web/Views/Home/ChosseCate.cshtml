@@ -9,9 +9,9 @@
         @foreach(var category in Model)
         {
             <li>
-                <a href="/@category.Id">
+                <a href="@Url.Action("Index", "Category", new { categoryUrl = category.CategoryUrl })">
                     <div class="img-catesp cateiphone">
-                        <img src="@category.ImageURL" alt="@category.Name" width="102" height="112">
+                        <img class="lazyload" data-src="@category.ImageURL" alt="@category.Name" width="102" height="112">
                     </div>
                     <span>@category.Name</span>
                 </a>

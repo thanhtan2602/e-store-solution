@@ -1,0 +1,88 @@
+﻿body {
+    background-image: url(https://mews.biggeek.ru/wp-content/uploads/2023/01/snimok-jekrana-2023-01-31-v-11.07.01.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: -60px;
+}
+#wrapper{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+#form-login{
+    max-width:500px;
+    max-height:1900px;
+    background:rgba(0,0,0,0.8);
+    border-radius :30px;
+    flex-grow:1;
+    padding:30px 30px 40px;
+    box-shadow:rgb(255, 255, 255,0.8) 0px 0px 17px 2px;
+}
+.form-heading{
+    font-size:28px;
+    color: white;
+    text-align:center;
+    margin-bottom:30px;
+}
+.form-group {
+    border-bottom: 1px solid white;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    display:flex;
+}
+.form-group i {
+    color: white;
+    font-size: 17px;
+    padding-top: 5px;
+    padding-right: 10px;
+}
+.form-input{
+    background:transparent;
+    border:0;
+    outline:0;
+    color:white;
+    font-size:17px;
+    flex-grow:1;
+}
+#eye i{
+    padding-right:0;
+    cursor:pointer;
+}
+    .form-input::placeholder {
+        color: rgb(128, 128, 128);
+        font-size: 17px;
+    }
+.form-submit {
+    background: transparent;
+    border: 1px solid white;
+    width: 100%;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: 12px;
+    margin-top: 10px;
+    color: white;
+    transition: 0.25s ease-in-out;
+}
+.form-submit-after {
+    background: rgb(255, 255, 255,0.9);
+    color: black;
+    box-shadow: rgb(255, 255, 255,0.9) 0px 0px 8px 2px;
+}
+.option-authen{
+    color:white;
+    text-align:center;
+    margin-top:10px;
+    font-size:14px;
+}.option-authen a{
+    color:white;
+    font-style:italic;
+    margin-left:5px;
+}
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-top: 20px;
+}

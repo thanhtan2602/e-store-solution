@@ -10,7 +10,9 @@ namespace Store.Infrastructure.Repositories.Interfaces
 {
     public interface IBannerRepository
     {
-        Task<IEnumerable<Banner>> GetBannerByCateAsync(int page, int pageSize, int categoryId);
+        Task<IEnumerable<Banner>> GetBannerByCateAsync(int page, int pageSize, string categoryUrl);
+        Task<IEnumerable<Banner>> GetAllBannerAsync(int page, int pageSize);
+        Task<Banner> GetBannerDetailAsync(int bannerId);
         void InsertOrUpdateBanner(BannerDTO bannerDTO);
         void DeletedBanner(int bannerId);
     }

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Store.WebService.Response
 {
-    public class ProductDetailResponse:BaseResponse
-    {
-        public Product result {  get; set; }
-    }
+	public class ProductDetailResponse : BaseResponse
+	{
+		public Product result { get; set; }
+	}
 }

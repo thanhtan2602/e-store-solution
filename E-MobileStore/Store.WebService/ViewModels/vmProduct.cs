@@ -11,6 +11,8 @@ namespace Store.WebService.ViewModels
     {
         public Guid ProductId { get; set; }
         public string ProductName { get; set; }
+        public string ProductUrl { get; set; }
+        public string CategoryUrl { get; set; }
         public string CategoryName { get; set; }
         public decimal Price { get; set; }
         public decimal PriceSale { get; set; }

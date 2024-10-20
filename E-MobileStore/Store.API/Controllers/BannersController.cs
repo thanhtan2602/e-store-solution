@@ -20,12 +20,50 @@ namespace Store.API.Controllers
         }
         [HttpGet]
         [Route("GetBannerByCate")]
-        public async Task<IActionResult> GetBannerByCate(int page, int pageSize, int categoryId)
+        public async Task<IActionResult> GetBannerByCate(int page, int pageSize, string categoryUrl)
         {
             try
             {
-                var listBanner = await _bannerService.GetBannerByCateAsync(page, pageSize, categoryId);
+                var listBanner = await _bannerService.GetBannerByCateAsync(page, pageSize, categoryUrl);
                 _response.Result = listBanner;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                var statuscode = _response.StatusCode = HttpStatusCode.BadRequest;
+                var errorMessenger = _response.ErrorMessages = new List<string> { ex.Message };
+                _response.IsSuccess = false;
+                _response.Failed(statuscode, errorMessenger);
+                return BadRequest(_response);
+            }
+        }
+        [HttpGet]
+        [Route("GetAllBanner")]
+        public async Task<IActionResult> GetAllBanner(int page, int pageSize)
+        {
+            try
+            {
+                var listBanner = await _bannerService.GetAllBanner(page, pageSize);
+                _response.Result = listBanner;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                var statuscode = _response.StatusCode = HttpStatusCode.BadRequest;
+                var errorMessenger = _response.ErrorMessages = new List<string> { ex.Message };
+                _response.IsSuccess = false;
+                _response.Failed(statuscode, errorMessenger);
+                return BadRequest(_response);
+            }
+        }
+        [HttpGet]
+        [Route("GetBannerDetail")]
+        public async Task<IActionResult> GetBannerDetail(int bannerId)
+        {
+            try
+            {
+                var banner = await _bannerService.GetBannerDetail(bannerId);
+                _response.Result = banner;
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -44,7 +82,6 @@ namespace Store.API.Controllers
             try
             {
                 _bannerService.InsertOrUpdateBanner(banner);
-                _response.Result = banner;
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -64,7 +101,7 @@ namespace Store.API.Controllers
             {
                 _bannerService.DeletedBanner(bannerId);
                 _response.StatusCode = HttpStatusCode.OK;
-                _response.Message = "This banner has been deleted";
+                _response.Message = "200";
                 return Ok(_response);
             }
             catch (Exception ex)

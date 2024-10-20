@@ -1,0 +1,114 @@
+﻿@model Store.WebService.ViewModels.vmProduct
+@using static Store.Web.Utility.ProductsUtilities
+@{
+	ViewData["Title"] = "Chi tiết";
+	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@if(Model!=null)
+{
+	<div class="single-product-tab-area mg-t-0 mg-b-30" style="margin:60px 20px 200px 20px">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="single-product-pr">
+						<div class="row">
+							@if (Model.ProductImages != null && Model.ProductImages.Any())
+							{
+								int i = 0;
+								int j = 0;
+								<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+									<div id="myTabContent1" class="tab-content">
+										@foreach (var image in Model.ProductImages)
+										{
+											<div class="product-tab-list tab-pane fade @(i == 0 ? "active in" : "")" id="single-tab@(i)">
+												<img src="@image.ImageURL" alt="" />
+											</div>
+											i++;
+										}
+									</div>
+									<ul id="single-product-tab">
+										@foreach (var image in Model.ProductImages)
+										{
+											<li class="@(j == 0 ? "active" : "")">
+												<a href="#single-tab@(j)"><img src="@image.ImageURL" alt="" /></a>
+											</li>
+											j++;
+										}
+									</ul>
+								</div>
+							}
+
+							<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+								<div class="single-product-details res-pro-tb">
+									<h1> <span>Tên Sản Phẩm :</span> @Model.ProductName</h1>
+									<h5>Ngành hàng: @Model.CategoryName</h5>
+									<div class="single-pro-price">
+										@if (Model.PriceSale > 0)
+										{
+											<span class="single-regular">Giá : @FormatPrice(Model.Price)đ</span>
+											<span class="single-old"><del>@FormatPrice(Model.PriceSale)đ</del></span>
+										}
+										else
+										{
+											<span class="single-regular">Giá : @FormatPrice(Model.Price)đ</span>
+										}
+									</div>
+									<div class="single-pro-cn">
+										<h3>Mô tả</h3>
+										<p>
+											@Model.ShortDesc
+										</p>
+									</div>
+								</div>
+								<div class="single-pro-review-area mt-t-30 mg-b-30">
+									<div class="row">
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+											<ul id="myTab" class="tab-review-design">
+												<li class="active"><a href="#description">Mô tả sản phẩm</a></li>
+												<li><a href="#INFORMATION">Thông tin sản phẩm</a></li>
+											</ul>
+											<div id="myTabContent" class="tab-content">
+												<div class="product-tab-list product-details-ect tab-pane fade active in" id="description">
+													<div class="row">
+														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+															<div class="review-content-section">
+																@Html.Raw(Model.Description)
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="product-tab-list tab-pane fade" id="INFORMATION">
+													<div class="row">
+														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+															<div class="review-content-section">
+																<p>
+																	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+																	ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+																	mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
+																	beatae vitae dicta sunt explicabo.
+																</p>
+																<p class="pro-b-0">
+																	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco labo nisi ut aliquip ex
+																	ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ut labore et dolore magna aliqua. Ut enim ad , quis nostrud exercitation ullamco
+																	laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.
+																</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+}
+

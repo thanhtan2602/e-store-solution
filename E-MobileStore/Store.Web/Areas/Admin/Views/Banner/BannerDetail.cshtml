@@ -1,0 +1,53 @@
+﻿@model Store.WebService.ViewModels.vmBanner
+@using static Store.Web.Utility.ProductsUtilities
+@using static Store.Web.Utility.StatusUltilities
+
+@{
+	ViewData["Title"] = "Chi tiết";
+	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@if (Model != null)
+{
+	<div class="single-product-tab-area mg-t-0 mg-b-30" style="margin:60px 20px 200px 20px">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="single-product-pr">
+						<div class="row">
+							<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+								<div class="product-tab-list tab-pane fade active in" id="single-tab1">
+									<img src="@Model.ImageURL" alt="" />
+								</div>
+							</div>
+							<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+								<div class="single-product-details res-pro-tb">
+									<h1> <span>Tên Banner :</span> @Model.BannerAlt</h1>
+									<div class="single-pro-cn">
+										<h3>Dành cho ngành hàng : @Model.CategoryName</h3>
+										@* <h3>Mặt hàng trong ngành</h3>
+									<p>
+									@Model.Products.Count
+									</p> *@
+										<h3>Vị trí hiển thị : @Model.Position</h3>
+
+										<h3>Tạo bởi : @Model.CreatedBy</h3>
+
+										<h3>Thời gian tạo : @Model.CreatedDate</h3>
+
+										<h3>Cập nhật bởi : @Model.UpdatedBy</h3>
+
+										<h3>Thời gian cập nhật : @Model.UpdatedDate</h3>
+
+										<h3>Trạng thái : @GetStatusElement(Model.IsActive, Model.IsDeleted)</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+}
+

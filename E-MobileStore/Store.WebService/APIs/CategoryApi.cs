@@ -15,5 +15,23 @@ namespace Store.WebService.APIs
         {
             return $"{baseUrl}/api/categories/getallcategory?page={page}&pageSize={pageSize}";
         }
+
+        public string InsertOrUpdateCategory()
+        {
+            return $"{baseUrl}/api/categories/InsertOrUpdateCategory";
+
+        }
+
+        public string DeleteCategory(string categoryUrl)
+        {
+            return $"{baseUrl}/api/categories/DeleteCategory?categoryUrl={categoryUrl}";
+
+        }
+
+        public string GetCategoryByUrl(string categoryUrl)
+        {
+            return $"{baseUrl}/api/Categories/GetCategoryByUrl?categoryUrl={categoryUrl}";
+
+        }
     }
 }

@@ -18,21 +18,27 @@ namespace Store.ApiService.Services
         {
             _productRepository = productRepository;
         }
-        public void AddOrUpdateProduct(ProductDTO product)
+        public Task<string> AddOrUpdateProduct(ProductDTO product)
         {
-            _productRepository.AddOrUpdateProduct(product);
+            return _productRepository.AddOrUpdateProduct(product);
         }
-        public void DeleteProduct(Guid productId)
+        public void DeleteProduct(string productUrl)
         {
-            _productRepository.DeleteProduct(productId);
+            _productRepository.DeleteProduct(productUrl);
         }
-        public Task<Product> GetProductById(Guid productId)
+        public Task<Product> GetProductByUrlAsync(string productUrl)
         {
-            return _productRepository.GetProductById(productId);
+            return _productRepository.GetProductByUrlAsync(productUrl);
         }
-        public async Task<IEnumerable<Product>> GetProductListByCateId(int cateId, int page, int pageSize, string? sortBy)
+
+        public async Task<IEnumerable<Product>> GetProductListAsync(int page, int pageSize, string? sortBy)
         {
-            return await _productRepository.GetProductListByCateId(cateId, page, pageSize, sortBy);
+            return await _productRepository.GetProductListAsync(page, pageSize, sortBy);
+        }
+
+        public async Task<IEnumerable<Product>> GetProductListByCateUrlAsync(string cateUrl, int page, int pageSize, string? sortBy)
+        {
+            return await _productRepository.GetProductListByCateUrlAsync(cateUrl, page, pageSize, sortBy);
         }
 
         public async Task<IEnumerable<Product>> GetProductSearchAsync(string search, int page, int pageSize)
@@ -40,14 +46,18 @@ namespace Store.ApiService.Services
             return await _productRepository.GetProductSearchAsync(search, page, pageSize);
         }
 
-        public Task<IEnumerable<ProductsVM>> GetSaleProducts(int flashSaleId)
+        public Task<IEnumerable<FlashSaleProduct>> GetSaleProducts(int flashSaleId)
         {
             return _productRepository.GetSaleProducts(flashSaleId);
         }
 
-        public async Task<int> TotalProductAsync(int cateId)
+        public async Task<int> TotalProductByCateAsync(string cateUrl)
         {
-            return await _productRepository.TotalProductAsync(cateId);
+            return await _productRepository.TotalProductByCateAsync(cateUrl);
+        }
+        public async Task<int> TotalProductAsync()
+        {
+            return await _productRepository.TotalProductAsync();
         }
     }
 }
