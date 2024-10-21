@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Store.Domain.Entities;
+using Store.WebService.APIs;
 using Store.WebService.APIs.Interfaces;
+using Store.WebService.DTO;
 using Store.WebService.Response;
 using Store.WebService.Services.Interfaces;
 using Store.WebService.ViewModels;
@@ -9,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Store.WebService.Services
 {
@@ -21,6 +24,35 @@ namespace Store.WebService.Services
             _httpClient = new HttpClient();
             _categoryApi = categoryApi;
         }
+
+        public async Task<string> DeleteCategory(string categoryUrl)
+        {
+            try
+            {
+                //add category
+                var uri = _categoryApi.DeleteCategory(categoryUrl);
+                var jsonContent = JsonConvert.SerializeObject(categoryUrl);
+                var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PutAsync(uri, httpContent);
+                var responseApi = await response.Content.ReadAsStringAsync();
+                var content = JsonConvert.DeserializeObject<AuthenResponse>(responseApi);
+                var result = "";
+                if (response.IsSuccessStatusCode && content != null)
+                {
+                    result = content.statusCode.ToString();
+                }
+                else
+                {
+                    result = content.message;
+                }
+                return result;
+            }
+            catch
+            {
+                return "404";
+            }
+        }
+
         public async Task<List<vmCategory>> GetAllCategory(int page, int pageSize)
         {
             try
@@ -42,6 +74,7 @@ namespace Store.WebService.Services
                                 Name = category.Name,
                                 ImageURL = category.ImageURL,
                                 IsActive = category.IsActive,
+                                CategoryUrl = category.CategoryUrl,
                                 CreatedBy = category.CreatedBy,
                                 Position = category.Position,
                                 Description = category.Description,
@@ -59,6 +92,71 @@ namespace Store.WebService.Services
             catch (Exception ex)
             {
                 return new List<vmCategory>();
+            }
+        }
+
+        public async Task<vmCategory> GetCategoryByURL(string categoryUrl)
+        {
+            try
+            {
+                var uri = _categoryApi.GetCategoryByUrl(categoryUrl);
+                var response = await _httpClient.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var categoryresponse = JsonConvert.DeserializeObject<CategoryDetailResponse>(content);
+                    if (categoryresponse != null && categoryresponse.result != null)
+                    {
+                        var category = categoryresponse.result;
+                        return new vmCategory()
+                        {
+                            Id = category.Id,
+                            Name = category.Name,
+                            Description = category.Description,
+                            ImageURL = category.ImageURL,
+                            Position = category.Position,
+                            IsDeleted = category.IsDeleted,
+                            IsActive = category.IsActive,
+                            CreatedBy = category.CreatedBy,
+                            CreatedDate = category.CreatedDate.ToLocalTime().ToString("HH:mm dd/MM/yyyy"),
+                            UpdatedBy = category.UpdatedBy,
+                            UpdatedDate = category.UpdatedDate.ToLocalTime().ToString("HH:mm dd/MM/yyyy"),
+                        };
+                    }
+                }
+                return new vmCategory();
+            }
+            catch
+            {
+                return new vmCategory();
+            }
+        }
+
+        public async Task<string> InsertOrUpdateCategory(CategoryDTO categoryDTO)
+        {
+            try
+            {
+                //add category
+                var uri = _categoryApi.InsertOrUpdateCategory();
+                var jsonContent = JsonConvert.SerializeObject(categoryDTO);
+                var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync(uri, httpContent);
+                var responseApi = await response.Content.ReadAsStringAsync();
+                var content = JsonConvert.DeserializeObject<AuthenResponse>(responseApi);
+                if (response.IsSuccessStatusCode && content != null)
+                {
+                    var result = content.statusCode.ToString();
+                    return result;
+                }
+                else
+                {
+                    var result = content.message;
+                    return result;
+                }
+            }
+            catch
+            {
+                return "404";
             }
         }
     }

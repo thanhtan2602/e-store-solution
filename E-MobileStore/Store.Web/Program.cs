@@ -1,3 +1,4 @@
+﻿using Microsoft.AspNetCore.Http.Features;
 using Store.WebService.APIs;
 using Store.WebService.APIs.Interfaces;
 using Store.WebService.Services;
@@ -11,6 +12,8 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 //Register services
 builder.Services.AddScoped<IProductApi, ProductApi>();
 builder.Services.AddScoped<IProductWebService, ProductWebService>();
+builder.Services.AddScoped<IProductImageApi, ProductImageApi>();
+builder.Services.AddScoped<IProductImageWebService, ProductImageWebService>();
 builder.Services.AddScoped<ICategoryApi, CategoryApi>();
 builder.Services.AddScoped<ICategoryWebService, CategoryWebService>();
 builder.Services.AddScoped<IBannerApi, BannerApi>();
@@ -21,7 +24,28 @@ builder.Services.AddScoped<IFlashSaleApi, FlashSaleApi>();
 builder.Services.AddScoped<IFlashSaleWebService, FlashSaleWebService>();
 builder.Services.AddScoped<IStoreApi, StoreApi>();
 builder.Services.AddScoped<IStoreWebService, StoreWebService>();
-
+builder.Services.AddScoped<IAuthenticationApi, AuthenticationApi>();
+builder.Services.AddScoped<IAuthenWebService, AuthenWebService>();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(option =>
+{
+    option.IdleTimeout = TimeSpan.FromHours(4);
+    option.Cookie.HttpOnly = true;
+    option.Cookie.IsEssential = true;
+});
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 10485760; // Giới hạn kích thước file upload (ở đây là 10 MB)
+});
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyPolicy", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,32 +56,54 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseStatusCodePages(async context =>
+{
+    if (context.HttpContext.Response.StatusCode == 404)
+    {
+        context.HttpContext.Response.Redirect("/Home/PageNotFound");
+    }
+});
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
+app.UseSession();
 
-
+app.UseCors("MyPolicy");
+//web admin
 app.MapControllerRoute(
-    name: "default",
+    name: "login",
+    pattern: "admin/thong-tin-dang-nhap",
+    defaults: new { area = "Admin", controller = "Authen", action = "Index" }
+    );
+app.MapControllerRoute(
+    name: "admin",
+    pattern: "admin",
+    defaults: new { area = "Admin", controller = "Home", action = "Index" }
+    );
+//Web
+app.MapControllerRoute(
+    name: "home",
     pattern: "{controller=Home}/{action=Index}/{id?}"
     );
 app.MapControllerRoute(
     name: "category",
-    pattern: "{controller=ProductCate}/{action=Index}/{categoryId?}",
-    defaults: new { controller = "ProductCate" }
+    pattern: "{categoryUrl}",
+    defaults: new { controller = "Category", action = "Index", categoryUrl = "categoryUrl" }
+);
+app.MapControllerRoute(
+	name: "login",
+	pattern: "nguoi-dung/dang-nhap",
+	defaults: new { controller = "Authentication", action = "Index" }
 );
 app.MapControllerRoute(
     name: "detail",
-    pattern: "{controller=DetailProduct}/{action=Index}/{productId?}"
+    pattern: "{categoryUrl}/{productUrl}",
+    defaults: new { controller = "ProductDetail", action = "Index", categoryUrl = "categoryUrl", productUrl= "productUrl" }
 );
-
 app.MapControllerRoute(
     name: "ProductSearchResults",
     pattern: "{controller=Common}/{action=ProductSearchResults}/{search?}",
     defaults: new { controller = "Common" }
 );
-
 app.Run();

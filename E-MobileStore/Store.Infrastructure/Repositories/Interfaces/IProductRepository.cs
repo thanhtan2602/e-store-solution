@@ -12,12 +12,15 @@ namespace Store.Infrastructure.Repositories.Interfaces
     public interface IProductRepository
     {
 
-        Task<IEnumerable<ProductsVM>> GetSaleProducts(int flashSaleId);
-        Task<Product> GetProductById(Guid productId);
-        void AddOrUpdateProduct(ProductDTO product);
-        void DeleteProduct(Guid productId);
-        Task<IEnumerable<Product>> GetProductListByCateId(int cateId, int page, int pageSize, string? sortBy);
-        Task<int> TotalProductAsync(int cateId);
-        Task<IEnumerable<Product>> GetProductSearchAsync(string search, int page, int pageSize);
+        Task<IEnumerable<FlashSaleProduct>> GetSaleProducts(int flashSaleId);
+        Task<Product> GetProductByUrlAsync(string productUrl);
+        Task<string> AddOrUpdateProduct(ProductDTO product);
+        void DeleteProduct(string productUrl);
+        Task<IEnumerable<Product>> GetProductListByCateUrlAsync(string cateUrl, int page, int pageSize, string? sortBy);
+        Task<IEnumerable<Product>> GetProductListAsync(int page, int pageSize, string? sortBy);
+        Task<int> TotalProductByCateAsync(string cateUrl);
+        Task<int> TotalProductAsync();
+
+		Task<IEnumerable<Product>> GetProductSearchAsync(string search, int page, int pageSize);
     }
 }

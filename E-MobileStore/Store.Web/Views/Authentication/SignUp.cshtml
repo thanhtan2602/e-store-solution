@@ -1,0 +1,51 @@
+﻿<link rel="stylesheet" href="~/css//layout/authen.css" asp-append-version="true" />
+<body>
+	<div id="wrapper">
+		<form action="/nguoi-dung/thong-tin-dang-ky" method="post" id="form-login">
+			<h1 class="form-heading">
+				Đăng ký
+			</h1>
+			@if (ViewBag.ErrorMessage != null)
+			{
+				<div class="alert alert-danger">
+					@ViewBag.ErrorMessage
+				</div>
+			}
+			<p class="text-danger">*Vui lòng điền đầy đủ thông tin</p>
+			<div class="form-group">
+				<i class="far fa-user"></i>
+				<input type="text" name="FirstName" class="form-input" value="" id="firstname" placeholder="Họ" />
+			</div>
+			<div class="form-group">
+				<i class="far fa-user"></i>
+				<input type="text" name="LastName" class="form-input" value="" id="lastname" placeholder="Tên" />
+			</div>
+			<div class="form-group">
+				<i class="far fa-envelope"></i>
+				<input type="text" name="Email" class="form-input" value="" id="email" placeholder="Địa chỉ Email" />
+			</div>
+			<div class="form-group">
+				<i class="far fa-user"></i>
+				<input type="text" name="UserName" class="form-input" value="" id="username" placeholder="Tên đăng nhập" />
+			</div>
+			<div class="form-group">
+				<i class="fa fa-key"></i>
+				<input type="password" name="Password" class="form-input" value="" placeholder="Mật khẩu" id="password-1" />
+				<div id="eye-1">
+					<i class="fa fa-eye"></i>
+				</div>
+			</div>
+			<div class="form-group">
+				<i class="fa fa-key"></i>
+				<input type="password" name="name" class="form-input" value="" placeholder="Xác nhận mật khẩu" id="password-2" />
+				<div id="eye-2">
+					<i class="fa fa-eye"></i>
+				</div>
+			</div>
+			<input type="submit" value="Đăng ký" class="form-submit" disabled />
+			<p class="option-authen">Bạn đã có tài khoản ? <a href="/nguoi-dung/dang-nhap">Đăng nhập</a> </p>
+
+		</form>
+	</div>
+	<script src="~/js/authen/signup.js"></script>
+</body>

@@ -4,6 +4,7 @@ using Store.Infrastructure.DTOs;
 using Store.Infrastructure.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,9 +22,21 @@ namespace Store.ApiService.Services
         {
             _bannerRepository.DeletedBanner(bannerId);
         }
-        public async Task<IEnumerable<Banner>> GetBannerByCateAsync(int page, int pageSize, int categoryId)
+
+        public async Task<IEnumerable<Banner>> GetAllBanner(int page, int pageSize)
         {
-            return await _bannerRepository.GetBannerByCateAsync(page, pageSize, categoryId);
+            return await _bannerRepository.GetAllBannerAsync(page, pageSize);
+
+        }
+
+        public async Task<IEnumerable<Banner>> GetBannerByCateAsync(int page, int pageSize, string categoryUrl)
+        {
+            return await _bannerRepository.GetBannerByCateAsync(page, pageSize, categoryUrl);
+        }
+
+        public async Task<Banner> GetBannerDetail(int bannerId)
+        {
+            return await _bannerRepository.GetBannerDetailAsync(bannerId);
         }
         public void InsertOrUpdateBanner(BannerDTO bannerDTO)
         {

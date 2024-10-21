@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-
 namespace Store.Domain.Entities
 {
     public class Product : BaseEntity<Guid>
@@ -25,6 +24,8 @@ namespace Store.Domain.Entities
         public string Description { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+        [Required]
+        public string ProductUrl {  get; set; }
         public ICollection<FlashSaleProduct> FlashSaleProducts { get; set; }
         public ICollection<CartItem> CartItems { get; set; }
         public ICollection<ProductAttribute> ProductAttributes { get; set; }

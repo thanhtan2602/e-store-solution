@@ -33,19 +33,21 @@ namespace Store.Infrastructure.Repositories
                 _context.SaveChanges();
             }
         }
-        public async Task<IEnumerable<Banner>> GetBannerByCateAsync(int page, int pageSize, int categoryId)
+        public async Task<IEnumerable<Banner>> GetBannerByCateAsync(int page, int pageSize, string? categoryUrl)
         {
-            var banners = await _context.Banners
+          
+                var banners = await _context.Banners
+                    .AsNoTracking()
                     .Include(x => x.Category)
-                    .Where(x => x.IsActive == true && x.IsDeleted == false)
+                    .Where(x => x.IsActive == true && x.IsDeleted == false && x.Category.CategoryUrl == categoryUrl)
                     .OrderByDescending(x => x.CreatedDate.Year)
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize)
-                    .AsNoTracking()
                     .ToListAsync();
-            var result = banners.Where(x => x.CategoryId == categoryId).ToList();
-            return result ?? new List<Banner>();
+                return banners ?? new List<Banner>();
         }
+       
+
         public void InsertOrUpdateBanner(BannerDTO bannerDTO)
         {
             if (bannerDTO.Id > 0)
@@ -84,6 +86,27 @@ namespace Store.Infrastructure.Repositories
                 _context.Banners.Add(newBanner);
             }
             _context.SaveChanges();
+        }
+
+        public async Task<IEnumerable<Banner>> GetAllBannerAsync(int page, int pageSize)
+        {
+            var banners = await _context.Banners
+                    .AsNoTracking()
+                    .Include(x => x.Category)
+                    .Where(x => x.IsActive == true && x.IsDeleted == false)
+                    .OrderByDescending(x => x.CreatedDate)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+            return banners ?? new List<Banner>();
+        }
+
+        public async Task<Banner> GetBannerDetailAsync(int bannerId)
+        {
+            var banners = await _context.Banners
+                    .Include(x => x.Category)
+                    .FirstOrDefaultAsync(x => x.Id==bannerId);
+            return banners ?? new Banner();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Store.Domain.Entities;
 using Store.Web.ViewsModel;
 using Store.WebService.Services;
 using Store.WebService.Services.Interfaces;
@@ -15,8 +16,9 @@ namespace Store.Web.Controllers
         private readonly INewsWebService _newsWebService;
         private readonly IFlashSaleWebService _flashSaleWebService;
         private readonly IStoreWebService _storeWebService;
+        private readonly IProductWebService _productWebService;
 
-        public HomeController(ILogger<HomeController> logger, IStoreWebService storeWebService, ICategoryWebService categoryWebService, IBannerWebService bannerWebService, INewsWebService newsWebService, IFlashSaleWebService flashSaleWebService)
+        public HomeController(ILogger<HomeController> logger, IProductWebService productWebService, IStoreWebService storeWebService, ICategoryWebService categoryWebService, IBannerWebService bannerWebService, INewsWebService newsWebService, IFlashSaleWebService flashSaleWebService)
         {
             _logger = logger;
             _categoryWebService = categoryWebService;
@@ -24,14 +26,26 @@ namespace Store.Web.Controllers
             _newsWebService = newsWebService;
             _flashSaleWebService = flashSaleWebService;
             _storeWebService = storeWebService;
+            _productWebService = productWebService;
+
         }
+        [Route("/Home/ProductSearchResults")]
+        public async Task<IActionResult> ProductSearchResults(string search)
+        {
+            var searchResult = await _productWebService.GetProductSearch(search, 1, 10);
+            return Json(searchResult);
+        }
+        [Route("/")]
         public async Task<IActionResult> Index()
         {
+            _logger.LogInformation("This is home page");
             var catelist = await _categoryWebService.GetAllCategory(1, 6);
-            var bannerHome = await _bannerWebService.GetBannerByCate(1, 100, 15);
+            var bannerHome = await _bannerWebService.GetBannerByCate(1, 100, "home");
             var tekZone = await _newsWebService.GetAllNews(1, 6);
             var flashSale = await _flashSaleWebService.GetFlashSale(1, 2);
             var storeList = await _storeWebService.GetStoreList(1, 10);
+            var jwt = TempData["jwt"];
+            ViewBag.jwt = jwt;
             var result = new HomeVM
             {
                 ChosseCate = catelist,
@@ -39,8 +53,9 @@ namespace Store.Web.Controllers
                 HomeSlider = bannerHome,
                 TekZone = tekZone,
                 FlashSale = flashSale,
-                Stores = storeList
+                Stores = storeList,
             };
+
             return PartialView("/Views/Home/Index.cshtml", result);
         }
         public IActionResult ProductByCate()
@@ -59,6 +74,17 @@ namespace Store.Web.Controllers
         {
             return View();
         }
+        [Route("trang-chu/{flashsaleId?}")]
+        public async Task<JsonResult> FlashSaleItem(int flashsaleId)
+        {
+            var productlist = await _productWebService.GetProductBySaleId(flashsaleId);
+            var result = new HomeVM
+            {
+                Products = productlist,
+                Count = productlist.Count()
+            };
+            return Json(result);
+        }
         public IActionResult HomeSlider()
         {
             return View();
@@ -69,6 +95,11 @@ namespace Store.Web.Controllers
         }
         public IActionResult Privacy()
         {
+            return View();
+        }
+        public IActionResult PageNotFound()
+        {
+            _logger.LogWarning("dont have page");
             return View();
         }
     }

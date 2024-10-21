@@ -10,7 +10,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-
+using static Store.Common.Utility.ProductsUtility;
 namespace Store.Infrastructure.Repositories
 {
     public class CategoryRepository : ICategoryRepository
@@ -32,80 +32,78 @@ namespace Store.Infrastructure.Repositories
                 .ToListAsync();
             return result ?? new List<Category>();
         }
-        public Task<CategoryVM> GetById(int categoryId)
+        public async Task<Category> GetByUrl(string categoryUrl)
         {
-            var cate = _context.Categories.FirstOrDefault(x => x.Id == categoryId);
+            var cate = _context.Categories.Include(x=>x.Products).FirstOrDefault(x => x.CategoryUrl == categoryUrl);
             if (cate == null)
             {
                 throw new Exception("This Category was not found");
             }
             else
             {
-                var result = new CategoryVM
-                {
-                    Id = cate.Id,
-                    Name = cate.Name,
-                    Description = cate.Description,
-                    ImageURL = cate.ImageURL,
-                    IsActive = cate.IsActive,
-                    IsDeleted = cate.IsDeleted,
-                    CreatedBy = cate.CreatedBy,
-                    CreatedDate = cate.CreatedDate.ToLocalTime().ToString("HH:mm dd:MM:yyyy"),
-                    UpdatedBy = cate.UpdatedBy,
-                    UpdatedDate = cate.UpdatedDate.ToLocalTime().ToString("HH:mm dd:MM:yyyy")
-                };
-                return Task.FromResult(result);
-            }
+				return cate ?? new Category();
+			}
         }
         public void AddOrUpdateCategory(CategoryDTO category)
         {
-            if (category.Id > 0)
+            try
             {
-                var cate = _context.Categories.FirstOrDefault(x => x.Id == category.Id);
-                if (cate == null)
+                if (category.Id == 0)
                 {
-                    throw new Exception("This Category was not found");
-                }
-                else
-                {
-                    cate.Name = category.Name;
-                    cate.Description = category.Description;
-                    cate.ImageURL = category.ImageURL;
-                    cate.IsActive = category.IsActive;
-                    cate.IsDeleted = category.IsDeleted;
-                    cate.UpdatedBy = category.UpdatedBy;
-                    cate.UpdatedDate = DateTime.Now;
-                    _context.Categories.Update(cate);
-                }
-            }
-            else
-            {
-                bool isExistCateName = _context.Categories.Any(x => x.Name == category.Name);
-                if (isExistCateName)
-                {
-                    throw new Exception("This Category Name is already exists");
-                }
-                else
-                {
-                    var newCategory = new Category
+                    bool isExistCateName = _context.Categories.Any(x => x.Name == category.Name);
+                    if (isExistCateName)
                     {
-                        Name = category.Name,
-                        Description = category.Description,
-                        ImageURL = category.ImageURL,
-                        CreatedBy = category.CreatedBy,
-                        CreatedDate = DateTime.Now,
-                        IsActive = category.IsActive,
-                        IsDeleted = false,
-                        UpdatedBy = string.Empty,
-                    };
-                    _context.Categories.Add(newCategory);
+                        throw new Exception("This Category Name is already exists");
+                    }
+                    else
+                    {
+                        var newCategory = new Category
+                        {
+                            Name = category.Name,
+                            CategoryUrl = ToUrl(category.Name),
+                            Description = category.Description,
+                            ImageURL = category.ImageURL,
+                            CreatedBy = category.CreatedBy,
+                            Position = category.Position,
+                            CreatedDate = DateTime.Now,
+                            IsActive = category.IsActive,
+                            IsDeleted = false,
+                            UpdatedBy = category.UpdatedBy,
+                        };
+                        _context.Categories.Add(newCategory);
+                    }
                 }
+                else
+                {
+                    var cate = _context.Categories.FirstOrDefault(x => x.Id == category.Id);
+                    if (cate == null)
+                    {
+                        throw new Exception("This Category was not found");
+                    }
+                    else
+                    {
+                        cate.Name = category.Name;
+                        cate.CategoryUrl = ToUrl(category.Name);
+                        cate.Description = category.Description;
+                        cate.Position = category.Position;
+                        cate.ImageURL = category.ImageURL;
+                        cate.IsActive = category.IsActive;
+                        cate.IsDeleted = category.IsDeleted;
+                        cate.UpdatedBy = category.UpdatedBy;
+                        cate.UpdatedDate = DateTime.Now;
+                        _context.Categories.Update(cate);
+                    }
+                }
+                _context.SaveChanges();
             }
-            _context.SaveChanges();
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while saving category. See inner exception for details.", ex);
+            }
         }
-        public void DeleteCategory(int categoryId)
+        public void DeleteCategory(string categoryUrl)
         {
-            var cate = _context.Categories.FirstOrDefault(c => c.Id == categoryId);
+            var cate = _context.Categories.FirstOrDefault(c => c.CategoryUrl == categoryUrl);
             if (cate == null)
             {
                 throw new Exception("Category was not found");

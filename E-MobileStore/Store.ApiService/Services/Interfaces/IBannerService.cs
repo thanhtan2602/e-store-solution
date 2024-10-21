@@ -10,7 +10,9 @@ namespace Store.ApiService.Services.Interfaces
 {
     public interface IBannerService
     {
-        Task<IEnumerable<Banner>> GetBannerByCateAsync(int page, int pageSize, int categoryId);
+        Task<IEnumerable<Banner>> GetBannerByCateAsync(int page, int pageSize, string categoryUrl);
+        Task<IEnumerable<Banner>> GetAllBanner(int page, int pageSize);
+        Task<Banner> GetBannerDetail(int bannerId);
         void DeletedBanner(int bannerId);
         void InsertOrUpdateBanner(BannerDTO bannerDTO);
     }

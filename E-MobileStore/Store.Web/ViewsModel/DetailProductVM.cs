@@ -4,7 +4,7 @@ namespace Store.Web.ViewsModel
 {
     public class DetailProductVM
     {
-        public IEnumerable<vmProduct> SuggestProduct { get; set; }
-        public vmProduct Product { get; set; }
+        public IEnumerable<vmProduct>? SuggestProduct { get; set; }
+        public vmProduct? Product { get; set; }
     }
 }

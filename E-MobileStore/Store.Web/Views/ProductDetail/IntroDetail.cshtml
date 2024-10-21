@@ -1,0 +1,140 @@
+﻿@model Store.WebService.ViewModels.vmProduct
+@using static Store.Web.Utility.ProductsUtilities
+@if (Model != null)
+{
+    int index = 0;
+    <div class="intro-detail">
+        <div class="center-page">
+            <div class="thubmail-slide full">
+                <div class="owl-carousel slider-img owl-loaded owl-drag" id="slider-defaults">
+                    <div class="row">
+                        <div class="col-md-6">
+                            @if (Model.ProductImages != null)
+                            {
+                            <div>
+                                <div class="owl-carousel  owl-loaded  slider-for">
+                                        @foreach (var image in Model.ProductImages)
+                                        {
+                                            if (index == 0)
+                                            {
+                                                <div class="owl-item @(index) active" style="width: 600px;">
+                                                    <div class="item-img" data-thumb="@image.ImageURL">
+                                                        <img class="owl-lazy" title="@image.ImageName" alt="@image.ImageName" data-src="@image.ImageURL" width="650" height="650" src="@image.ImageURL" style="opacity: 1;">
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="owl-item @(index) " style="width: 600px;">
+                                                    <div class="item-img" data-thumb="@image.ImageURL">
+                                                        <img class="owl-lazy" title="@image.ImageName" alt="@image.ImageName" data-src="@image.ImageURL" width="650" height="650" src="@image.ImageURL" style="opacity: 1;">
+                                                    </div>
+                                                </div>
+                                            }
+                                            index++;
+                                        }
+                                </div>
+                                <div class="slider-nav ">
+                                    @foreach (var image in Model.ProductImages)
+                                    {
+                                        <img class="theImg " style="max-width: 100px; max-height:100px; background-color: white;border-radius: 10px;" src="@image.ImageURL" alt="@image.ImageName" title="@image.ImageName">
+                                    }
+                                </div>
+                                <div class="video-sp"></div>
+                            </div>
+                            }
+                        </div>
+                        <div class="col-md-6">
+                            <div>
+                                <h1>@(Model.ProductName)</h1>
+                                <div class="price-promo-local">
+                                    @ProductStatus(Model.Quantity)
+                                </div>
+                                <strong class="price" data-price="1090000" data-disprice="790000" data-percent="27">
+                                    @FormatPrice(Model.Price)₫                <strike>@FormatPrice(Model.PriceSale)₫</strike>
+                                </strong>
+                                <div class="loyalty">
+                                    <div class="loyalty__main">
+                                        <img data-src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/logo.png" class=" ls-is-cached lazyloaded" width="24" height="24" src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/logo.png">
+                                        <p class="loyalty__main__point"><b>+3.950</b> điểm tích lũy Quà Tặng VIP</p>
+                                        <img data-src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/question_mark.png" class="loyalty__main__ic-tooltip ls-is-cached lazyloaded" width="20" height="20" src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/question_mark.png">
+                                    </div>
+                                    <ul class="loyalty__tooltip">
+                                        <li>Đây là điểm tích lũy tạm tính khi mua sản phẩm này. Số điểm thực tế có thể thay đổi và sẽ được hiển thị chính xác sau khi Quý khách hoàn tất đặt hàng.</li>
+                                        <li>Tải <b>app Quà Tặng VIP</b> để tích và sử dụng điểm cho khách hàng thân thiết. <a href="https://www.topzone.vn/tekzone/tat-tan-tat-thong-tin-ve-app-tich-diem-hoan-toan-moi-1480642" target="_blank">Tìm hiểu thêm</a></li>
+                                    </ul>
+                                </div>
+                                <div class="color-sp">
+                                    <span>Màu: </span>
+                                    
+                                </div>
+                                @*  <div class="pr-item mg-bot10">
+                            <p>
+                            <small>Giá và khuyến mãi dự kiến áp dụng đến 23:59 | 30/06</small>
+                            </p>
+                            </div> *@
+                                <span class="check-goods"><i class="topzone-box"></i>Xem TopZone có hàng</span>
+                                <div class="buy-sp normal ">
+                                    <a href="javascript:void(0)" onclick="BuyNow($(this))" class="btn-buy full">
+                                        Mua ngay
+                                    </a>
+                                </div>
+                                <div class="popup-error">
+                                    <div>
+                                        <a href="javascript:void(0)" class="pe-close">×</a>
+                                        <div></div>
+                                        <a href="/cart" class="pe-btn">Kiểm tra giỏ hàng</a>
+                                        <a href="javascript:void(0)" class="pe-btn btn-confirm">Đồng ý</a>
+                                    </div>
+                                </div>
+                                <ul class="policy">
+                                    <li>
+                                        <span>
+                                            <i class="topzone-doitra"></i>
+                                            Bảo hành có cam kết <b>12 tháng</b><a href="https://www.topzone.vn/bao-hanh-doi-tra"> Xem chi tiết chính sách bảo hành, đổi trả </a>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span>
+                                            <i class="topzone-giaohang"></i>
+                                            Giao hàng nhanh toàn quốc <a href="/giao-hang">Xem chi tiết</a>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span>
+                                            <i class="topzone-tongdai"></i>
+                                            Tổng đài: <a href="tel:1900969642">1900.9696.42</a> (7:30 - 22:00)
+                                        </span>
+                                    </li>
+                                </ul>
+                                <div class="pr-loyalty">
+                                    <div class="qr-download">
+                                        <img data-src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/qr.png?v=1" class=" ls-is-cached lazyloaded" width="72" height="72" src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/qr.png?v=1">
+                                        <p>Quét để tải App</p>
+                                    </div>
+                                    <div class="text-area">
+                                        <p class="text-area__title"><img data-src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/logo.png" class=" ls-is-cached lazyloaded" width="32" height="32" src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/logo.png"><span>Quà Tặng VIP</span></p>
+                                        <p class="text-area__content">
+                                            Tích &amp; Sử dụng điểm <br> cho khách hàng thân thiết
+                                        </p>
+                                        <p class="text-area__note">Sản phẩm của tập đoàn MWG</p>
+                                    </div>
+                                    <div class="download-link">
+                                        <a href="http://play.google.com/store/apps/details?id=mwg.tgdd.loyalty" target="_blank">
+                                            <img data-src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/ggplay.png" class=" ls-is-cached lazyloaded" width="136" height="40" src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/ggplay.png">
+                                        </a>
+                                        <a href="https://apps.apple.com/vn/app/qu%C3%A0-t%E1%BA%B7ng-vip/id1589555369" target="_blank">
+                                            <img data-src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/appstore.png" class=" ls-is-cached lazyloaded" width="136" height="40" src="//cdn.tgdd.vn/mwgcart/topzone/images/promote_loyalty/appstore.png">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

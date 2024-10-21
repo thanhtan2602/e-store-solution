@@ -1,34 +1,4 @@
-﻿///*! jQuery v3.5.1 | (c) JS Foundation and other contributors | jquery.org/license */
-//function gtm_ProductImpressions(n, t, i, r, u, f, e)
-//{
-//    if (dataLayer === undefined)
-//    { console.log("dataLayer chÆ°a khai bĂ¡o"); return }
-//    var o = [{ name: n, id: t, price: i, brand: r, category: u, list: f, position: e }], s = { ecommerce: { impressions: o }, event: "productImpressions" }; dataLayer.push(s)
-//} function addListProductIntoImpression(n, t, i)
-//{
-//    var e, u; if (n !== undefined && n.length > 0)
-//    { (i === undefined || i <= 0) && (i = 1); (t === undefined || t == null || t == "") && (t = "List product"); var o = [], r = {}, f = 0; for (e = 0; e < n.length; e++)f++, u = n[e], r.name = u.dataset.name, r.id = u.dataset.id, r.price = u.dataset.price, r.brand = u.dataset.brand, r.category = u.dataset.cate, r.list = t, r.position = f.toString(), o.push(r), r = {}, (e + 1 == n.length && f < i || f == i) && (gtm_ListProductImpressions(o), f = 0, o = []) }
-//} function gtm_ListProductImpressions(n)
-//{
-//    if (dataLayer === undefined)
-//    { console.log("dataLayer chÆ°a khai bĂ¡o"); return }
-//    if (n !== undefined && n != null && n.length > 0)
-//    { var t = { ecommerce: { impressions: n }, event: "productImpressions" }; dataLayer.push(t) }
-//} function gtm_ProductClick(n, t, i, r, u, f, e)
-//{
-//    if (dataLayer === undefined) { console.log("dataLayer chÆ°a khai bĂ¡o"); return }
-//    var o = [{ name: n, id: t === undefined ? "" : t.toString(), price: i === undefined ? "" : i.toString(), brand: r, category: u, list: f, position: e }], s = { ecommerce: { click: { products: o, actionField: { list: f } } }, event: "productClick" }; dataLayer.push(s)
-//} function gtm_ProductDetailView(n, t, i, r, u, f, e, o, s, h, c, l, a, v, y, p, w, b, k)
-//{
-//    if (dataLayer === undefined)
-//    { console.log("dataLayer chÆ°a khai bĂ¡o"); return }
-//    var d = [{ name: n, id: t, price: i, brand: r, category: u, dimension33: f, dimension34: e, dimension35: o, dimension36: s, dimension37: h, dimension16: c, dimension38: l, dimension39: a, dimension40: v, dimension41: y, dimension43: p, dimension44: w, dimension45: b }], g = { event: "productDetail", serviceOrder: k, ecommerce: { detail: { products: d } } }; dataLayer.push(g)
-//} function gtm_ProductAddtoCart(n, t, i, r, u, f, e, o, s, h, c, l, a, v, y, p, w, b, k, d, g, nt, tt)
-//{
-//    if (dataLayer === undefined)
-//    { console.log("dataLayer chÆ°a khai bĂ¡o"); return }
-//    var it = [{ name: n, id: t, price: i, brand: r, category: u, variant: f, quantity: e, dimension33: o, dimension34: s, dimension35: h, dimension36: c, dimension37: l, dimension16: a, dimension38: v, dimension39: y, dimension40: p, dimension41: w, dimension43: b, dimension44: k, dimension45: d, dimension42: g }], rt = { event: "productAddToCart", orderType: nt, serviceOrder: tt, ecommerce: { add: { products: it } } }; dataLayer.push(rt)
-//}
+﻿
 function goToSearchPage(n)
 {
     var t, r = n.toString().replace(inValidChar, ""), i = r.trim(), u = encodeURIComponent(i).replace(/\./g, "+").replace(/%20/gi, "+").replace(/ /g, "+");
@@ -58,7 +28,7 @@ function callSuggestSearch(n) {
 
         if (i.length >= MIN_SSKEYWORD_LENGTH) {
             $.ajax({
-                url: urlRoot + "/Common/ProductSearchResults",
+                url: urlRoot + "/Home/ProductSearchResults",
                 type: "POST",
                 data: { search: i },
                 cache: false,

@@ -1,0 +1,44 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<link rel="stylesheet" href="~/css//layout/authen.css" asp-append-version="true" />
+<div id="wrapper">
+	<form action="/nguoi-dung/thong-tin-dang-nhap" method="post" id="form-login">
+		<h1 class="form-heading">
+			Vui lòng xác nhận email
+		</h1>
+		@if (ViewBag.ErrorMessage != null)
+		{
+			<div class="alert alert-danger">
+				@ViewBag.ErrorMessage
+			</div>
+		}
+	
+		<p class="option-authen">Chúng tôi đã gửi 1 đường link đến địa chỉ email của bạn. Vui lòng truy cập email và click vào đường link để hoàn thành đăng ký tài khoản</p>
+        <div class="image-container">
+            <img width="200px" height="200px" src="https://i.gifer.com/ZZ5H.gif" />
+        </div>
+	</form>
+</div>
+<script>
+    function checkEmailConfirmation() {
+        
+        fetch('/api/nguoi-dung/check-email-confirmation')
+            .then(response => response.json())
+            .then(data => {
+                if (data.isConfirmed) {
+                    // Nếu email đã được xác nhận, chuyển hướng về trang đăng nhập
+                    window.location.href = '/nguoi-dung/dang-nhap';
+                } else {
+                    // Nếu chưa, tiếp tục kiểm tra sau 5 giây
+                    setTimeout(checkEmailConfirmation, 5000);
+                }
+            })
+            .catch(error => console.error('Lỗi kiểm tra email xác nhận:', error));
+    }
+
+    // Bắt đầu kiểm tra email xác nhận khi trang được tải
+    checkEmailConfirmation();
+</script>

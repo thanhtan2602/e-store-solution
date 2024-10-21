@@ -22,17 +22,17 @@ namespace Store.ApiService.Services
         {
             return await _categoryRepository.GetCategoriesAsync(page, pageSize);
         }
-        public async Task<CategoryVM> GetById(int categoryId)
+        public async Task<Category> GetByUrl(string categoryUrl)
         {
-            return await _categoryRepository.GetById(categoryId);
+            return await _categoryRepository.GetByUrl(categoryUrl);
         }
         public void AddOrUpdateCategory(CategoryDTO category)
         {
             _categoryRepository.AddOrUpdateCategory(category);
         }
-        public void DeleteCategory(int categoryId)
+        public void DeleteCategory(string categoryUrl)
         {
-            _categoryRepository.DeleteCategory(categoryId);
+            _categoryRepository.DeleteCategory(categoryUrl);
         }
     }
 }

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Store.WebService.ViewModels.vmProduct>
+
+@using static Store.Web.Utility.ProductsUtilities
+	<ul class="listing-cate crm-cate ">
+		@foreach (var product in Model)
+		{
+			<li class="item show">
+			<a href="@Url.Action("Index","ProductDetail",new {categoryUrl=product.CategoryUrl, productUrl = product.ProductUrl })" class="main-contain">
+					<div class="item-img item-img_44">
+					<img class="thumb ls-is-cached lazyload" width="235" height="235" alt="@product.ProductImages?.FirstOrDefault(x=>x.Position=="1")?.ImageName" data-src="@product.ProductImages?.FirstOrDefault(x => x.Position == "1")?.ImageURL">
+					</div>
+					<h3>
+						@product.ProductName
+					</h3>
+					@* <div class="item-compare">
+						<span>
+							@product.ShortDesc
+						</span>
+					</div> *@
+					<div class="box-p">
+						@if (product.PriceSale > 0)
+						{
+							<strong class="price">@FormatPrice(@product.PriceSale)₫</strong>
+							<p class="price-old black">@FormatPrice(@product.Price)₫</p>
+						}
+						else
+						{
+							<strong class="price">@FormatPrice(@product.Price)₫</strong>
+						}
+					</div>
+					<p class="item-txt-online orange">Online giá rẻ quá</p>
+				</a>
+			</li>
+		}
+	</ul>

@@ -13,7 +13,7 @@ namespace Store.ApiService.Services.Interfaces
     {
         void AddOrUpdateCategory(CategoryDTO category);
         Task<IEnumerable<Category>> GetCategoriesAsync(int page, int pageSize);
-        Task<CategoryVM> GetById(int categoryId);
-        void DeleteCategory(int categoryId);
+        Task<Category> GetByUrl(string categoryUrl);
+        void DeleteCategory(string categoryUrl);
     }
 }

@@ -8,15 +8,11 @@
         color: white;
     }
 </style>
-<div class="flashsale-block" id="flashsale">
-    <div class="stage-two" style="display: none;">
-        <div class="load"></div>
-    </div>
     <div class="flex-fs">
         <div class="gvdshock">
             <h3>
                 <i class="lightning-ic">
-                    <img width="32" height="70" src="//cdn.tgdd.vn/mwgcart/topzone/images/icon-fs.png" alt="lightningicon">
+                    <img width="32" height="70" class="lazyload" data-class="lazyload" data-src="//cdn.tgdd.vn/mwgcart/topzone/images/icon-fs.png" alt="lightningicon">
                 </i>
             </h3>
             <div class="endtime" data-countdown="6/22/2024 11:59:00 PM" data-begin="6/22/2024 8:00:00 AM">
@@ -25,59 +21,33 @@
             </div>
         </div>
         <div class="listing-timeline">
-            <ul class="nav " data-slick='{"slidesToShow": 1, "slidesToScroll": 3}'>
+            <ul class="nav active" data-slick='{"slidesToShow": 1, "slidesToScroll": 3}'>
                 @foreach (var flashSale in Model)
                 {
+                int index = 1;
+                @if (index == 1)
+                {
                     <li class="nav-item" role="presentation">
-                        <a class="timelineCount nav-link @(flashSale.Id == Model.First().Id ? "active" : "")" id="tab@(flashSale.Id)-tab" data-countdown="@flashSale.DateClose.ToLocalTime()" data-begin="@DateTime.Now.ToLocalTime()" data-bs-toggle="tab" href="#tab@(flashSale.Id)" role="tab" aria-controls="tab@(flashSale.Id)" aria-selected="@(flashSale.Id == Model.First().Id ? "true" : "false")">
+                        <a class="timelineCount nav-link active" flashsale-id="@(flashSale.Id)" data-countdown="@flashSale.DateClose.ToLocalTime()" data-begin="@DateTime.Now.ToLocalTime()" data-bs-toggle="tab" href="#tab@(flashSale.Id)" role="tab" aria-controls="tab@(flashSale.Id)">
                             <span>@FormatToDMY(@flashSale.DateOpen) - @FormatToDMY(@flashSale.DateClose)</span>
                             <span class="timeline">@FormatToToD(@flashSale.DateOpen) - @FormatToToD(@flashSale.DateClose)</span>
                         </a>
                     </li>
                 }
+                else
+                {
+                    <li class="nav-item" role="presentation">
+                        <a class="timelineCount nav-link" flashsale-id="@(flashSale.Id)" data-countdown="@flashSale.DateClose.ToLocalTime()" data-begin="@DateTime.Now.ToLocalTime()" data-bs-toggle="tab" href="#tab@(flashSale.Id)" role="tab" aria-controls="tab@(flashSale.Id)">
+                            <span>@FormatToDMY(@flashSale.DateOpen) - @FormatToDMY(@flashSale.DateClose)</span>
+                            <span class="timeline">@FormatToToD(@flashSale.DateOpen) - @FormatToToD(@flashSale.DateClose)</span>
+                        </a>
+                    </li>
+                }
+                }
             </ul>
         </div>
     </div>
-    <div class="tab-content" id="myTabContent">
-        @foreach (var flashSale in Model)
-        {
-            <div class="tab-pane fade @(flashSale.Id == Model.First().Id ? "show active" : "")" id="tab@(flashSale.Id)" role="tabpanel" aria-labelledby="tab@(flashSale.Id)-tab">
-                @if (flashSale.FlashSaleProducts != null && flashSale.FlashSaleProducts.Any())
-                {
-                    <div class="box-scroll">
-                        <div class="listproduct slider-flashsale owl-carousel owl-loaded owl-drag filtering" data-size="36">
-                            @foreach (var flashSaleProduct in flashSale.FlashSaleProducts)
-                            {
-                                <div class="owl-item cloned" style="min-width: 240.667px; min-height: 370px;">
-                                    <div class="item" data-id="@flashSaleProduct.Product.Id" data-pos="14">
-                                        <a href="#" class="main-contain">
-                                            <div class="item-img">
-                                                <img data-src="@flashSaleProduct.Product.ProductImages?.FirstOrDefault(x => x.Position.Trim() == "1")?.ImageURL" class="ls-is-cached lazyloaded" alt="@flashSaleProduct.Product.ProductImages?.FirstOrDefault(x => x.Position.Trim() == "1")?.ImageName" height="207" src="@flashSaleProduct.Product.ProductImages?.FirstOrDefault(x => x.Position.Trim() == "1")?.ImageURL">
-                                            </div>
-                                            <h3>@flashSaleProduct.Product.Name</h3>
-                                            <p class="price-old black">@FormatPrice(@flashSaleProduct.Product.Price)₫</p>
-                                            <strong class="price">@FormatPrice(@flashSaleProduct.PriceSale)đ</strong>
-                                            <span class="rq_count">
-                                                @if (flashSaleProduct.IsActive)
-                                                {
-                                                    <b>Đang mở bán</b>
-                                                }
-                                                else
-                                                {
-                                                    <b>Sắp mở bán</b>
-                                                }
-                                            </span>
-                                        </a>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                }
-            </div>
-        }
-    </div>
-</div>
+    
 @section Scripts {
     <script type="text/javascript">
         $(document).ready(function () {

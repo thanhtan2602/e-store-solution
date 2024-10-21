@@ -16,7 +16,6 @@ namespace Store.Domain.Entities
         public string Position { get; set; }
         public int? CategoryId { get; set; }
         public bool IsDeleted { get; set; } = false;
-        [JsonIgnore]
         public Category Category { get; set; }
         public DateTime UpdatedDate { get; set; }
     }

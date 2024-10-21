@@ -25,7 +25,7 @@ namespace Store.Infrastructure.ViewModels
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
 
-        public ICollection<ProductImagesVM> ProductImages { get; set; }
+        public ICollection<ProductImage> ProductImages { get; set; }
         public ICollection<ProductAttributesVM> ProductAttributes { get; set; }
         public ICollection<Rate> Rates { get; set; }
         public ICollection<Comment> Comments { get; set; }

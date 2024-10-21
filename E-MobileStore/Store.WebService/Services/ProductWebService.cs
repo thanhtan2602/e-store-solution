@@ -1,31 +1,38 @@
 ﻿using Newtonsoft.Json;
 using Store.Domain.Entities;
+using Store.WebService.APIs;
 using Store.WebService.APIs.Interfaces;
+using Store.WebService.DTO;
 using Store.WebService.Response;
 using Store.WebService.Services.Interfaces;
 using Store.WebService.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
-
+using static System.Net.Mime.MediaTypeNames;
 namespace Store.WebService.Services
 {
     public class ProductWebService : IProductWebService
     {
         private readonly HttpClient _httpClient;
         private readonly IProductApi _productApi;
-        public ProductWebService(IProductApi productApi)
+        private readonly IProductImageApi _productImageApi;
+
+        public ProductWebService( IProductApi productApi, IProductImageApi productImageApi)
         {
             _httpClient = new HttpClient();
             _productApi = productApi;
+            _productImageApi = productImageApi;
         }
-        public async Task<vmProduct> GetProductDetail(Guid productId)
+        public async Task<vmProduct> GetProductDetail(string productUrl)
         {
             try
             {
-                var uri = _productApi.GetProductById(productId);
+                var uri = _productApi.GetProductByUrl(productUrl);
                 var response = await _httpClient.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
@@ -42,7 +49,9 @@ namespace Store.WebService.Services
                             ShortDesc = product.ShortDesc,
                             Description = product.Description,
                             CategoryId = product.CategoryId,
-                            CategoryName = product.Category.Name,
+                            ProductUrl = product.ProductUrl,
+                            CategoryUrl = product.Category?.CategoryUrl,
+                            CategoryName = product.Category?.Name,
                             Quantity = product.Quantity,
                             ProductImages = product.ProductImages,
                             PriceSale = product.PriceSale,
@@ -58,17 +67,17 @@ namespace Store.WebService.Services
                 }
                 return new vmProduct();
             }
-            catch (Exception ex)
+            catch
             {
                 return new vmProduct();
             }
         }
 
-        public async Task<int> TotalProduct(int categoryId)
+        public async Task<int> TotalProductByCate(string categoryUrl)
         {
             try
             {
-                var uri = _productApi.TotalProductAsync(categoryId);
+                var uri = _productApi.TotalProductByCateAsync(categoryUrl);
                 var response = await _httpClient.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
@@ -86,12 +95,34 @@ namespace Store.WebService.Services
                 return 0;
             }
         }
-        public async Task<List<vmProduct>> GetProductListByCateId(int cateId, int page, int pageSize, string? sortBy)
+        public async Task<int> TotalProduct()
+        {
+            try
+            {
+                var uri = _productApi.TotalProductAsync();
+                var response = await _httpClient.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var productresponse = JsonConvert.DeserializeObject<TotalProductResponse>(content);
+                    return productresponse.result;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+        public async Task<List<vmProduct>> GetProductListByCateUrl(string categoryUrl, int page, int pageSize, string? sortBy)
         {
             try
             {
                 var products = new List<vmProduct>();
-                var uri = _productApi.GetProductListByCateId(cateId, page, pageSize, sortBy);
+                var uri = _productApi.GetProductListByCateUrl(categoryUrl, page, pageSize, sortBy);
                 var response = await _httpClient.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
@@ -109,7 +140,9 @@ namespace Store.WebService.Services
                                 ShortDesc = product.ShortDesc,
                                 Description = product.Description,
                                 CategoryId = product.CategoryId,
-                                CategoryName = product.Category.Name,
+                                CategoryName = product.Category?.Name,
+                                ProductUrl = product.ProductUrl,
+                                CategoryUrl = product.Category?.CategoryUrl,
                                 Quantity = product.Quantity,
                                 ProductImages = product.ProductImages,
                                 PriceSale = product.PriceSale,
@@ -153,7 +186,7 @@ namespace Store.WebService.Services
                                 ShortDesc = product.ShortDesc,
                                 Description = product.Description,
                                 CategoryId = product.CategoryId,
-                                CategoryName = product.Category.Name,
+                                CategoryName = product.Category?.Name,
                                 Quantity = product.Quantity,
                                 ProductImages = product.ProductImages,
                                 PriceSale = product.PriceSale,
@@ -172,6 +205,178 @@ namespace Store.WebService.Services
             catch (Exception ex)
             {
                 return new List<vmProduct>();
+            }
+        }
+
+        public async Task<List<vmProduct>> GetProductBySaleId(int flashsaleId)
+        {
+            try
+            {
+                var products = new List<vmProduct>();
+                var uri = _productApi.GetProductBySaleId(flashsaleId);
+                var response = await _httpClient.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var productresponse = JsonConvert.DeserializeObject<ProductSaleResponse>(content);
+                    if (productresponse != null && productresponse.result.Count > 0)
+                    {
+                        foreach (var product in productresponse.result)
+                        {
+                            products.Add(new vmProduct
+                            {
+                                ProductId = product.ProductId,
+                                ProductName = product.Product.Name,
+                                Price = product.Product.Price,
+                                ShortDesc = product.Product.ShortDesc,
+                                Description = product.Product.Description,
+                                ProductUrl = product.Product.ProductUrl,
+                                CategoryUrl = product.Product.Category?.CategoryUrl,
+                                CategoryName = product.Product.Category?.Name,
+                                Quantity = product.Product.Quantity,
+                                ProductImages = product.Product.ProductImages,
+                                PriceSale = product.PriceSale,
+                                IsDeleted = product.IsDeleted,
+                                IsActive = product.IsActive,
+                                CreatedBy = product.Product.CreatedBy,
+                                CreatedDate = product.Product.CreatedDate.ToLocalTime().ToString("HH:mm dd/MM/yyyy"),
+                                UpdatedBy = product.Product.UpdatedBy,
+                                UpdatedDate = product.Product.UpdatedDate.ToLocalTime().ToString("HH:mm dd/MM/yyyy"),
+                            });
+                        }
+                    }
+                }
+                return products;
+            }
+            catch
+            {
+                return new List<vmProduct>();
+            }
+        }
+
+        public async Task<List<vmProduct>> GetProductList(int page, int pageSize, string? sortBy)
+        {
+            try
+            {
+                var products = new List<vmProduct>();
+                var uri = _productApi.GetProductList(page, pageSize, sortBy);
+                var response = await _httpClient.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var productresponse = JsonConvert.DeserializeObject<ProductResponse>(content);
+                    if (productresponse != null && productresponse.result.Count > 0)
+                    {
+                        foreach (var product in productresponse.result)
+                        {
+                            products.Add(new vmProduct
+                            {
+                                ProductId = product.Id,
+                                ProductName = product.Name,
+                                Price = product.Price,
+                                ShortDesc = product.ShortDesc,
+                                Description = product.Description,
+                                CategoryId = product.CategoryId,
+                                CategoryName = product.Category?.Name,
+                                ProductUrl = product.ProductUrl,
+                                CategoryUrl = product.Category?.CategoryUrl,
+                                Quantity = product.Quantity,
+                                ProductImages = product.ProductImages,
+                                PriceSale = product.PriceSale,
+                                IsDeleted = product.IsDeleted,
+                                IsActive = product.IsActive,
+                                CreatedBy = product.CreatedBy,
+                                CreatedDate = product.CreatedDate.ToLocalTime().ToString("HH:mm dd/MM/yyyy"),
+                                UpdatedBy = product.UpdatedBy,
+                                UpdatedDate = product.UpdatedDate.ToLocalTime().ToString("HH:mm dd/MM/yyyy"),
+                            });
+                        }
+                    }
+                }
+                return products;
+            }
+            catch
+            {
+                return new List<vmProduct>();
+            }
+        }
+        public async Task<string> InserOrUpdateProduct(ProductDTO productDTO, List<ProductImageDTO> Images)
+        {
+            try
+            {
+                //add product
+                var uri = _productApi.InserOrUpdateProduct();
+                var jsonContent = JsonConvert.SerializeObject(productDTO);
+                var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync(uri, httpContent);
+                var responseApi = await response.Content.ReadAsStringAsync();
+                var content = JsonConvert.DeserializeObject<AuthenResponse>(responseApi);
+                var result = "";
+                if (response.IsSuccessStatusCode && content != null)
+                {
+                    result = content.message.ToString();
+                }
+                else
+                {
+                    result = content.message;
+                }
+                //add product Image
+                if (Images != null && Images.Count > 0)
+                {
+                    for (int i = 0; i < Images.Count; i++)
+                    {
+                        var uriProductImage = _productImageApi.AddOrUpdateProductImage(result);
+                        var jsonContentProductImage = JsonConvert.SerializeObject(Images[i]);
+                        var httpContentProductImage = new StringContent(jsonContentProductImage, Encoding.UTF8, "application/json");
+                        var responseProductImage = await _httpClient.PostAsync(uriProductImage, httpContentProductImage);
+                        var responseApiProductImage = await responseProductImage.Content.ReadAsStringAsync();
+                        var contentProductImage = JsonConvert.DeserializeObject<AuthenResponse>(responseApiProductImage);
+                        if (responseProductImage.IsSuccessStatusCode && contentProductImage != null)
+                        {
+                        }
+                        else
+                        {
+                            result += "error to add image" + contentProductImage.message;
+                        }
+                    }
+                    result = string.Empty;
+                    result = "200";
+                }
+
+                return result;
+
+            }
+            catch
+            {
+                return "404";
+            }
+        }
+
+        public async Task<string> DeleteProduct(string productUrl)
+        {
+            try
+            {
+                //add product
+                var uri = _productApi.DeletedProduct(productUrl);
+                var jsonContent = JsonConvert.SerializeObject(productUrl);
+                var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PutAsync(uri, httpContent);
+                var responseApi = await response.Content.ReadAsStringAsync();
+                var content = JsonConvert.DeserializeObject<AuthenResponse>(responseApi);
+                var result = "";
+                if (response.IsSuccessStatusCode && content != null)
+                {
+                    result = content.message.ToString();
+                }
+                else
+                {
+                    result = content.message;
+                }
+                return result;
+            }
+            catch
+            {
+                return "404";
             }
         }
     }

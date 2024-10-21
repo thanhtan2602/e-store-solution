@@ -10,11 +10,10 @@ namespace Store.Infrastructure.DTOs
 {
     public class ProductImageDTO
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public string ImageURL { get; set; } = string.Empty;
         public string ImageName { get; set; } = string.Empty;
         public string Position { get; set; } = string.Empty;
-        public Guid? ProductId { get; set; }
         public bool IsDeleted { get; set; } = false;
         public bool IsActive { get; set; } = true;
         public string CreatedBy { get; set; } = string.Empty;

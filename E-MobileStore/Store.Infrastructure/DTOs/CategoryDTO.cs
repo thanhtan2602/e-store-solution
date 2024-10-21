@@ -12,6 +12,7 @@ namespace Store.Infrastructure.DTOs
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string ImageURL { get; set; } = string.Empty;
+        public string Position { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
         public bool IsDeleted { get; set; } = false;
         public string CreatedBy { get; set; } = string.Empty;

@@ -1,0 +1,64 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<style>
+    a.has-arrow span {
+        padding: 0 15px;
+    }
+</style>
+<div class="left-sidebar-pro">
+    <nav id="sidebar" class="">
+        <div class="sidebar-header">
+            <a href="/admin/"><img class="main-logo" src="img/logo/logo.png" alt="" /></a>
+            <strong><img src="img/logo/logosn.png" alt="" /></strong>
+        </div>
+        <div class="nalika-profile">
+            <div class="profile-dtl">
+                <a href="#"><img src="img/notification/4.jpg" alt="" /></a>
+                <h2>Lakian <span class="min-dtn">Das</span></h2>
+            </div>
+            <div class="profile-social-dtl">
+                <ul class="dtl-social">
+                    <li><a href="#"><i class="icon nalika-facebook"></i></a></li>
+                    <li><a href="#"><i class="icon nalika-twitter"></i></a></li>
+                    <li><a href="#"><i class="icon nalika-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="left-custom-menu-adp-wrap comment-scrollbar">
+            <nav class="sidebar-nav left-sidebar-menu-pro">
+                <ul class="metismenu" id="menu1">
+                    <li class="active">
+                        <a class="has-arrow" href="index.html">
+                            <i class="fa-brands fa-product-hunt"></i>
+                            <span class="mini-click-non">Quản lý sản phẩm</span>
+                        </a>
+                        <ul class="submenu-angle" aria-expanded="true">
+                            <li><a title="Danh sách sản phẩm<" href="@Url.Action("Index","Product")"><span class="mini-sub-pro">Danh sách sản phẩm</span></a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="has-arrow" href="index.html">
+                            <i class="fa-solid fa-c"></i>
+                            <span class="mini-click-non">Quản lý danh mục</span>
+                        </a>
+                        <ul class="submenu-angle" aria-expanded="true">
+                            <li><a title="Product List" href="@Url.Action("Index","Category")"><span class="mini-sub-pro">Danh sách ngành hàng</span></a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="has-arrow" href="index.html">
+                            <i class="fa-solid fa-images"></i>
+                            <span class="mini-click-non">Quản lý banner</span>
+                        </a>
+                        <ul class="submenu-angle" aria-expanded="true">
+                            <li><a title="Product List" href="@Url.Action("Index","Banner")"><span class="mini-sub-pro">Danh sách banner</span></a></li>
+                        </ul>
+                    </li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </nav>
+</div>
